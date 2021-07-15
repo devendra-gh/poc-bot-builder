@@ -1,0 +1,16 @@
+@import "src/assets/styles/variables.scss";
+@import "src/assets/styles/mixins.scss";
+
+.layout {
+  &__wrapper {
+    padding: $spacing-10 $spacing-xxxlarge;
+
+    @include media("tablet-portrait-max") {
+      padding: $spacing-xxlarge $spacing-large;
+    }
+
+    @include media("mobile-landscape-max") {
+      padding: $spacing-xlarge $spacing-large;
+    }
+  }
+}
