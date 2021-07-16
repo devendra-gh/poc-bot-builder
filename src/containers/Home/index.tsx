@@ -5,17 +5,34 @@ import { isLoading } from "../../redux/actions";
 
 import DraggableComponent from "../../components/DraggableComponent";
 import Preview from "../../components/Preview";
+import Sidebar from "../../components/Sidebar";
 
 const Home = ({ isLoading }: any) => {
   const [components, setComponents] = useState([]);
 
   return (
-    <main className="main">
-      <div>
-        <DraggableComponent />
-        <DraggableComponent bg="red" />
+    <main className="wrapper__main">
+      <div className="wrapper__canvas-container">
+        <Preview components={components} setComponents={setComponents} />
+        <Sidebar />
       </div>
-      <Preview components={components} setComponents={setComponents} />
+      <div className="wrapper__design-menu">
+        <div className="wrapper__design-menu__inner">
+          <div className="wrapper__design-menu__holder">
+            <div className="wrapper__design-menu__scroll">
+              <div className="wrapper__design-menu__step-menu">
+                <DraggableComponent />
+                <DraggableComponent />
+                <DraggableComponent />
+                <DraggableComponent />
+                <DraggableComponent />
+                <DraggableComponent />
+                <DraggableComponent />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   );
 };

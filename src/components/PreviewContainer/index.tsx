@@ -13,13 +13,21 @@ const PreviewContainer = ({
   }, [onClick]);
 
   return (
-    <Box
+    <div
       onClick={clickHandler}
-      sx={{ border: focused && "1px solid blue" }}
       {...restProps}
+      style={{
+        margin: "10px",
+        width: "200px",
+        height: "100px",
+        border: "1px solid #000",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
     >
       {children}
-    </Box>
+    </div>
   );
 };
 

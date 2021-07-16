@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { DndProvider } from "react-dnd";
@@ -6,7 +6,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 
 import reportWebVitals from "./reportWebVitals";
 import store from "./redux/store";
-import "./assets/styles/index.scss";
+import "./styles.scss";
 
 import App from "./App";
 

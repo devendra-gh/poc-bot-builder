@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from "react";
-import { Box } from "rebass/styled-components";
 import { useDrop } from "react-dnd";
 import { DRAG_TYPES } from "../../constants/DragTypes";
 
@@ -69,14 +68,9 @@ const Preview = ({ components, setComponents }: any) => {
     });
 
   return (
-    <Box
-      ref={drop}
-      width="400px"
-      height="100vh"
-      sx={{ border: "1px solid black" }}
-    >
+    <div className="wrapper__canvas-preview" ref={drop}>
       {componentPreview}
-    </Box>
+    </div>
   );
 };
 

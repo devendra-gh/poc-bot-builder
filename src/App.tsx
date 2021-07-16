@@ -4,7 +4,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Loader, Landing } from "./components";
 import { Home, NotFound } from "./containers";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <Suspense fallback={<Loader />}>
       <BrowserRouter>
