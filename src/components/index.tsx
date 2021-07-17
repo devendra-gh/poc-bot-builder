@@ -1,7 +1,7 @@
 import { lazy } from "react";
+import Loader from "./common/Loader";
 
-import Loader from "./Loader";
-const Landing = lazy(() => import("./Landing"));
-const Header = lazy(() => import("./Header"));
+const Layout = lazy(() => import("./common/Layout"));
+const Header = lazy(() => import("./common/Header"));
 
-export { Loader, Landing, Header };
+export { Loader, Layout, Header };
