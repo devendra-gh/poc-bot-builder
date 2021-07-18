@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 
 import {
   createSchema,
@@ -58,10 +59,12 @@ const Creator = ({ diagram }: any) => {
   console.log("schema=> ", schema);
 
   const addNewNode = () => {
+    debugger;
     const nodeId = schema.nodes.length + 1;
+    const guid = uuidv4();
 
     const nextNode = {
-      id: `node-${nodeId}`,
+      id: `node--${guid}`,
       content: `Node ${nodeId}`,
       render: NodeBlock,
       coordinates: [
@@ -70,14 +73,14 @@ const Creator = ({ diagram }: any) => {
       ],
       inputs: [
         {
-          id: `input-port-${nodeId}${1}`,
+          id: `input-port-${guid}`,
           alignment: "left",
           canLink: canAllowToLink,
         },
       ],
       outputs: [
         {
-          id: `output-port-${nodeId}${1}`,
+          id: `output-port-${guid}`,
           alignment: "right",
           canLink: canAllowToLink,
         },
@@ -102,6 +105,8 @@ const Creator = ({ diagram }: any) => {
 
       return false;
     });
+
+    debugger;
 
     removeNode(nodeToRemove);
   };

@@ -1,4 +1,7 @@
 import types from "../types";
+import { v4 as uuidv4 } from "uuid";
+
+const guid = uuidv4();
 
 /**
  * @param {Object} state - previous state
@@ -9,7 +12,7 @@ const initialState: any = {
   diagram: {
     nodes: [
       {
-        id: "node-1",
+        id: `node--${guid}`,
         content: "Start",
         className: "start",
         render: "NodeBlock",
@@ -17,7 +20,7 @@ const initialState: any = {
         coordinates: [50, 50],
         inputs: [
           {
-            id: "input-port-11",
+            id: `input-port-${guid}`,
             alignment: "right",
             canLink: "canAllowToLink",
           },
