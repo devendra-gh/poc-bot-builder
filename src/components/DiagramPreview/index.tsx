@@ -3,7 +3,7 @@ import { useDrop } from "react-dnd";
 
 import { DRAG_TYPES } from "../../constants/DragTypes";
 
-const Preview = ({ schema, onChange, addNewNode }: any) => {
+const DiagramPreview = ({ schema, onChange, addNewNode }: any) => {
   const [{ isOver, isOverCurrent }, drop] = useDrop({
     accept: DRAG_TYPES.COMPONENT,
 
@@ -38,4 +38,4 @@ const Preview = ({ schema, onChange, addNewNode }: any) => {
   );
 };
 
-export default Preview;
+export default DiagramPreview;

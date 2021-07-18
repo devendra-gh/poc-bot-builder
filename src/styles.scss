@@ -48,23 +48,24 @@ body {
   }
 
   &__header {
+    position: relative;
     padding: 24px;
     display: flex;
     align-items: center;
     width: 100%;
-    position: relative;
+    z-index: 52;
     background-color: rgb(255, 255, 255);
-    border-bottom: 1px solid rgb(223, 227, 237);
   }
 
   &__design-menu {
     width: 250px;
     height: 100%;
     padding: 16px;
-    z-index: 10;
+    z-index: 9;
     transition: transform 350ms cubic-bezier(0.075, 0.82, 0.165, 1) 0s;
     will-change: transform;
     transform: translateX(0px) !important;
+    border-top: 1px solid rgb(223, 227, 237);
 
     &--holder {
       transition: background-color 0.15s ease 0s, box-shadow 0.15s ease 0s;
@@ -114,16 +115,6 @@ body {
     }
   }
 
-  &__sidebar {
-    &__block-editor {
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      height: 100%;
-      overflow: hidden;
-    }
-  }
-
   &__canvas {
     width: calc(100% - 250px);
     height: 100%;
@@ -135,6 +126,140 @@ body {
       width: 100%;
       overflow: hidden;
       user-select: none;
+
+      .bi.bi-diagram {
+        border-radius: 0;
+      }
+    }
+  }
+
+  &__node {
+    &--block {
+      position: relative;
+      width: 300px;
+      border-radius: 8px;
+      border: 2px solid rgb(255, 255, 255);
+      background-color: #eaeef3;
+
+      &::before {
+        display: block;
+        border-radius: 8px;
+        position: absolute;
+        inset: -3px;
+        border: 1px solid rgb(212, 217, 224);
+        content: "";
+        transition: box-shadow 0.15s ease 0s;
+      }
+    }
+
+    &--ports {
+      position: absolute;
+      top: 0px;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      z-index: 9;
+      padding: 21px 0;
+    }
+
+    &--close {
+      position: absolute;
+      bottom: 100%;
+      left: 100%;
+      padding: 0;
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      background: transparent;
+    }
+
+    &--edit {
+      display: flex;
+      justify-content: flex-end;
+
+      &-btn {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        background: transparent;
+      }
+    }
+
+    &--header {
+      position: relative;
+      padding: 10px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &--title {
+      padding: 0px 10px;
+      width: 100%;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: rgb(98, 119, 140);
+    }
+
+    &--content {
+      padding: 10px;
+    }
+
+    &--section {
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #fff;
+      border: 1px solid rgb(211, 217, 228);
+    }
+  }
+
+  &__editor {
+    &--block {
+      position: relative;
+      height: 100%;
+      padding: 20px;
+    }
+  }
+
+  &--btn {
+    &-section {
+      padding-top: 20px;
+
+      & button:last-child {
+        margin-left: 16px;
+      }
+    }
+
+    &-primary {
+      padding: 5px 10px;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 2px;
+      border: 1px solid green;
+      background-color: green;
+    }
+
+    &-secondary {
+      padding: 5px 10px;
+      color: #000;
+      cursor: pointer;
+      border-radius: 2px;
+      border: 1px solid #000;
+      background-color: transparent;
     }
   }
 }

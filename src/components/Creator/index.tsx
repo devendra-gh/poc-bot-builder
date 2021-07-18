@@ -1,98 +1,133 @@
-import { createSchema, useSchema } from "beautiful-react-diagrams";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
+
+import {
+  createSchema,
+  useSchema,
+  //   validateNode,
+  //   validateNodes,
+  //   validateSchema,
+  //   validateLink,
+  //   validateLinks,
+  //   validatePort,
+} from "beautiful-react-diagrams";
 import "beautiful-react-diagrams/styles.css";
 
-import { isLoading } from "../../redux/actions";
+import { canAllowToLink } from "../../utils/helpers";
+import { updateLinks } from "../../redux/actions";
 
-import CustomRender from "../CustomRender";
-import Preview from "../Preview";
+import NodeBlock from "../NodeBlock";
+import DiagramPreview from "../DiagramPreview";
 import DesignMenu from "../DesignMenu";
 import SidebarEditor from "../SidebarEditor";
 
-const Creator = (_: any) => {
-  const initialSchema = createSchema({
-    nodes: [
-      {
-        id: "node-1",
-        content: "Node 1",
-        render: CustomRender,
-        coordinates: [250, 60],
-      },
-      {
-        id: "node-2",
-        content: "Node 2",
-        render: CustomRender,
-        coordinates: [100, 200],
-      },
-      {
-        id: "node-3",
-        content: "Node 3",
-        render: CustomRender,
-        coordinates: [250, 220],
-      },
-      {
-        id: "node-4",
-        content: "Node 4",
-        render: CustomRender,
-        coordinates: [400, 200],
-      },
-    ],
-    links: [
-      { input: "node-1", output: "node-2", label: "Link 1", readonly: true },
-      { input: "node-1", output: "node-3", label: "Link 2", readonly: true },
-      {
-        input: "node-1",
-        output: "node-4",
-        label: "Link 3",
-        readonly: true,
-        className: "my-custom-link-class",
-      },
-    ],
+const Creator = ({ diagram }: any) => {
+  const activeNodes = diagram.nodes.map((node: any) => {
+    return {
+      ...node,
+      render: node.render === "NodeBlock" ? NodeBlock : () => {},
+      inputs: node?.inputs?.length
+        ? node.inputs.map((input: any) => {
+            return {
+              ...input,
+              canLink:
+                input.canLink === "canAllowToLink" ? canAllowToLink : null,
+            };
+          })
+        : [],
+      outputs: node?.outputs?.length
+        ? node.outputs.map((output: any) => {
+            return {
+              ...output,
+              canLink:
+                output.canLink === "canAllowToLink" ? canAllowToLink : null,
+            };
+          })
+        : [],
+    };
   });
 
-  const [schema, { onChange, addNode, removeNode }]: any =
+  const initialSchema = createSchema({
+    ...diagram,
+    nodes: activeNodes,
+  });
+
+  const [schema, { onChange, addNode, removeNode, connect }]: any =
     useSchema(initialSchema);
 
-  const deleteNodeFromSchema = (id: any) => {
-    const nodeToRemove = schema.nodes.find((node: any) => node.id === id);
-    removeNode(nodeToRemove);
-  };
+  console.log("schema=> ", schema);
 
   const addNewNode = () => {
+    const nodeId = schema.nodes.length + 1;
+
     const nextNode = {
-      id: `node-${schema.nodes.length + 1}`,
-      content: `Node ${schema.nodes.length + 1}`,
-      render: CustomRender,
-      data: { onClick: deleteNodeFromSchema },
+      id: `node-${nodeId}`,
+      content: `Node ${nodeId}`,
+      render: NodeBlock,
       coordinates: [
-        schema.nodes[schema.nodes.length - 1].coordinates[0] + 100,
-        schema.nodes[schema.nodes.length - 1].coordinates[1],
+        schema.nodes[nodeId - 2].coordinates[0] + 100,
+        schema.nodes[nodeId - 2].coordinates[1] + 100,
       ],
-      inputs: [{ id: `port-${Math.random()}` }],
-      outputs: [{ id: `port-${Math.random()}` }],
+      inputs: [
+        {
+          id: `input-port-${nodeId}${1}`,
+          alignment: "left",
+          canLink: canAllowToLink,
+        },
+      ],
+      outputs: [
+        {
+          id: `output-port-${nodeId}${1}`,
+          alignment: "right",
+          canLink: canAllowToLink,
+        },
+      ],
+      data: {
+        canClose: true,
+        canEdit: true,
+        name: "Node Name",
+        value: "Response Value",
+        onClick: deleteNodeFromSchema,
+      },
     };
 
     addNode(nextNode);
+  };
+
+  const deleteNodeFromSchema = (id: any) => {
+    const nodeToRemove = schema.nodes.find((node: any) => {
+      if (node.id === id) {
+        return true;
+      }
+
+      return false;
+    });
+
+    removeNode(nodeToRemove);
   };
 
   return (
     <>
       <DesignMenu addNewNode={addNewNode} />
       <SidebarEditor />
-      <Preview schema={schema} onChange={onChange} addNewNode={addNewNode} />
+      <DiagramPreview
+        schema={schema}
+        onChange={onChange}
+        addNewNode={addNewNode}
+      />
     </>
   );
 };
 
 const mapStateToProps = (state: any) => {
   return {
-    loading: state.loading,
+    diagram: state.creator.diagram,
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    isLoading: () => dispatch(isLoading(true)),
+    updateLinks: (payload: any) => dispatch(updateLinks(payload)),
   };
 };
 

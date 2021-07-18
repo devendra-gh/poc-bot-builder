@@ -1,45 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import Sidebar, { SidebarStyles } from "react-sidebar";
+
+import { updateSidebar } from "../../redux/actions";
 import SidebarEditorBlock from "../SidebarEditorBlock";
 
 const sidebarStyle: SidebarStyles = {
-  sidebar: { background: "white", width: "300px" },
+  overlay: { zIndex: "51" },
+  sidebar: { background: "white", width: "300px", zIndex: "52" },
 };
 
-const SidebarEditor = () => {
-  const [state, setState] = useState<any>({
-    sidebarOpen: true,
-  });
-
-  const onSetSidebarOpen = (open: any) => {
-    setState({ sidebarOpen: open });
+const SidebarEditor = ({ editor, updateSidebar }: any) => {
+  const updateSidebarHandler = (isOpen: any, data: any) => {
+    updateSidebar({ isOpen: isOpen, data: data });
   };
 
   return (
     <>
       <Sidebar
-        open={state.sidebarOpen}
-        onSetOpen={onSetSidebarOpen}
-        sidebar={<SidebarEditorBlock />}
+        open={editor.isOpen}
+        onSetOpen={() => updateSidebarHandler(true, {})}
+        sidebar={
+          <>
+            <SidebarEditorBlock updateSidebar={updateSidebarHandler} />
+          </>
+        }
         pullRight={true}
         styles={sidebarStyle}
-        rootClassName="rz__editor"
+        rootClassName="rz__editor--root"
         sidebarClassName="rz__editor--sidebar"
         overlayClassName="rz__editor--overlay"
       >
-        <div
-          style={{
-            position: "absolute",
-            top: "50px",
-            left: "250px",
-            zIndex: 9999,
-          }}
-        >
-          <button onClick={() => onSetSidebarOpen(true)}>Open sidebar</button>
-        </div>
+        <></>
       </Sidebar>
     </>
   );
 };
 
-export default SidebarEditor;
+const mapStateToProps = (state: any) => {
+  return {
+    editor: state.creator.editor,
+  };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    updateSidebar: (payload: any) => dispatch(updateSidebar(payload)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SidebarEditor);

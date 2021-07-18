@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 
-const SidebarEditorBlock = () => {
+const SidebarEditorBlock = ({ updateSidebar }: any) => {
   return (
-    <div>
+    <div className="rz__editor--block">
       <h1>Hello Test</h1>
       <ul>
         <li>Item 1</li>
@@ -12,6 +12,23 @@ const SidebarEditorBlock = () => {
         <li>Item 2</li>
         <li>Item 2</li>
       </ul>
+
+      <div className="rz--btn-section">
+        <button
+          className="rz--btn-primary"
+          onClick={() => {
+            updateSidebar(false, {});
+          }}
+        >
+          Update
+        </button>
+        <button
+          className="rz--btn-secondary"
+          onClick={() => updateSidebar(false, {})}
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   );
 };
