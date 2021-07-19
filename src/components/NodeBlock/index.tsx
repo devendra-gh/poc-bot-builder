@@ -15,12 +15,12 @@ const NodeBlock = (props: any) => {
       ) : null}
 
       <div className="rz__node--ports">
-        <div className="rz__node--ports-output">
-          {outputs.map((port: any) => React.cloneElement(port, {}))}
-        </div>
-
         <div className="rz__node--ports-input">
           {inputs.map((port: any) => React.cloneElement(port, {}))}
+        </div>
+
+        <div className="rz__node--ports-output">
+          {outputs.map((port: any) => React.cloneElement(port, {}))}
         </div>
       </div>
 

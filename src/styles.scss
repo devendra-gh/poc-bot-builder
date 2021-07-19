@@ -174,7 +174,7 @@ body {
       z-index: 9;
       padding: 21px 0;
 
-      &-output {
+      &-input {
         position: absolute;
         top: 21px;
         left: 5px;
@@ -200,7 +200,7 @@ body {
         }
       }
 
-      &-input {
+      &-output {
         position: absolute;
         top: 18px;
         right: 5px;

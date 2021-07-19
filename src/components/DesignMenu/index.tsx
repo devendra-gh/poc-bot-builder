@@ -7,6 +7,7 @@ const _designMenu = [
     id: uuidv4(),
     content: "Utterance",
     icon: "FaBeer",
+    renderNode: "NodeBlock",
     componentName: "Utterance",
     actions: {
       input: 1,
@@ -23,6 +24,7 @@ const _designMenu = [
     id: uuidv4(),
     content: "Workflow Switch",
     icon: "FaBeer",
+    renderNode: "NodeBlock",
     componentName: "WorkflowSwitch",
     actions: {
       input: 1,
@@ -39,6 +41,7 @@ const _designMenu = [
     id: uuidv4(),
     content: "API",
     icon: "FaBeer",
+    renderNode: "NodeBlock",
     componentName: "API",
     actions: {
       input: 1,
@@ -55,6 +58,7 @@ const _designMenu = [
     id: uuidv4(),
     content: "Reset",
     icon: "FaBeer",
+    renderNode: "NodeBlock",
     componentName: "Reset",
     actions: {
       input: 1,
@@ -71,6 +75,7 @@ const _designMenu = [
     id: uuidv4(),
     content: "Webhook",
     icon: "FaBeer",
+    renderNode: "NodeBlock",
     componentName: "Webhook",
     actions: {
       input: 1,
@@ -87,6 +92,7 @@ const _designMenu = [
     id: uuidv4(),
     content: "End",
     icon: "FaBeer",
+    renderNode: "NodeBlock",
     componentName: "End",
     actions: {
       input: 1,
@@ -103,6 +109,7 @@ const _designMenu = [
     id: uuidv4(),
     content: "Decision",
     icon: "FaBeer",
+    renderNode: "NodeBlock",
     componentName: "Decision",
     actions: {
       input: 1,
@@ -119,6 +126,7 @@ const _designMenu = [
     id: uuidv4(),
     content: "Agent Handover",
     icon: "FaBeer",
+    renderNode: "NodeBlock",
     componentName: "AgentHandover",
     actions: {
       input: 1,
@@ -135,6 +143,7 @@ const _designMenu = [
     id: uuidv4(),
     content: "Response",
     icon: "FaBeer",
+    renderNode: "NodeBlock",
     componentName: "Response",
     actions: {
       input: 1,

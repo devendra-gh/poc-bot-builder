@@ -22,6 +22,10 @@ import DiagramPreview from "../DiagramPreview";
 import DesignMenu from "../DesignMenu";
 import SidebarEditor from "../SidebarEditor";
 
+const renderNodeBlock: any = {
+  NodeBlock: NodeBlock,
+};
+
 const Creator = ({ diagram }: any) => {
   const deleteNodeFromSchema = (id: any) => {
     const nodeToRemove = schema.nodes.find((node: any) => {
@@ -63,14 +67,11 @@ const Creator = ({ diagram }: any) => {
 
     return {
       ...node,
-      render: node.render === "NodeBlock" ? NodeBlock : () => {},
+      render: renderNodeBlock[node?.renderNode] || null,
       inputs: inputs,
       outputs: outputs,
       data: {
-        canClose: true,
-        canEdit: true,
-        name: "Node Name",
-        value: "Response Value",
+        ...node.data,
         onClick: deleteNodeFromSchema,
       },
     };
@@ -121,7 +122,7 @@ const Creator = ({ diagram }: any) => {
     const nextNode = {
       id: `node--${uuidv4()}`,
       content: menu.content,
-      render: NodeBlock,
+      render: renderNodeBlock[menu?.renderNode] || null,
       coordinates: coordinates,
       inputs: inputs,
       outputs: outputs,

@@ -11,47 +11,23 @@ const initialState: any = {
     nodes: [
       {
         id: uuidv4(),
-        content: "Utterance",
+        content: "Start",
         icon: "FaBeer",
-        render: "NodeBlock",
-        componentName: "Utterance",
+        renderNode: "NodeBlock",
+        componentName: "Start",
         disableDrag: true,
         coordinates: [50, 50],
         actions: {
-          input: 1,
+          input: 0,
           output: 1,
-          canEdit: true,
-          canDelete: true,
+          canEdit: false,
+          canDelete: false,
         },
         data: {
           name: "Hello",
           value: "World",
         },
       },
-
-      // {
-      //   id: "node-1",
-      //   content: "Node 1",
-      //   render: "NodeBlock",
-      //   coordinates: [200, 200],
-      //   disableDrag: true,
-      //   inputs: [
-      //     { id: "input-port-11", alignment: "left", canLink: "canAllowToLink" },
-      //   ],
-      //   outputs: [
-      //     {
-      //       id: "output-port-11",
-      //       alignment: "right",
-      //       canLink: "canAllowToLink",
-      //     },
-      //   ],
-      //   data: {
-      //     canClose: true,
-      //     canEdit: true,
-      //     name: "Node Name",
-      //     value: "Response Value",
-      //   },
-      // },
     ],
     links: [
       // {

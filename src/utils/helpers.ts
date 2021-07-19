@@ -3,15 +3,9 @@ export const canAllowToLink = (id: any, target: any, type: any) => {
     return false;
   }
 
-  if (id.includes("output")) {
+  if (id.includes("input")) {
     return false;
   }
 
-  return {
-    input: "input-port-01",
-    output: "output-port-11",
-    label: "Link",
-    readonly: false,
-    className: "my-custom-link-class",
-  };
+  return true;
 };
