@@ -1,0 +1,3 @@
+export const DRAG_TYPES = {
+  NODE_COMPONENT: "NODE_COMPONENT",
+};

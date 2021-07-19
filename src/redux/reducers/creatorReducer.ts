@@ -1,8 +1,6 @@
 import types from "../types";
 import { v4 as uuidv4 } from "uuid";
 
-const guid = uuidv4();
-
 /**
  * @param {Object} state - previous state
  * @param {Object} action - action to handle
@@ -12,7 +10,7 @@ const initialState: any = {
   diagram: {
     nodes: [
       {
-        id: `node--${guid}`,
+        id: `node--${uuidv4()}`,
         content: "Start",
         className: "start",
         render: "NodeBlock",
@@ -20,7 +18,7 @@ const initialState: any = {
         coordinates: [50, 50],
         inputs: [
           {
-            id: `input-port-${guid}`,
+            id: `input-port-${uuidv4()}`,
             alignment: "right",
             canLink: "canAllowToLink",
           },
@@ -85,7 +83,6 @@ const creatorReducer = (state = initialState, action: any) => {
       };
 
     case types.UPDATE_LINKS:
-      // debugger;
       console.log("links s=> ", state);
       console.log("links a=> ", action);
 

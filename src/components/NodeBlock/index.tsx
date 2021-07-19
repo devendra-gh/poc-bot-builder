@@ -15,41 +15,13 @@ const NodeBlock = (props: any) => {
       ) : null}
 
       <div className="rz__node--ports">
-        {outputs.map((port: any) =>
-          React.cloneElement(port, {
-            style: {
-              position: "absolute",
-              top: "21px",
-              left: "10px",
-              cursor: "no-drop",
-              boxSizing: "content-box",
-              boxShadow: "rgb(110 132 154) 0px 0px 0px 1px",
-              borderRadius: "50%",
-              height: "8px",
-              width: "8px",
-              background:
-                "linear-gradient(rgba(98, 119, 140, 0.12), rgba(98, 119, 140, 0.24) 100%)",
-            },
-          })
-        )}
+        <div className="rz__node--ports-output">
+          {outputs.map((port: any) => React.cloneElement(port, {}))}
+        </div>
 
-        {inputs.map((port: any) =>
-          React.cloneElement(port, {
-            style: {
-              position: "absolute",
-              top: "18px",
-              right: "10px",
-              cursor: "copy",
-              boxSizing: "content-box",
-              boxShadow: "rgb(110 132 154) 0px 0px 0px 1px",
-              borderRadius: "50%",
-              height: "5px",
-              width: "5px",
-              backgroundColor: "rgb(110, 132, 154)",
-              border: "4px solid white",
-            },
-          })
-        )}
+        <div className="rz__node--ports-input">
+          {inputs.map((port: any) => React.cloneElement(port, {}))}
+        </div>
       </div>
 
       <NodeEditor {...props} />

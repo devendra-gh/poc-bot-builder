@@ -58,33 +58,45 @@ const Creator = ({ diagram }: any) => {
 
   console.log("schema=> ", schema);
 
-  const addNewNode = () => {
-    debugger;
+  const addNewNode = (menu: any) => {
     const nodeId = schema.nodes.length + 1;
-    const guid = uuidv4();
+    const inputs = [];
+    const outputs = [];
+    const input = menu?.actions?.input || 0;
+    const output = menu.actions.output || 0;
 
-    const nextNode = {
-      id: `node--${guid}`,
-      content: `Node ${nodeId}`,
-      render: NodeBlock,
-      coordinates: [
-        schema.nodes[nodeId - 2].coordinates[0] + 100,
-        schema.nodes[nodeId - 2].coordinates[1] + 100,
-      ],
-      inputs: [
-        {
-          id: `input-port-${guid}`,
+    const coordinates = [
+      schema.nodes[nodeId - 2].coordinates[0] + 100,
+      schema.nodes[nodeId - 2].coordinates[1] + 100,
+    ];
+
+    if (input) {
+      for (let i = 0; i < input; i++) {
+        inputs.push({
+          id: `input-port-${uuidv4()}`,
           alignment: "left",
           canLink: canAllowToLink,
-        },
-      ],
-      outputs: [
-        {
-          id: `output-port-${guid}`,
+        });
+      }
+    }
+
+    if (output) {
+      for (let j = 0; j < output; j++) {
+        outputs.push({
+          id: `output-port-${uuidv4()}`,
           alignment: "right",
           canLink: canAllowToLink,
-        },
-      ],
+        });
+      }
+    }
+
+    const nextNode = {
+      id: `node--${uuidv4()}`,
+      content: menu.title,
+      render: NodeBlock,
+      coordinates: coordinates,
+      inputs: inputs,
+      outputs: outputs,
       data: {
         canClose: true,
         canEdit: true,
@@ -105,8 +117,6 @@ const Creator = ({ diagram }: any) => {
 
       return false;
     });
-
-    debugger;
 
     removeNode(nodeToRemove);
   };

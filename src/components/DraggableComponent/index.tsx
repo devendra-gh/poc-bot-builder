@@ -2,15 +2,25 @@ import { FaEllipsisV } from "react-icons/fa";
 import { useDrag } from "react-dnd";
 
 import Icon from "../common/Icon";
-import { DRAG_TYPES } from "../../constants/DragTypes";
+import { DRAG_TYPES } from "../../constants";
 
-const DraggableComponent = ({ ...props }: any) => {
-  const [{ opacity }, drag, preview] = useDrag(() => ({
-    type: DRAG_TYPES.COMPONENT,
-    item: {
-      id: "ComponentName",
-      type: DRAG_TYPES.COMPONENT,
-      props: {},
+interface DropResult {
+  name: string;
+}
+
+const DraggableComponent = (props: any) => {
+  const {
+    menu: { title, icon },
+  } = props;
+
+  const [{ opacity }, drag] = useDrag(() => ({
+    type: DRAG_TYPES.NODE_COMPONENT,
+    item: { ...props.menu },
+    end: (item, monitor) => {
+      const dropResult = monitor.getDropResult<DropResult>();
+      if (item && dropResult) {
+        console.log(`You dropped ${item.id}`);
+      }
     },
     collect: (monitor) => ({
       opacity: monitor.isDragging() ? 0.5 : 1,
@@ -18,14 +28,20 @@ const DraggableComponent = ({ ...props }: any) => {
   }));
 
   return (
-    <div ref={drag} style={{ opacity }} className="rz__design-menu--item">
-      <span>
-        <Icon iconName="FaBeer" />
-        Component Name
+    <div
+      ref={drag}
+      role="menu-item"
+      style={{ opacity }}
+      className="rz__design-menu--item"
+    >
+      <span className="rz__design-menu--title">
+        <Icon iconName={icon} />
+        {title}
       </span>
-      <span>
-        <FaEllipsisV style={{ marginRight: "-4px" }} />
-        <FaEllipsisV style={{ marginLeft: "-4px" }} />
+
+      <span className="rz__design-menu--icon">
+        <FaEllipsisV />
+        <FaEllipsisV />
       </span>
     </div>
   );
