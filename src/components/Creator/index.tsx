@@ -22,12 +22,123 @@ import DiagramPreview from "../DiagramPreview";
 import DesignMenu from "../DesignMenu";
 import SidebarEditor from "../SidebarEditor";
 
-const renderNodeBlock: any = {
+const ConstantNodeBlock: any = {
   NodeBlock: NodeBlock,
 };
 
+const ConstantCanLink: any = {
+  canAllowToLink: canAllowToLink,
+};
+
 const Creator = ({ diagram }: any) => {
-  const deleteNodeFromSchema = (id: any) => {
+  let deleteNodeFromSchema: any;
+
+  const getInitialNode: any = () => {
+    let nodes: any = [];
+    let links: any = [];
+
+    nodes = diagram?.nodes?.map((node: any) => {
+      const _input = node?.inputs || [];
+      const _output = node?.outputs || [];
+      let inputs = [];
+      let outputs = [];
+
+      if (_input.length) {
+        inputs = _input.map((input: any) => {
+          return {
+            ...input,
+            canLink: ConstantCanLink[input?.canLink],
+          };
+        });
+      }
+
+      if (_output.length) {
+        outputs = _output.map((output: any) => {
+          return {
+            ...output,
+            canLink: ConstantCanLink[output?.canLink],
+          };
+        });
+      }
+
+      return {
+        id: node.id,
+        content: node.content,
+        disableDrag: node.disableDrag,
+        coordinates: node.coordinates,
+        inputs: inputs,
+        outputs: outputs,
+        render: ConstantNodeBlock[node?.render] || null,
+        data: {
+          ...node.data,
+          onClick: deleteNodeFromSchema,
+        },
+      };
+    });
+
+    links = diagram?.links;
+
+    return {
+      nodes,
+      links,
+    };
+  };
+
+  const initialSchema = createSchema(getInitialNode());
+
+  const [schema, { onChange, addNode, removeNode, connect }]: any =
+    useSchema(initialSchema);
+
+  const addNewNode = (node: any) => {
+    debugger;
+    const nodeId = schema.nodes.length + 1;
+    const coordinates = [
+      schema.nodes[nodeId - 2].coordinates[0] + 100,
+      schema.nodes[nodeId - 2].coordinates[1] + 100,
+    ];
+
+    const _input = node?.inputs || 0;
+    const _output = node?.outputs || 0;
+    const inputs = [];
+    const outputs = [];
+
+    if (_input) {
+      for (let i = 0; i < _input; i++) {
+        inputs.push({
+          id: `input-port-${uuidv4()}`,
+          alignment: "left",
+          canLink: canAllowToLink,
+        });
+      }
+    }
+
+    if (_output) {
+      for (let j = 0; j < _output; j++) {
+        outputs.push({
+          id: `output-port-${uuidv4()}`,
+          alignment: "right",
+          canLink: canAllowToLink,
+        });
+      }
+    }
+
+    const nextNode = {
+      id: `node--${uuidv4()}`,
+      content: node.content,
+      render: ConstantNodeBlock[node?.render] || null,
+      coordinates: coordinates,
+      inputs: inputs,
+      outputs: outputs,
+      data: {
+        ...node.data,
+        onClick: deleteNodeFromSchema,
+      },
+    };
+
+    addNode(nextNode);
+  };
+
+  deleteNodeFromSchema = (id: any) => {
     const nodeToRemove = schema.nodes.find((node: any) => {
       if (node.id === id) {
         return true;
@@ -39,104 +150,7 @@ const Creator = ({ diagram }: any) => {
     removeNode(nodeToRemove);
   };
 
-  const activeNodes = diagram.nodes.map((node: any) => {
-    const inputs = [];
-    const outputs = [];
-    const input = node?.actions?.input || 0;
-    const output = node?.actions?.output || 0;
-
-    if (input) {
-      for (let i = 0; i < input; i++) {
-        inputs.push({
-          id: `input-port-${uuidv4()}`,
-          alignment: "left",
-          canLink: canAllowToLink,
-        });
-      }
-    }
-
-    if (output) {
-      for (let j = 0; j < output; j++) {
-        outputs.push({
-          id: `output-port-${uuidv4()}`,
-          alignment: "right",
-          canLink: canAllowToLink,
-        });
-      }
-    }
-
-    return {
-      ...node,
-      render: renderNodeBlock[node?.renderNode] || null,
-      inputs: inputs,
-      outputs: outputs,
-      data: {
-        ...node.data,
-        onClick: deleteNodeFromSchema,
-      },
-    };
-  });
-
-  const initialSchema = createSchema({
-    ...diagram,
-    nodes: activeNodes,
-  });
-
-  const [schema, { onChange, addNode, removeNode, connect }]: any =
-    useSchema(initialSchema);
-
   console.log("schema=> ", schema);
-
-  const addNewNode = (menu: any) => {
-    const nodeId = schema.nodes.length + 1;
-    const inputs = [];
-    const outputs = [];
-    const input = menu?.actions?.input || 0;
-    const output = menu.actions.output || 0;
-
-    const coordinates = [
-      schema.nodes[nodeId - 2].coordinates[0] + 100,
-      schema.nodes[nodeId - 2].coordinates[1] + 100,
-    ];
-
-    if (input) {
-      for (let i = 0; i < input; i++) {
-        inputs.push({
-          id: `input-port-${uuidv4()}`,
-          alignment: "left",
-          canLink: canAllowToLink,
-        });
-      }
-    }
-
-    if (output) {
-      for (let j = 0; j < output; j++) {
-        outputs.push({
-          id: `output-port-${uuidv4()}`,
-          alignment: "right",
-          canLink: canAllowToLink,
-        });
-      }
-    }
-
-    const nextNode = {
-      id: `node--${uuidv4()}`,
-      content: menu.content,
-      render: renderNodeBlock[menu?.renderNode] || null,
-      coordinates: coordinates,
-      inputs: inputs,
-      outputs: outputs,
-      data: {
-        canClose: true,
-        canEdit: true,
-        onClick: deleteNodeFromSchema,
-        name: "Node Name",
-        value: "Response Value",
-      },
-    };
-
-    addNode(nextNode);
-  };
 
   return (
     <>

@@ -1,14 +1,16 @@
 import React from "react";
-import { FaRegWindowClose, FaEdit } from "react-icons/fa";
+import { FaRegWindowClose } from "react-icons/fa";
 
 import NodeEditor from "../NodeEditor";
 
 const NodeBlock = (props: any) => {
-  const { id, content, data, inputs, outputs } = props;
+  const { id, data, inputs, outputs } = props;
+  debugger;
+  const canDelete = data?.actions?.canDelete;
 
   return (
     <div className="rz__node--block">
-      {data?.canClose ? (
+      {canDelete ? (
         <button className="rz__node--close" onClick={() => data.onClick(id)}>
           <FaRegWindowClose />
         </button>

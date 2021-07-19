@@ -4,14 +4,9 @@ import { FaEdit } from "react-icons/fa";
 import { connect } from "react-redux";
 import { updateSidebar } from "../../redux/actions";
 
-const NodeEditor = ({
-  id,
-  content,
-  data,
-  inputs,
-  outputs,
-  updateSidebar,
-}: any) => {
+const NodeEditor = ({ content, data, updateSidebar }: any) => {
+  const canEdit = data?.actions?.canEdit;
+
   const updateSidebarHandler = () => {
     updateSidebar({ isOpen: true, data: data });
   };
@@ -26,7 +21,7 @@ const NodeEditor = ({
         <div className="rz__node--section">{content}</div>
       </div>
 
-      {data?.canEdit ? (
+      {canEdit ? (
         <div className="rz__node--edit">
           <button className="rz__node--edit-btn" onClick={updateSidebarHandler}>
             <FaEdit />

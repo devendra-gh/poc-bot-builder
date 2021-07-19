@@ -12,21 +12,31 @@ const initialState: any = {
       {
         id: uuidv4(),
         content: "Start",
-        icon: "FaBeer",
-        renderNode: "NodeBlock",
-        componentName: "Start",
-        disableDrag: true,
         coordinates: [50, 50],
-        actions: {
-          input: 0,
-          output: 1,
-          canEdit: false,
-          canDelete: false,
-        },
         data: {
-          name: "Hello",
-          value: "World",
+          ui: {
+            icon: "FaBeer",
+            renderEditor: "Start",
+          },
+          actions: {
+            canEdit: false,
+            canDelete: false,
+          },
+          editor: {
+            name: "Hello",
+            value: "World",
+          },
         },
+        disableDrag: true,
+        inputs: [],
+        outputs: [
+          {
+            id: `output-port-${uuidv4()}`,
+            alignment: "right",
+            canLink: "canAllowToLink",
+          },
+        ],
+        render: "NodeBlock",
       },
     ],
     links: [
