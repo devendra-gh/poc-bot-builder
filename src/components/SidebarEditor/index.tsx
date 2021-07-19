@@ -1,19 +1,27 @@
-import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Sidebar, { SidebarStyles } from "react-sidebar";
 
 import { updateSidebar } from "../../redux/actions";
-import SidebarEditorBlock from "../SidebarEditorBlock";
+import { SidebarEditorBlock } from "../../components";
 
 const sidebarStyle: SidebarStyles = {
   overlay: { zIndex: "51" },
   sidebar: { background: "white", width: "300px", zIndex: "52" },
 };
 
+// const editorComponents = {
+//   photo: PhotoStory,
+//   video: VideoStory
+// };
+
 const SidebarEditor = ({ editor, updateSidebar }: any) => {
   const updateSidebarHandler = (isOpen: any, data: any) => {
     updateSidebar({ isOpen: isOpen, data: data });
   };
+
+  // const renderEditorBlock = () => {
+  //   switch
+  // }
 
   return (
     <>

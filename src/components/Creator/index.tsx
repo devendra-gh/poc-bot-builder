@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 
@@ -16,11 +15,12 @@ import "beautiful-react-diagrams/styles.css";
 
 import { canAllowToLink } from "../../utils/helpers";
 import { updateLinks } from "../../redux/actions";
-
-import NodeBlock from "../NodeBlock";
-import DiagramPreview from "../DiagramPreview";
-import DesignMenu from "../DesignMenu";
-import SidebarEditor from "../SidebarEditor";
+import {
+  NodeBlock,
+  DiagramPreview,
+  DesignMenu,
+  SidebarEditor,
+} from "../../components";
 
 const ConstantNodeBlock: any = {
   NodeBlock: NodeBlock,
@@ -90,7 +90,6 @@ const Creator = ({ diagram }: any) => {
     useSchema(initialSchema);
 
   const addNewNode = (node: any) => {
-    debugger;
     const nodeId = schema.nodes.length + 1;
     const coordinates = [
       schema.nodes[nodeId - 2].coordinates[0] + 100,

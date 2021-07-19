@@ -1,6 +1,4 @@
-import React from "react";
 import { FaEdit } from "react-icons/fa";
-
 import { connect } from "react-redux";
 import { updateSidebar } from "../../redux/actions";
 

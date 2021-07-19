@@ -1,8 +1,8 @@
 import { FaEllipsisV } from "react-icons/fa";
 import { useDrag } from "react-dnd";
-
-import Icon from "../common/Icon";
 import { DRAG_TYPES } from "../../constants";
+
+import { Icon } from "../../components";
 
 interface DropResult {
   name: string;

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import DraggableComponent from "../DraggableComponent";
+import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+
+import { DraggableComponent } from "../../components";
 
 const _designMenu = [
   {

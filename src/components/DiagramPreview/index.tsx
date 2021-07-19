@@ -1,6 +1,5 @@
 import Diagram from "beautiful-react-diagrams";
 import { useDrop } from "react-dnd";
-
 import { DRAG_TYPES } from "../../constants";
 
 const selectStyles = (isActive: boolean, canDrop: boolean) => {

@@ -1,11 +1,10 @@
 import React from "react";
 import { FaRegWindowClose } from "react-icons/fa";
 
-import NodeEditor from "../NodeEditor";
+import { NodeEditor } from "../../components";
 
 const NodeBlock = (props: any) => {
   const { id, data, inputs, outputs } = props;
-  debugger;
   const canDelete = data?.actions?.canDelete;
 
   return (
