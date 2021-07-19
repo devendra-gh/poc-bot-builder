@@ -1,9 +1,10 @@
-// import React, { useState } from "react";
+import React from "react";
+import { FaRegWindowClose } from "react-icons/fa";
 
-const SidebarEditorBlock = ({ updateSidebar }: any) => {
+const Webhook = ({ updateSidebar }: any) => {
   return (
     <div className="rz__editor--block">
-      <h1>Hello Test</h1>
+      <h1>Hello Webhook</h1>
       <ul>
         <li>Item 1</li>
         <li>Item 2</li>
@@ -33,4 +34,4 @@ const SidebarEditorBlock = ({ updateSidebar }: any) => {
   );
 };
 
-export default SidebarEditorBlock;
+export default Webhook;

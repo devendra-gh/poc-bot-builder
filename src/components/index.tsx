@@ -4,7 +4,6 @@ import NodeBlock from "./NodeBlock";
 import DesignMenu from "./DesignMenu";
 import DraggableComponent from "./DraggableComponent";
 import NodeEditor from "./NodeEditor";
-import SidebarEditorBlock from "./SidebarEditorBlock";
 
 const Layout = lazy(() => import("./common/Layout"));
 const Header = lazy(() => import("./common/Header"));
@@ -25,5 +24,4 @@ export {
   NodeBlock,
   NodeEditor,
   SidebarEditor,
-  SidebarEditorBlock,
 };
