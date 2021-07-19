@@ -23,28 +23,56 @@ import DesignMenu from "../DesignMenu";
 import SidebarEditor from "../SidebarEditor";
 
 const Creator = ({ diagram }: any) => {
+  const deleteNodeFromSchema = (id: any) => {
+    const nodeToRemove = schema.nodes.find((node: any) => {
+      if (node.id === id) {
+        return true;
+      }
+
+      return false;
+    });
+
+    removeNode(nodeToRemove);
+  };
+
   const activeNodes = diagram.nodes.map((node: any) => {
+    const inputs = [];
+    const outputs = [];
+    const input = node?.actions?.input || 0;
+    const output = node?.actions?.output || 0;
+
+    if (input) {
+      for (let i = 0; i < input; i++) {
+        inputs.push({
+          id: `input-port-${uuidv4()}`,
+          alignment: "left",
+          canLink: canAllowToLink,
+        });
+      }
+    }
+
+    if (output) {
+      for (let j = 0; j < output; j++) {
+        outputs.push({
+          id: `output-port-${uuidv4()}`,
+          alignment: "right",
+          canLink: canAllowToLink,
+        });
+      }
+    }
+
     return {
       ...node,
       render: node.render === "NodeBlock" ? NodeBlock : () => {},
-      inputs: node?.inputs?.length
-        ? node.inputs.map((input: any) => {
-            return {
-              ...input,
-              canLink:
-                input.canLink === "canAllowToLink" ? canAllowToLink : null,
-            };
-          })
-        : [],
-      outputs: node?.outputs?.length
-        ? node.outputs.map((output: any) => {
-            return {
-              ...output,
-              canLink:
-                output.canLink === "canAllowToLink" ? canAllowToLink : null,
-            };
-          })
-        : [],
+      inputs: inputs,
+      outputs: outputs,
+      data: {
+        canClose: true,
+        canEdit: true,
+        name: "Node Name",
+        value: "Response Value",
+        onClick: deleteNodeFromSchema,
+      },
     };
   });
 
@@ -92,7 +120,7 @@ const Creator = ({ diagram }: any) => {
 
     const nextNode = {
       id: `node--${uuidv4()}`,
-      content: menu.title,
+      content: menu.content,
       render: NodeBlock,
       coordinates: coordinates,
       inputs: inputs,
@@ -100,25 +128,13 @@ const Creator = ({ diagram }: any) => {
       data: {
         canClose: true,
         canEdit: true,
+        onClick: deleteNodeFromSchema,
         name: "Node Name",
         value: "Response Value",
-        onClick: deleteNodeFromSchema,
       },
     };
 
     addNode(nextNode);
-  };
-
-  const deleteNodeFromSchema = (id: any) => {
-    const nodeToRemove = schema.nodes.find((node: any) => {
-      if (node.id === id) {
-        return true;
-      }
-
-      return false;
-    });
-
-    removeNode(nodeToRemove);
   };
 
   return (

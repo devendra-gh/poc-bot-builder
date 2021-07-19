@@ -10,32 +10,31 @@ const initialState: any = {
   diagram: {
     nodes: [
       {
-        id: `node--${uuidv4()}`,
-        content: "Start",
-        className: "start",
+        id: uuidv4(),
+        content: "Utterance",
+        icon: "FaBeer",
         render: "NodeBlock",
+        componentName: "Utterance",
         disableDrag: true,
         coordinates: [50, 50],
-        inputs: [
-          {
-            id: `input-port-${uuidv4()}`,
-            alignment: "right",
-            canLink: "canAllowToLink",
-          },
-        ],
-        outputs: [],
+        actions: {
+          input: 1,
+          output: 1,
+          canEdit: true,
+          canDelete: true,
+        },
         data: {
-          canClose: false,
-          canEdit: false,
-          type: "Start",
-          foo: "bar",
+          name: "Hello",
+          value: "World",
         },
       },
+
       // {
       //   id: "node-1",
       //   content: "Node 1",
       //   render: "NodeBlock",
       //   coordinates: [200, 200],
+      //   disableDrag: true,
       //   inputs: [
       //     { id: "input-port-11", alignment: "left", canLink: "canAllowToLink" },
       //   ],

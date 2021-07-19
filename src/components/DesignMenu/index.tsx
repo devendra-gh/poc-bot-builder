@@ -4,8 +4,8 @@ import { v4 as uuidv4 } from "uuid";
 
 const _designMenu = [
   {
-    key: uuidv4(),
-    title: "Utterance",
+    id: uuidv4(),
+    content: "Utterance",
     icon: "FaBeer",
     componentName: "Utterance",
     actions: {
@@ -20,8 +20,8 @@ const _designMenu = [
     },
   },
   {
-    key: uuidv4(),
-    title: "Workflow Switch",
+    id: uuidv4(),
+    content: "Workflow Switch",
     icon: "FaBeer",
     componentName: "WorkflowSwitch",
     actions: {
@@ -36,8 +36,8 @@ const _designMenu = [
     },
   },
   {
-    key: uuidv4(),
-    title: "API",
+    id: uuidv4(),
+    content: "API",
     icon: "FaBeer",
     componentName: "API",
     actions: {
@@ -52,8 +52,8 @@ const _designMenu = [
     },
   },
   {
-    key: uuidv4(),
-    title: "Reset",
+    id: uuidv4(),
+    content: "Reset",
     icon: "FaBeer",
     componentName: "Reset",
     actions: {
@@ -68,8 +68,8 @@ const _designMenu = [
     },
   },
   {
-    key: uuidv4(),
-    title: "Webhook",
+    id: uuidv4(),
+    content: "Webhook",
     icon: "FaBeer",
     componentName: "Webhook",
     actions: {
@@ -84,8 +84,8 @@ const _designMenu = [
     },
   },
   {
-    key: uuidv4(),
-    title: "End",
+    id: uuidv4(),
+    content: "End",
     icon: "FaBeer",
     componentName: "End",
     actions: {
@@ -100,8 +100,8 @@ const _designMenu = [
     },
   },
   {
-    key: uuidv4(),
-    title: "Decision",
+    id: uuidv4(),
+    content: "Decision",
     icon: "FaBeer",
     componentName: "Decision",
     actions: {
@@ -116,8 +116,8 @@ const _designMenu = [
     },
   },
   {
-    key: uuidv4(),
-    title: "Agent Handover",
+    id: uuidv4(),
+    content: "Agent Handover",
     icon: "FaBeer",
     componentName: "AgentHandover",
     actions: {
@@ -132,8 +132,8 @@ const _designMenu = [
     },
   },
   {
-    key: uuidv4(),
-    title: "Response",
+    id: uuidv4(),
+    content: "Response",
     icon: "FaBeer",
     componentName: "Response",
     actions: {
@@ -160,7 +160,7 @@ const DesignMenu = ({ addNewNode }: any) => {
             ? designMenu.map((menu: any) => {
                 return (
                   <DraggableComponent
-                    key={menu.key}
+                    key={menu.id}
                     onClick={addNewNode}
                     menu={menu}
                   />

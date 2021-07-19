@@ -10,7 +10,7 @@ interface DropResult {
 
 const DraggableComponent = (props: any) => {
   const {
-    menu: { title, icon },
+    menu: { content, icon },
   } = props;
 
   const [{ opacity }, drag] = useDrag(() => ({
@@ -34,9 +34,9 @@ const DraggableComponent = (props: any) => {
       style={{ opacity }}
       className="rz__design-menu--item"
     >
-      <span className="rz__design-menu--title">
+      <span className="rz__design-menu--content">
         <Icon iconName={icon} />
-        {title}
+        {content}
       </span>
 
       <span className="rz__design-menu--icon">

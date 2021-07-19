@@ -19,7 +19,7 @@ const NodeEditor = ({
   return (
     <>
       <div className="rz__node--header">
-        <div className="rz__node--title">{content}</div>
+        <div className="rz__node--content">{content}</div>
       </div>
 
       <div className="rz__node--content">
