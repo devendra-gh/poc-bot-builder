@@ -18,7 +18,7 @@ const DraggableComponent = (props: any) => {
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult<DropResult>();
       if (item && dropResult) {
-        console.log(`You dropped ${item.id}`);
+        // console.log(`You dropped ${item.id}`);
       }
     },
     collect: (monitor) => ({
@@ -29,7 +29,7 @@ const DraggableComponent = (props: any) => {
   return (
     <div
       ref={drag}
-      role="menu-item"
+      // role="menu-item"
       style={{ opacity }}
       className="rz__design-menu--item"
     >

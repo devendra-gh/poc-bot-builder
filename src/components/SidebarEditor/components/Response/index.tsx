@@ -1,5 +1,4 @@
 import React from "react";
-import { FaRegWindowClose } from "react-icons/fa";
 
 const Response = ({ updateSidebar }: any) => {
   return (

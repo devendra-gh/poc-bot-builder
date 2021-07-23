@@ -1,11 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 import reportWebVitals from "./reportWebVitals";
-import store from "./redux/store";
 import "./styles.scss";
 
 import App from "./App";
@@ -14,11 +12,9 @@ const rootElement = document.getElementById("root");
 
 ReactDOM.render(
   <DndProvider backend={HTML5Backend}>
-    <Provider store={store}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </Provider>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
   </DndProvider>,
   rootElement
 );

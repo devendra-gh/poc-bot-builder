@@ -19,7 +19,7 @@ const selectStyles = (isActive: boolean, canDrop: boolean) => {
 };
 
 const DiagramPreview = ({ schema, onChange, addNewNode }: any) => {
-  const [{ canDrop, isOver, isOverCurrent }, drop] = useDrop({
+  const [{ canDrop, isOver }, drop] = useDrop({
     accept: DRAG_TYPES.NODE_COMPONENT,
     drop(item: any, monitor: any) {
       const didDrop = monitor.didDrop();
@@ -27,7 +27,6 @@ const DiagramPreview = ({ schema, onChange, addNewNode }: any) => {
       if (didDrop) {
         return;
       }
-      console.log("item dropped!", item);
 
       addNewNode(item);
     },
@@ -45,7 +44,7 @@ const DiagramPreview = ({ schema, onChange, addNewNode }: any) => {
     <div className="rz__canvas">
       <div
         ref={drop}
-        role="node"
+        // role="node"
         style={{ ...styles }}
         className="rz__canvas--preview"
       >

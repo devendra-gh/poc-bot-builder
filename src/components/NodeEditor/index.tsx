@@ -1,12 +1,14 @@
 import { FaEdit } from "react-icons/fa";
-import { connect } from "react-redux";
-import { updateSidebar } from "../../redux/actions";
+import { types } from "../../constants";
 
-const NodeEditor = ({ content, data, updateSidebar }: any) => {
+const NodeEditor = ({ content, data }: any) => {
   const canEdit = data?.actions?.canEdit;
 
   const updateSidebarHandler = () => {
-    updateSidebar({ isOpen: true, data: data });
+    data?.updateStateCreator(types.ON_CHANGE_SIDEBAR, {
+      isOpen: true,
+      data: data,
+    });
   };
 
   return (
@@ -30,16 +32,4 @@ const NodeEditor = ({ content, data, updateSidebar }: any) => {
   );
 };
 
-const mapStateToProps = (state: any) => {
-  return {
-    editor: state.creator.editor,
-  };
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    updateSidebar: (payload: any) => dispatch(updateSidebar(payload)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(NodeEditor);
+export default NodeEditor;

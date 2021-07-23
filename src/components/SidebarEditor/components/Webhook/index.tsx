@@ -1,5 +1,4 @@
 import React from "react";
-import { FaRegWindowClose } from "react-icons/fa";
 
 const Webhook = ({ updateSidebar }: any) => {
   return (

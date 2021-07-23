@@ -1,4 +1,4 @@
-import { connect } from "react-redux";
+import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -14,13 +14,15 @@ import {
 import "beautiful-react-diagrams/styles.css";
 
 import { canAllowToLink } from "../../utils/helpers";
-import { updateLinks } from "../../redux/actions";
+import { types } from "../../constants";
 import {
   NodeBlock,
   DiagramPreview,
   DesignMenu,
   SidebarEditor,
 } from "../../components";
+
+import initialState from "./data";
 
 const ConstantNodeBlock: any = {
   NodeBlock: NodeBlock,
@@ -30,8 +32,14 @@ const ConstantCanLink: any = {
   canAllowToLink: canAllowToLink,
 };
 
-const Creator = ({ diagram }: any) => {
+const Creator = () => {
+  const { diagram, designMenu } = initialState;
   let deleteNodeFromSchema: any;
+
+  const [sidebarState, setSidebarState] = useState<any>({
+    isOpen: false,
+    data: {},
+  });
 
   const getInitialNode: any = () => {
     let nodes: any = [];
@@ -71,6 +79,8 @@ const Creator = ({ diagram }: any) => {
         render: ConstantNodeBlock[node?.render] || null,
         data: {
           ...node.data,
+          id: node.id,
+          content: node.content,
           onClick: deleteNodeFromSchema,
         },
       };
@@ -84,12 +94,51 @@ const Creator = ({ diagram }: any) => {
     };
   };
 
-  const initialSchema = createSchema(getInitialNode());
+  let updateStateCreator: any;
 
-  const [schema, { onChange, addNode, removeNode, connect }]: any =
+  const initialData = getInitialNode();
+  const initialSchema = createSchema(initialData);
+
+  const [schema, { onChange, addNode, removeNode }]: any =
     useSchema(initialSchema);
 
+  updateStateCreator = (type: any, payload: any) => {
+    switch (type) {
+      case types.ON_CHANGE_NODE:
+        const _nodes = Object.assign([], schema?.nodes);
+        const index = _nodes.findIndex((node: any) => {
+          if (node.id === payload.id) {
+            return true;
+          }
+
+          return false;
+        });
+
+        if (index >= 0) {
+          delete payload.id;
+
+          _nodes[index] = {
+            ..._nodes[index],
+            data: {
+              ..._nodes[index].data,
+              editor: payload,
+            },
+          };
+
+          onChange({
+            nodes: _nodes,
+          });
+        }
+
+        return;
+
+      case types.ON_CHANGE_SIDEBAR:
+        return setSidebarState(payload);
+    }
+  };
+
   const addNewNode = (node: any) => {
+    const _id = `node--${uuidv4()}`;
     const nodeId = schema.nodes.length + 1;
     const coordinates = [
       schema.nodes[nodeId - 2].coordinates[0] + 100,
@@ -122,7 +171,7 @@ const Creator = ({ diagram }: any) => {
     }
 
     const nextNode = {
-      id: `node--${uuidv4()}`,
+      id: _id,
       content: node.content,
       render: ConstantNodeBlock[node?.render] || null,
       coordinates: coordinates,
@@ -130,7 +179,10 @@ const Creator = ({ diagram }: any) => {
       outputs: outputs,
       data: {
         ...node.data,
+        id: _id,
+        content: node.content,
         onClick: deleteNodeFromSchema,
+        updateStateCreator: updateStateCreator,
       },
     };
 
@@ -149,12 +201,16 @@ const Creator = ({ diagram }: any) => {
     removeNode(nodeToRemove);
   };
 
-  console.log("schema=> ", schema);
+  console.log("sidebarState => ", sidebarState);
+  console.log("schema => ", schema);
 
   return (
     <>
-      <DesignMenu addNewNode={addNewNode} />
-      <SidebarEditor />
+      <DesignMenu designMenu={designMenu} addNewNode={addNewNode} />
+      <SidebarEditor
+        sidebar={sidebarState}
+        updateStateCreator={updateStateCreator}
+      />
       <DiagramPreview
         schema={schema}
         onChange={onChange}
@@ -164,16 +220,4 @@ const Creator = ({ diagram }: any) => {
   );
 };
 
-const mapStateToProps = (state: any) => {
-  return {
-    diagram: state.creator.diagram,
-  };
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    updateLinks: (payload: any) => dispatch(updateLinks(payload)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Creator);
+export default Creator;

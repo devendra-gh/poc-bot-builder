@@ -1,7 +1,6 @@
-import { connect } from "react-redux";
 import Sidebar, { SidebarStyles } from "react-sidebar";
+import { types } from "../../constants";
 
-import { updateSidebar } from "../../redux/actions";
 import {
   AgentHandover,
   API,
@@ -33,24 +32,36 @@ const sidebarStyle: SidebarStyles = {
   sidebar: { background: "white", width: "300px", zIndex: "52" },
 };
 
-const SidebarEditor = ({ editor, updateSidebar }: any) => {
-  const renderEditor = editor?.data?.ui?.renderEditor || "NotFound";
+const SidebarEditor = ({ sidebar, updateStateCreator }: any) => {
+  const renderEditor = sidebar?.data?.ui?.renderEditor || "NotFound";
   const SpecificEditor = components[renderEditor];
+  const formData = {
+    ...sidebar?.data?.editor,
+    id: sidebar?.data?.id,
+  };
 
-  // debugger;
+  const onSuccessClick = (payload: any) => {
+    updateStateCreator(types.ON_CHANGE_NODE, payload);
+    onCancelClick();
+  };
 
-  const updateSidebarHandler = (isOpen: any, data: any) => {
-    updateSidebar({ isOpen: isOpen, data: data });
+  const onCancelClick = () => {
+    updateStateCreator(types.ON_CHANGE_SIDEBAR, { isOpen: false, data: {} });
   };
 
   return (
     <>
       <Sidebar
-        open={editor.isOpen}
-        onSetOpen={() => updateSidebarHandler(true, {})}
+        open={sidebar?.isOpen}
+        onSetOpen={() => {}}
         sidebar={
           <>
-            <SpecificEditor updateSidebar={updateSidebarHandler} />;
+            <SpecificEditor
+              data={formData}
+              onSuccess={onSuccessClick}
+              onCancel={onCancelClick}
+            />
+            ;
           </>
         }
         pullRight={true}
@@ -65,16 +76,4 @@ const SidebarEditor = ({ editor, updateSidebar }: any) => {
   );
 };
 
-const mapStateToProps = (state: any) => {
-  return {
-    editor: state.creator.editor,
-  };
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    updateSidebar: (payload: any) => dispatch(updateSidebar(payload)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SidebarEditor);
+export default SidebarEditor;
