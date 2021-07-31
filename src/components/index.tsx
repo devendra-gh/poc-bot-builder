@@ -7,15 +7,12 @@ import NodeEditor from "./NodeEditor";
 import Creator from "./Creator";
 
 const Layout = lazy(() => import("./common/Layout"));
-const Header = lazy(() => import("./common/Header"));
-// const Creator = lazy(() => import("./Creator"));
 const DiagramPreview = lazy(() => import("./DiagramPreview"));
 const SidebarEditor = lazy(() => import("./SidebarEditor"));
 
 export {
   Loader,
   Layout,
-  Header,
   Creator,
   DesignMenu,
   DiagramPreview,

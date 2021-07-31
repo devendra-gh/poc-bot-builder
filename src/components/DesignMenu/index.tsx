@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { DraggableComponent } from "../../components";
 
-const DesignMenu = ({ designMenu, addNewNode }: any) => {
-  const [menus] = useState(designMenu);
+const DesignMenu = ({ availableNodes, addNewNode }: any) => {
+  const [menus] = useState(availableNodes);
 
   return (
     <div className="rz__design-menu">

@@ -21,7 +21,13 @@ const selectStyles = (isActive: boolean, canDrop: boolean) => {
   };
 };
 
-const DiagramPreview = ({ schema, onChange, addNewNode }: any) => {
+const DiagramPreview = ({
+  schema,
+  onChange,
+  addNewNode,
+  workFlowState,
+  onChangeWorkFlow,
+}: any) => {
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: DRAG_TYPES.NODE_COMPONENT,
     drop(item: any, monitor: any) {
@@ -45,8 +51,13 @@ const DiagramPreview = ({ schema, onChange, addNewNode }: any) => {
 
   return (
     <div className="rz__canvas">
-      <WorkFlowTab />
+      <WorkFlowTab
+        workFlowState={workFlowState}
+        onChangeWorkFlow={onChangeWorkFlow}
+      />
+
       <ActionBar />
+
       <div
         ref={drop}
         // role="node"

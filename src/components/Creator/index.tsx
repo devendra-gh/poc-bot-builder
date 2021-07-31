@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-
+import _ from "lodash";
 import {
   createSchema,
   useSchema,
@@ -20,8 +20,7 @@ import {
   DesignMenu,
   SidebarEditor,
 } from "../../components";
-
-import initialState from "./data";
+import { availableNodesData, diagramData } from "./data";
 
 const ConstantNodeBlock: any = {
   NodeBlock: NodeBlock,
@@ -32,8 +31,11 @@ const ConstantCanLink: any = {
 };
 
 const Creator = () => {
-  const { diagram, designMenu } = initialState;
+  const [availableNodes] = useState<any>(availableNodesData);
+
   let deleteNodeFromSchema: any;
+
+  const [workFlowState, setWorkFlowState] = useState<any>({});
 
   const [sidebarState, setSidebarState] = useState<any>({
     isOpen: false,
@@ -44,7 +46,7 @@ const Creator = () => {
     let nodes: any = [];
     let links: any = [];
 
-    nodes = diagram?.nodes?.map((node: any) => {
+    nodes = diagramData?.nodes?.map((node: any) => {
       const _input = node?.inputs || [];
       const _output = node?.outputs || [];
       let inputs = [];
@@ -85,7 +87,7 @@ const Creator = () => {
       };
     });
 
-    links = diagram?.links;
+    links = diagramData?.links;
 
     return {
       nodes,
@@ -100,6 +102,35 @@ const Creator = () => {
 
   const [schema, { onChange, addNode, removeNode }]: any =
     useSchema(initialSchema);
+
+  useEffect(() => {
+    setWorkFlowState({
+      currentWorkFlowIndex: 0,
+      flows: [
+        {
+          id: `workflow--${uuidv4()}`,
+          name: "Workflow 1",
+          schema: _.cloneDeep(schema),
+        },
+      ],
+    });
+  }, []);
+
+  useEffect(() => {
+    if (schema.links) {
+      const { currentWorkFlowIndex } = workFlowState;
+
+      if (typeof currentWorkFlowIndex !== "undefined") {
+        const _workFlowState = _.cloneDeep(workFlowState);
+        const _schema = _.cloneDeep(schema);
+
+        _workFlowState.flows[currentWorkFlowIndex].schema.links = _schema.links;
+
+        setWorkFlowState(_workFlowState);
+        onChange(schema);
+      }
+    }
+  }, [schema.links]);
 
   updateStateCreator = (type: any, payload: any) => {
     switch (type) {
@@ -152,7 +183,7 @@ const Creator = () => {
     if (_input) {
       for (let i = 0; i < _input; i++) {
         inputs.push({
-          id: `input-port-${uuidv4()}`,
+          id: `input-port--${uuidv4()}`,
           alignment: "left",
           canLink: canAllowToLink,
         });
@@ -162,7 +193,7 @@ const Creator = () => {
     if (_output) {
       for (let j = 0; j < _output; j++) {
         outputs.push({
-          id: `output-port-${uuidv4()}`,
+          id: `output-port--${uuidv4()}`,
           alignment: "right",
           canLink: canAllowToLink,
         });
@@ -186,6 +217,15 @@ const Creator = () => {
     };
 
     addNode(nextNode);
+    addNodeWorkFlowState(nextNode);
+  };
+
+  const addNodeWorkFlowState = (node: any) => {
+    const { currentWorkFlowIndex } = workFlowState;
+    const _workFlowState = _.cloneDeep(workFlowState);
+    _workFlowState.flows[currentWorkFlowIndex].schema.nodes.push(node);
+
+    setWorkFlowState(_workFlowState);
   };
 
   deleteNodeFromSchema = (id: any) => {
@@ -198,22 +238,84 @@ const Creator = () => {
     });
 
     removeNode(nodeToRemove);
+
+    setTimeout(() => {
+      removeNodeWorkFlowState();
+    });
   };
 
+  const removeNodeWorkFlowState = () => {
+    const _schema = _.cloneDeep(schema);
+    const _workFlowState = _.cloneDeep(workFlowState);
+    const { currentWorkFlowIndex } = _workFlowState;
+
+    _workFlowState.flows[currentWorkFlowIndex].schema = _schema;
+
+    setWorkFlowState(_workFlowState);
+  };
+
+  const onChangeWorkFlowTabHandler = ({ type, workFlowIndex }: any) => {
+    switch (type) {
+      case types.ON_CHANGE_WORKFLOW:
+        const _workFlowState = _.cloneDeep(workFlowState);
+        const selectSchema = _workFlowState.flows[workFlowIndex].schema;
+
+        onChange(selectSchema);
+        setWorkFlowState((prev: any) => ({
+          ...prev,
+          currentWorkFlowIndex: workFlowIndex,
+        }));
+
+        return;
+
+      case types.ON_ADD_WORKFLOW:
+        onChange(initialSchema);
+        setWorkFlowState((prev: any) => ({
+          currentWorkFlowIndex: workFlowIndex,
+          flows: [
+            ...prev.flows,
+            {
+              id: `workflow--${uuidv4()}`,
+              name: `Workflow ${workFlowIndex + 1}`,
+              schema: _.cloneDeep(initialSchema),
+            },
+          ],
+        }));
+
+        return;
+
+      case types.ON_UPDATE_WORKFLOW:
+        const _updateWorkFlowState = _.cloneDeep(workFlowState);
+        const _schema = _.cloneDeep(schema);
+
+        _updateWorkFlowState.flows[workFlowIndex].schema = _schema;
+
+        setWorkFlowState(_updateWorkFlowState);
+
+        return;
+    }
+  };
+
+  console.log("availableNodes => ", availableNodes);
   console.log("sidebarState => ", sidebarState);
+  console.log("workFlowState => ", workFlowState);
   console.log("schema => ", schema);
 
   return (
     <>
-      <DesignMenu designMenu={designMenu} addNewNode={addNewNode} />
+      <DesignMenu availableNodes={availableNodes} addNewNode={addNewNode} />
+
       <SidebarEditor
         sidebar={sidebarState}
         updateStateCreator={updateStateCreator}
       />
+
       <DiagramPreview
         schema={schema}
         onChange={onChange}
         addNewNode={addNewNode}
+        workFlowState={workFlowState}
+        onChangeWorkFlow={onChangeWorkFlowTabHandler}
       />
     </>
   );

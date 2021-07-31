@@ -7,7 +7,10 @@
       {
         "id": "24c5e99076ba351b212d069a41f1d054fe60d4bc",
         "name": "Flow 1",
-        "nodes": []
+        "schema": {
+          "nodes": [],
+          "links": []
+        }
       }
     ],
     "currentFlowIndex": 0
