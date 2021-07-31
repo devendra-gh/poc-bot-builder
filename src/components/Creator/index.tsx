@@ -135,7 +135,7 @@ const Creator = () => {
   updateStateCreator = (type: any, payload: any) => {
     switch (type) {
       case types.ON_CHANGE_NODE:
-        const _nodes = Object.assign([], schema?.nodes);
+        const _nodes = _.cloneDeep(schema?.nodes);
         const index = _nodes.findIndex((node: any) => {
           if (node.id === payload.id) {
             return true;
@@ -155,6 +155,11 @@ const Creator = () => {
             },
           };
 
+          const _workFlowState = _.cloneDeep(workFlowState);
+          const { currentWorkFlowIndex } = _workFlowState;
+          _workFlowState.flows[currentWorkFlowIndex].schema.nodes = _nodes;
+
+          setWorkFlowState(_workFlowState);
           onChange({
             nodes: _nodes,
           });
@@ -217,15 +222,9 @@ const Creator = () => {
     };
 
     addNode(nextNode);
-    addNodeWorkFlowState(nextNode);
-  };
-
-  const addNodeWorkFlowState = (node: any) => {
-    const { currentWorkFlowIndex } = workFlowState;
-    const _workFlowState = _.cloneDeep(workFlowState);
-    _workFlowState.flows[currentWorkFlowIndex].schema.nodes.push(node);
-
-    setWorkFlowState(_workFlowState);
+    setTimeout(() => {
+      updateWorkFlowState();
+    });
   };
 
   deleteNodeFromSchema = (id: any) => {
@@ -238,13 +237,12 @@ const Creator = () => {
     });
 
     removeNode(nodeToRemove);
-
     setTimeout(() => {
-      removeNodeWorkFlowState();
+      updateWorkFlowState();
     });
   };
 
-  const removeNodeWorkFlowState = () => {
+  const updateWorkFlowState = () => {
     const _schema = _.cloneDeep(schema);
     const _workFlowState = _.cloneDeep(workFlowState);
     const { currentWorkFlowIndex } = _workFlowState;
