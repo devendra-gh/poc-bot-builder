@@ -2,6 +2,9 @@ import Diagram from "beautiful-react-diagrams";
 import { useDrop } from "react-dnd";
 import { DRAG_TYPES } from "../../constants";
 
+import WorkFlowTab from "../WorkFlowTab";
+import ActionBar from "../ActionBar";
+
 const selectStyles = (isActive: boolean, canDrop: boolean) => {
   if (isActive) {
     return {
@@ -42,10 +45,12 @@ const DiagramPreview = ({ schema, onChange, addNewNode }: any) => {
 
   return (
     <div className="rz__canvas">
+      <WorkFlowTab />
+      <ActionBar />
       <div
         ref={drop}
         // role="node"
-        style={{ ...styles }}
+        // style={{ ...styles }}
         className="rz__canvas--preview"
       >
         <Diagram schema={schema} onChange={onChange} />

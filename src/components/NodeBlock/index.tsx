@@ -1,5 +1,5 @@
 import React from "react";
-import { FaRegWindowClose } from "react-icons/fa";
+import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
 
 import { NodeEditor } from "../../components";
 
@@ -11,9 +11,11 @@ const NodeBlock = (props: any) => {
     <div className="rz__node--block">
       {canDelete ? (
         <button className="rz__node--close" onClick={() => data.onClick(id)}>
-          <FaRegWindowClose />
+          <RemoveCircleOutlineIcon style={{ color: "#fff" }} fontSize="small" />
         </button>
       ) : null}
+
+      <NodeEditor {...props} />
 
       <div className="rz__node--ports">
         <div className="rz__node--ports-input">
@@ -24,8 +26,6 @@ const NodeBlock = (props: any) => {
           {outputs.map((port: any) => React.cloneElement(port, {}))}
         </div>
       </div>
-
-      <NodeEditor {...props} />
     </div>
   );
 };

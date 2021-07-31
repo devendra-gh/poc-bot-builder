@@ -1,0 +1,19 @@
+{
+  "alert": {
+    "notifications": []
+  },
+  "flowData": {
+    "flows": [
+      {
+        "id": "24c5e99076ba351b212d069a41f1d054fe60d4bc",
+        "name": "Flow 1",
+        "nodes": []
+      }
+    ],
+    "currentFlowIndex": 0
+  },
+  "nodeData": {
+    "availableNodes": {},
+    "selectedNodeModel": {}
+  }
+}

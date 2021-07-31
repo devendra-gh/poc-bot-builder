@@ -1,50 +1,22 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap");
 @import url("./reboot.css");
-
-#body,
-#root,
-body,
-html {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  height: 100%;
-  min-height: 0;
-  overflow: hidden;
-}
-
-body {
-  width: 100%;
-  color: #132144;
-  font-weight: 400;
-  font-size: 15px;
-  font-family: "Open Sans", sans-serif;
-  background: #f9f9f9 !important;
-}
+@import url("beautiful-react-diagrams/styles.css");
 
 .rz {
   &__container {
     position: relative;
     display: flex;
-    height: 100vh;
+    flex-flow: column;
     width: 100vw;
-    flex-direction: column;
-    overflow: clip;
+    height: 100vh;
   }
 
   &__main {
-    position: relative;
-    width: 100%;
     height: 100%;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
-    flex-grow: 1;
-    flex-direction: row;
-    overflow: clip;
+    position: fixed;
   }
 
   &__header {
@@ -68,15 +40,14 @@ body {
     border-top: 2px solid rgb(223, 227, 237);
 
     &--holder {
-      transition: background-color 0.15s ease 0s, box-shadow 0.15s ease 0s;
+      position: relative;
+      overflow: hidden;
+      height: 100%;
       display: flex;
       width: 100%;
-      height: 100%;
-      position: relative;
       flex-direction: column;
       background-color: rgb(249, 249, 249);
-      overflow: hidden;
-      border-radius: 6px;
+      transition: background-color 0.15s ease 0s, box-shadow 0.15s ease 0s;
     }
 
     &--scroll {
@@ -89,17 +60,13 @@ body {
 
     &--item {
       margin-bottom: 10px;
-      padding: 10px 15px;
-      height: 45px;
-      position: relative;
+      padding: 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-radius: 5px;
-      background-color: rgb(255, 255, 255);
-      cursor: grab;
-      transition: background-image 0.15s ease 0s, box-shadow 0.15s ease 0s,
-        transform 0.15s ease 0s;
+      background-color: #455aa2;
+      color: white;
+      cursor: move;
 
       &:last-child {
         margin-bottom: 0;
@@ -109,24 +76,17 @@ body {
     &--content {
       display: flex;
       align-items: center;
-
-      svg {
-        margin-right: 5px;
-      }
     }
 
     &--icon {
       display: flex;
       align-items: center;
-
-      svg {
-        margin: 0;
-        width: 8px;
-      }
+      color: #ccc;
     }
   }
 
   &__canvas {
+    position: relative;
     width: calc(100% - 250px);
     height: 100%;
     overflow: hidden;
@@ -141,95 +101,120 @@ body {
       .bi.bi-diagram {
         border: none;
         border-radius: 0;
-        background-color: transparent;
+        // background-color: transparent;
+        background-color: #455aa2;
+        background-image: linear-gradient(
+            0deg,
+            transparent 9%,
+            rgba(255, 255, 255, 0.1) 10%,
+            rgba(255, 255, 255, 0.1) 12%,
+            transparent 13%,
+            transparent 29%,
+            rgba(255, 255, 255, 0.05) 30%,
+            rgba(255, 255, 255, 0.05) 31%,
+            transparent 32%,
+            transparent 49%,
+            rgba(255, 255, 255, 0.05) 50%,
+            rgba(255, 255, 255, 0.05) 51%,
+            transparent 52%,
+            transparent 69%,
+            rgba(255, 255, 255, 0.05) 70%,
+            rgba(255, 255, 255, 0.05) 71%,
+            transparent 72%,
+            transparent 89%,
+            rgba(255, 255, 255, 0.05) 90%,
+            rgba(255, 255, 255, 0.05) 91%,
+            transparent 92%,
+            transparent
+          ),
+          linear-gradient(
+            90deg,
+            transparent 9%,
+            rgba(255, 255, 255, 0.1) 10%,
+            rgba(255, 255, 255, 0.1) 12%,
+            transparent 13%,
+            transparent 29%,
+            rgba(255, 255, 255, 0.05) 30%,
+            rgba(255, 255, 255, 0.05) 31%,
+            transparent 32%,
+            transparent 49%,
+            rgba(255, 255, 255, 0.05) 50%,
+            rgba(255, 255, 255, 0.05) 51%,
+            transparent 52%,
+            transparent 69%,
+            rgba(255, 255, 255, 0.05) 70%,
+            rgba(255, 255, 255, 0.05) 71%,
+            transparent 72%,
+            transparent 89%,
+            rgba(255, 255, 255, 0.05) 90%,
+            rgba(255, 255, 255, 0.05) 91%,
+            transparent 92%,
+            transparent
+          );
+        background-size: 50px 50px;
       }
     }
   }
 
   &__node {
     &--block {
+      border: solid 3px #283c69;
+      border-radius: 3px;
+      width: 200px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
       position: relative;
-      width: 300px;
-      border-radius: 8px;
-      border: 2px solid rgb(255, 255, 255);
-      background-color: #eaeef3;
-
-      &::before {
-        display: block;
-        border-radius: 8px;
-        position: absolute;
-        inset: -3px;
-        border: 1px solid rgb(212, 217, 224);
-        content: "";
-        transition: box-shadow 0.15s ease 0s;
-      }
+      display: inline-block;
+      background-color: rgba(9, 19, 54, 0.666667);
+      color: #fff;
     }
 
     &--ports {
-      position: absolute;
-      top: 0px;
-      left: 0;
-      width: 100%;
-      height: 50px;
-      z-index: 9;
-      padding: 21px 0;
-
       &-input {
-        position: absolute;
-        top: 21px;
-        left: 5px;
+        width: 100%;
         display: flex;
         flex-direction: column;
 
         .bi-diagram-port {
           margin-top: 5px;
-          height: 8px;
-          width: 8px;
-          cursor: no-drop;
-          box-sizing: content-box;
-          box-shadow: rgb(110, 132, 154) 0 0 0 1px;
-          border-radius: 50%;
-          background: linear-gradient(
-            rgba(98, 119, 140, 0.12),
-            rgba(98, 119, 140, 0.24) 100%
-          );
+          width: 15px;
+          height: 15px;
+          cursor: pointer;
+          border-bottom-right-radius: 8px;
+          border-top-right-radius: 8px;
+          background-color: rgb(100, 214, 193);
 
           &:first-child {
-            margin-top: 0;
+            margin-top: 15px;
           }
         }
       }
 
       &-output {
-        position: absolute;
-        top: 18px;
-        right: 5px;
+        width: 100%;
         display: flex;
         flex-direction: column;
+        align-items: flex-end;
 
         & .bi-diagram-port {
           margin-top: 5px;
-          height: 5px;
-          width: 5px;
-          cursor: copy;
-          box-sizing: content-box;
-          box-shadow: rgb(110, 132, 154) 0px 0px 0px 1px;
-          border-radius: 50%;
-          background-color: rgb(110, 132, 154);
-          border: 4px solid white;
-
-          &:first-child {
-            margin-top: 0;
-          }
+          width: 15px;
+          height: 15px;
+          cursor: pointer;
+          border-bottom-left-radius: 8px;
+          border-top-left-radius: 8px;
+          background-color: rgb(100, 214, 193);
         }
       }
     }
 
     &--close {
       position: absolute;
-      bottom: 100%;
-      left: 100%;
+      top: 3px;
+      left: 0;
       padding: 0;
+      margin: 5px;
       width: 15px;
       height: 15px;
       cursor: pointer;
@@ -241,13 +226,14 @@ body {
     }
 
     &--edit {
+      position: absolute;
+      top: 5px;
+      right: 0;
       display: flex;
       justify-content: flex-end;
 
       &-btn {
         position: relative;
-        width: 40px;
-        height: 40px;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -258,28 +244,12 @@ body {
     }
 
     &--header {
-      position: relative;
-      padding: 10px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      padding: 5px;
+      background: #2d4571aa;
     }
 
     &--content {
-      padding: 0px 10px;
-      width: 100%;
-      font-size: 15px;
-      font-weight: 600;
       text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      color: rgb(98, 119, 140);
-    }
-
-    &--content {
-      padding: 10px;
     }
 
     &--section {
@@ -295,6 +265,7 @@ body {
       position: relative;
       height: 100%;
       padding: 20px;
+      width: 400px;
     }
   }
 
@@ -325,8 +296,39 @@ body {
       background-color: transparent;
     }
   }
-}
 
-.form-group {
-  margin-bottom: 15px;
+  &__workflow {
+    display: flex;
+    margin-top: 5px;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+
+    &--tab {
+      padding: 5px;
+      border-top: solid 1px #a2a7b2;
+      border-right: solid 1px #a2a7b2;
+      border-left: solid 1px #a2a7b2;
+      background-color: #455aa2b3;
+      color: white;
+      margin-right: 1px;
+      min-width: 80px;
+      text-align: center;
+      cursor: pointer;
+
+      &.active {
+        background-color: #455aa2;
+        z-index: 1;
+      }
+    }
+  }
+
+  &__action-bar {
+    position: absolute;
+    padding: 20px;
+    z-index: 9;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
 }

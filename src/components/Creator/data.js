@@ -21,8 +21,8 @@ const initialState = {
         },
       },
       disableDrag: false,
-      inputs: 1,
-      outputs: 1,
+      inputs: 2,
+      outputs: 2,
       render: "NodeBlock",
     },
     {
@@ -215,7 +215,7 @@ const initialState = {
       {
         id: `node--${uuidv4()}`,
         content: "Start",
-        coordinates: [50, 50],
+        coordinates: [55, 95],
         data: {
           ui: {
             icon: "FaBeer",

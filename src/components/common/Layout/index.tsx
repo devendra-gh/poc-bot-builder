@@ -4,7 +4,7 @@ import { Header } from "../../../components";
 const Layout = withRouter(({ children }) => {
   return (
     <section className="rz__container">
-      <Header />
+      {/* <Header /> */}
       {children}
     </section>
   );

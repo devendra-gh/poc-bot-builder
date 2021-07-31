@@ -1,8 +1,6 @@
-import { FaEllipsisV } from "react-icons/fa";
 import { useDrag } from "react-dnd";
+import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
 import { DRAG_TYPES } from "../../constants";
-
-import { Icon } from "../../components";
 
 interface DropResult {
   name: string;
@@ -33,14 +31,10 @@ const DraggableComponent = (props: any) => {
       style={{ opacity }}
       className="rz__design-menu--item"
     >
-      <span className="rz__design-menu--content">
-        <Icon iconName={icon} />
-        {content}
-      </span>
+      <span className="rz__design-menu--content">{content}</span>
 
       <span className="rz__design-menu--icon">
-        <FaEllipsisV />
-        <FaEllipsisV />
+        <DragIndicatorIcon />
       </span>
     </div>
   );

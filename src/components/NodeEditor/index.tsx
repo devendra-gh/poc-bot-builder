@@ -1,4 +1,4 @@
-import { FaEdit } from "react-icons/fa";
+import EditIcon from "@material-ui/icons/Edit";
 import { types } from "../../constants";
 
 const NodeEditor = ({ content, data }: any) => {
@@ -17,14 +17,10 @@ const NodeEditor = ({ content, data }: any) => {
         <div className="rz__node--content">{content}</div>
       </div>
 
-      <div className="rz__node--content">
-        <div className="rz__node--section">{content}</div>
-      </div>
-
       {canEdit ? (
         <div className="rz__node--edit">
           <button className="rz__node--edit-btn" onClick={updateSidebarHandler}>
-            <FaEdit />
+            <EditIcon style={{ color: "#fff" }} fontSize="small" />
           </button>
         </div>
       ) : null}

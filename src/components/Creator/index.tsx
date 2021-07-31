@@ -11,7 +11,6 @@ import {
   //   validateLinks,
   //   validatePort,
 } from "beautiful-react-diagrams";
-import "beautiful-react-diagrams/styles.css";
 
 import { canAllowToLink } from "../../utils/helpers";
 import { types } from "../../constants";
