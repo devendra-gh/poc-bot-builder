@@ -244,7 +244,7 @@ export const diagramData = {
   ],
 };
 
-export const initialWorkflowState = (schema) => {
+export const initialWorkflowState = (schema: any) => {
   return {
     currentWorkFlowIndex: 0,
     flows: [
