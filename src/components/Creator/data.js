@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import _ from "lodash";
 
 export const availableNodesData = [
   {
@@ -9,7 +10,10 @@ export const availableNodesData = [
       helper: {
         canEdit: true,
         canDelete: true,
+        canLinkInput: "canAllowToLink",
+        canLinkOutput: "canAllowToLink",
         renderEditor: "Utterance",
+        renderNode: "NodeBlock",
       },
       payload: {
         name: "Hello",
@@ -19,7 +23,6 @@ export const availableNodesData = [
     disableDrag: false,
     inputs: 2,
     outputs: 2,
-    render: "NodeBlock",
   },
   {
     id: uuidv4(),
@@ -29,7 +32,10 @@ export const availableNodesData = [
       helper: {
         canEdit: true,
         canDelete: true,
+        canLinkInput: "canAllowToLink",
+        canLinkOutput: "canAllowToLink",
         renderEditor: "WorkflowSwitch",
+        renderNode: "NodeBlock",
       },
       payload: {
         name: "Hello",
@@ -39,7 +45,6 @@ export const availableNodesData = [
     disableDrag: false,
     inputs: 1,
     outputs: 1,
-    render: "NodeBlock",
   },
   {
     id: uuidv4(),
@@ -49,7 +54,10 @@ export const availableNodesData = [
       helper: {
         canEdit: true,
         canDelete: true,
+        canLinkInput: "canAllowToLink",
+        canLinkOutput: "canAllowToLink",
         renderEditor: "API",
+        renderNode: "NodeBlock",
       },
       payload: {
         name: "Hello",
@@ -59,7 +67,6 @@ export const availableNodesData = [
     disableDrag: false,
     inputs: 1,
     outputs: 1,
-    render: "NodeBlock",
   },
   {
     id: uuidv4(),
@@ -69,7 +76,10 @@ export const availableNodesData = [
       helper: {
         canEdit: true,
         canDelete: true,
+        canLinkInput: "canAllowToLink",
+        canLinkOutput: "canAllowToLink",
         renderEditor: "Reset",
+        renderNode: "NodeBlock",
       },
       payload: {
         name: "Hello",
@@ -79,7 +89,6 @@ export const availableNodesData = [
     disableDrag: false,
     inputs: 1,
     outputs: 1,
-    render: "NodeBlock",
   },
   {
     id: uuidv4(),
@@ -89,7 +98,10 @@ export const availableNodesData = [
       helper: {
         canEdit: true,
         canDelete: true,
+        canLinkInput: "canAllowToLink",
+        canLinkOutput: "canAllowToLink",
         renderEditor: "Webhook",
+        renderNode: "NodeBlock",
       },
       payload: {
         name: "Hello",
@@ -99,7 +111,6 @@ export const availableNodesData = [
     disableDrag: false,
     inputs: 1,
     outputs: 1,
-    render: "NodeBlock",
   },
   {
     id: uuidv4(),
@@ -109,7 +120,10 @@ export const availableNodesData = [
       helper: {
         canEdit: true,
         canDelete: true,
+        canLinkInput: "canAllowToLink",
+        canLinkOutput: "canAllowToLink",
         renderEditor: "End",
+        renderNode: "NodeBlock",
       },
       payload: {
         name: "Hello",
@@ -119,7 +133,6 @@ export const availableNodesData = [
     disableDrag: false,
     inputs: 1,
     outputs: 1,
-    render: "NodeBlock",
   },
   {
     id: uuidv4(),
@@ -129,7 +142,10 @@ export const availableNodesData = [
       helper: {
         canEdit: true,
         canDelete: true,
+        canLinkInput: "canAllowToLink",
+        canLinkOutput: "canAllowToLink",
         renderEditor: "Decision",
+        renderNode: "NodeBlock",
       },
       payload: {
         name: "Hello",
@@ -139,7 +155,6 @@ export const availableNodesData = [
     disableDrag: false,
     inputs: 1,
     outputs: 1,
-    render: "NodeBlock",
   },
   {
     id: uuidv4(),
@@ -149,7 +164,10 @@ export const availableNodesData = [
       helper: {
         canEdit: true,
         canDelete: true,
+        canLinkInput: "canAllowToLink",
+        canLinkOutput: "canAllowToLink",
         renderEditor: "AgentHandover",
+        renderNode: "NodeBlock",
       },
       payload: {
         nodeName: "Hello",
@@ -159,7 +177,6 @@ export const availableNodesData = [
     disableDrag: false,
     inputs: 1,
     outputs: 1,
-    render: "NodeBlock",
   },
   {
     id: uuidv4(),
@@ -169,7 +186,10 @@ export const availableNodesData = [
       helper: {
         canEdit: true,
         canDelete: true,
+        canLinkInput: "canAllowToLink",
+        canLinkOutput: "canAllowToLink",
         renderEditor: "Response",
+        renderNode: "NodeBlock",
       },
       payload: {
         name: "Hello",
@@ -179,7 +199,6 @@ export const availableNodesData = [
     disableDrag: false,
     inputs: 1,
     outputs: 1,
-    render: "NodeBlock",
   },
 ];
 
@@ -193,7 +212,10 @@ export const diagramData = {
         helper: {
           canEdit: false,
           canDelete: false,
+          canLinkInput: false,
+          canLinkOutput: "canAllowToLink",
           renderEditor: "Start",
+          renderNode: "NodeBlock",
         },
         payload: {
           name: "Hello",
@@ -209,7 +231,6 @@ export const diagramData = {
           canLink: "canAllowToLink",
         },
       ],
-      render: "NodeBlock",
     },
   ],
   links: [
@@ -221,4 +242,17 @@ export const diagramData = {
     //   className: "my-custom-link-class",
     // },
   ],
+};
+
+export const initialWorkflowState = (schema) => {
+  return {
+    currentWorkFlowIndex: 0,
+    flows: [
+      {
+        id: `workflow--${uuidv4()}`,
+        name: "Workflow 1",
+        schema: _.cloneDeep(schema),
+      },
+    ],
+  };
 };

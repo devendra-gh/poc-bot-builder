@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import _ from "lodash";
+import { useState } from "react";
 import exportFromJSON from "export-from-json";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
@@ -77,7 +76,6 @@ const ActionBar = ({ workFlowState, onChangeWorkFlow }: any) => {
   };
 
   const importFlowData = (jsonFlowString: any) => {
-    debugger;
     const jsonFlow = validateFlowJSON(jsonFlowString);
 
     if (!jsonFlow) {
@@ -87,16 +85,13 @@ const ActionBar = ({ workFlowState, onChangeWorkFlow }: any) => {
         severity: "error",
       });
     } else {
-      debugger;
       const { currentWorkFlowIndex } = workFlowState;
-      debugger;
 
       onChangeWorkFlow({
         type: types.ON_IMPORT_WORKFLOW,
         workFlowIndex: currentWorkFlowIndex,
         importSchema: jsonFlow.schema,
       });
-
       setOpen({
         isOpen: true,
         message: `Successfully Workflow imported`,

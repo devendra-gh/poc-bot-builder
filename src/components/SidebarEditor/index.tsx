@@ -1,6 +1,5 @@
-import { types } from "../../constants";
 import Drawer from "@material-ui/core/Drawer";
-
+import { types } from "../../constants";
 import {
   AgentHandover,
   API,

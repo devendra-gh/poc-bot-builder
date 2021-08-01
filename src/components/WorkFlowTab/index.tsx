@@ -15,10 +15,12 @@ const Tab = (props: any) => {
 const WorkFlowTab = ({ workFlowState, onChangeWorkFlow }: any) => {
   const [activeTab, setActiveTab] = useState(0);
 
-  const tabs = workFlowState?.flows?.map((flow: any) => ({
-    id: flow.id,
-    name: flow.name,
-  }));
+  const tabs = workFlowState?.flows?.map((flow: any) => {
+    return {
+      id: flow.id,
+      name: flow.name,
+    };
+  });
   tabs.push({ id: types.ON_ADD_WORKFLOW, name: "Add" });
 
   const onTabChange = (index: any, id: any) => {

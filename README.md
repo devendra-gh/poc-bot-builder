@@ -44,29 +44,3 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-
-
-      // {
-      //   id: "node-1",
-      //   content: "Node 1",
-      //   render: "NodeBlock",
-      //   coordinates: [200, 200],
-      //   disableDrag: true,
-      //   inputs: [
-      //     { id: "input-port-11", alignment: "left", canLink: "canAllowToLink" },
-      //   ],
-      //   outputs: [
-      //     {
-      //       id: "output-port-11",
-      //       alignment: "right",
-      //       canLink: "canAllowToLink",
-      //     },
-      //   ],
-      //   data: {
-      //     canClose: true,
-      //     canEdit: true,
-      //     name: "Node Name",
-      //     value: "Response Value",
-      //   },
-      // },

@@ -8,16 +8,16 @@ import ActionBar from "../ActionBar";
 const selectStyles = (isActive: boolean, canDrop: boolean) => {
   if (isActive) {
     return {
-      border: "2px solid #000",
+      backgroundColor: "#2b3f89",
     };
   } else if (canDrop) {
     return {
-      border: "2px dashed #000",
+      backgroundColor: "#6375b3",
     };
   }
 
   return {
-    border: "2px solid #dae1e7",
+    backgroundColor: "#455aa2",
   };
 };
 
@@ -64,7 +64,7 @@ const DiagramPreview = ({
       <div
         ref={drop}
         // role="node"
-        // style={{ ...styles }}
+        style={{ ...styles }}
         className="rz__canvas--preview"
       >
         <Diagram schema={schema} onChange={onChange} />

@@ -5,7 +5,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 
-const renderActions = (handleClose, handleImport) => {
+const renderActions = (handleClose: any, handleImport: any) => {
   return (
     <DialogActions>
       <Button onClick={handleClose} color="primary">
@@ -19,9 +19,9 @@ const renderActions = (handleClose, handleImport) => {
   );
 };
 
-const ImportDialog = (props) => {
+const ImportDialog = (props: any) => {
   const { open, onClose, onImport } = props;
-  let jsonFieldRef;
+  let jsonFieldRef: any;
 
   const handleClose = () => {
     if (onClose) onClose();

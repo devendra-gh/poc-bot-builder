@@ -20,7 +20,7 @@ import {
   DesignMenu,
   SidebarEditor,
 } from "../../components";
-import { availableNodesData, diagramData } from "./data";
+import { availableNodesData, diagramData, initialWorkflowState } from "./data";
 
 const ConstantNodeBlock: any = {
   NodeBlock: NodeBlock,
@@ -31,22 +31,21 @@ const ConstantCanLink: any = {
 };
 
 const Creator = () => {
-  const [availableNodes] = useState<any>(availableNodesData);
-
+  let updateStateCreator: any;
   let deleteNodeFromSchema: any;
 
+  const [availableNodes] = useState<any>(availableNodesData);
   const [workFlowState, setWorkFlowState] = useState<any>({});
-
   const [sidebarState, setSidebarState] = useState<any>({
     isOpen: false,
     data: {},
   });
 
-  const getInitialNode: any = () => {
+  const getInitialNode: any = (payload: any) => {
     let nodes: any = [];
     let links: any = [];
 
-    nodes = diagramData?.nodes?.map((node: any) => {
+    nodes = payload?.nodes?.map((node: any) => {
       const _input = node?.inputs || [];
       const _output = node?.outputs || [];
       let inputs = [];
@@ -56,7 +55,7 @@ const Creator = () => {
         inputs = _input.map((input: any) => {
           return {
             ...input,
-            canLink: ConstantCanLink[input?.canLink],
+            canLink: ConstantCanLink[node?.data?.helper?.canLinkInput],
           };
         });
       }
@@ -65,7 +64,7 @@ const Creator = () => {
         outputs = _output.map((output: any) => {
           return {
             ...output,
-            canLink: ConstantCanLink[output?.canLink],
+            canLink: ConstantCanLink[node?.data?.helper?.canLinkOutput],
           };
         });
       }
@@ -77,17 +76,18 @@ const Creator = () => {
         coordinates: node.coordinates,
         inputs: inputs,
         outputs: outputs,
-        render: ConstantNodeBlock[node?.render] || null,
+        render: ConstantNodeBlock[node?.data?.helper?.renderNode] || null,
         data: {
           ...node.data,
           id: node.id,
           content: node.content,
           onClick: deleteNodeFromSchema,
+          updateStateCreator: updateStateCreator,
         },
       };
     });
 
-    links = diagramData?.links;
+    links = payload?.links;
 
     return {
       nodes,
@@ -95,25 +95,14 @@ const Creator = () => {
     };
   };
 
-  let updateStateCreator: any;
-
-  const initialData = getInitialNode();
+  const initialData = getInitialNode(diagramData);
   const initialSchema = createSchema(initialData);
 
-  const [schema, { onChange, addNode, removeNode }]: any =
+  const [schema, { onChange, addNode, removeNode, connect }]: any =
     useSchema(initialSchema);
 
   useEffect(() => {
-    setWorkFlowState({
-      currentWorkFlowIndex: 0,
-      flows: [
-        {
-          id: `workflow--${uuidv4()}`,
-          name: "Workflow 1",
-          schema: _.cloneDeep(schema),
-        },
-      ],
-    });
+    setWorkFlowState(initialWorkflowState(schema));
   }, []);
 
   useEffect(() => {
@@ -190,7 +179,7 @@ const Creator = () => {
         inputs.push({
           id: `input-port--${uuidv4()}`,
           alignment: "left",
-          canLink: canAllowToLink,
+          canLink: ConstantCanLink[node?.data?.helper?.canLinkInput],
         });
       }
     }
@@ -200,7 +189,7 @@ const Creator = () => {
         outputs.push({
           id: `output-port--${uuidv4()}`,
           alignment: "right",
-          canLink: canAllowToLink,
+          canLink: ConstantCanLink[node?.data?.helper?.canLinkOutput],
         });
       }
     }
@@ -208,7 +197,8 @@ const Creator = () => {
     const nextNode = {
       id: _id,
       content: node.content,
-      render: ConstantNodeBlock[node?.render] || null,
+      disableDrag: node.disableDrag,
+      render: ConstantNodeBlock[node?.data?.helper?.renderNode] || null,
       coordinates: coordinates,
       inputs: inputs,
       outputs: outputs,
@@ -228,18 +218,21 @@ const Creator = () => {
   };
 
   deleteNodeFromSchema = (id: any) => {
-    const nodeToRemove = schema.nodes.find((node: any) => {
+    const _schema = _.cloneDeep(schema);
+
+    const nodeToRemove = _schema?.nodes?.find((node: any) => {
       if (node.id === id) {
         return true;
       }
-
       return false;
     });
 
-    removeNode(nodeToRemove);
-    setTimeout(() => {
-      updateWorkFlowState();
-    });
+    if (nodeToRemove) {
+      removeNode(nodeToRemove);
+      setTimeout(() => {
+        updateWorkFlowState();
+      });
+    }
   };
 
   const updateWorkFlowState = () => {
@@ -297,25 +290,26 @@ const Creator = () => {
         return;
 
       case types.ON_IMPORT_WORKFLOW:
-        debugger;
+        const payload = _.cloneDeep(importSchema);
+        const _importSchema = getInitialNode(payload);
 
-        const _importSchema = _.cloneDeep(importSchema);
         const _updateImportWorkFlowState = _.cloneDeep(workFlowState);
-
-        debugger;
-        _updateImportWorkFlowState.flows[workFlowIndex].schema = _importSchema;
-
-        debugger;
-
-        onChange({
-          nodes: [],
-          links: [],
-        });
-
-        const aa = createSchema(_importSchema);
-        onChange(aa);
+        const _updatedSchema: any = createSchema(_importSchema);
+        _updateImportWorkFlowState.flows[workFlowIndex].schema = _updatedSchema;
 
         setWorkFlowState(_updateImportWorkFlowState);
+
+        schema.nodes.forEach((node: any) => {
+          removeNode(node);
+        });
+        _updatedSchema?.nodes.forEach((node: any) => {
+          addNode(node);
+        });
+        _updatedSchema?.links.forEach((link: any) => {
+          const inputId = link.input || "";
+          const outputId = link.output || "";
+          connect(inputId, outputId);
+        });
 
         return;
     }
