@@ -6,15 +6,12 @@ export const availableNodesData = [
     content: "Utterance",
     coordinates: [50, 50],
     data: {
-      ui: {
-        icon: "FaBeer",
-        renderEditor: "Utterance",
-      },
-      actions: {
+      helper: {
         canEdit: true,
         canDelete: true,
+        renderEditor: "Utterance",
       },
-      editor: {
+      payload: {
         name: "Hello",
         value: "World",
       },
@@ -29,15 +26,12 @@ export const availableNodesData = [
     content: "Workflow Switch",
     coordinates: [50, 50],
     data: {
-      ui: {
-        icon: "FaBeer",
-        renderEditor: "WorkflowSwitch",
-      },
-      actions: {
+      helper: {
         canEdit: true,
         canDelete: true,
+        renderEditor: "WorkflowSwitch",
       },
-      editor: {
+      payload: {
         name: "Hello",
         value: "World",
       },
@@ -52,15 +46,12 @@ export const availableNodesData = [
     content: "API",
     coordinates: [50, 50],
     data: {
-      ui: {
-        icon: "FaBeer",
-        renderEditor: "API",
-      },
-      actions: {
+      helper: {
         canEdit: true,
         canDelete: true,
+        renderEditor: "API",
       },
-      editor: {
+      payload: {
         name: "Hello",
         value: "World",
       },
@@ -75,15 +66,12 @@ export const availableNodesData = [
     content: "Reset",
     coordinates: [50, 50],
     data: {
-      ui: {
-        icon: "FaBeer",
-        renderEditor: "Reset",
-      },
-      actions: {
+      helper: {
         canEdit: true,
         canDelete: true,
+        renderEditor: "Reset",
       },
-      editor: {
+      payload: {
         name: "Hello",
         value: "World",
       },
@@ -98,15 +86,12 @@ export const availableNodesData = [
     content: "Webhook",
     coordinates: [50, 50],
     data: {
-      ui: {
-        icon: "FaBeer",
-        renderEditor: "Webhook",
-      },
-      actions: {
+      helper: {
         canEdit: true,
         canDelete: true,
+        renderEditor: "Webhook",
       },
-      editor: {
+      payload: {
         name: "Hello",
         value: "World",
       },
@@ -121,15 +106,12 @@ export const availableNodesData = [
     content: "End",
     coordinates: [50, 50],
     data: {
-      ui: {
-        icon: "FaBeer",
-        renderEditor: "End",
-      },
-      actions: {
+      helper: {
         canEdit: true,
         canDelete: true,
+        renderEditor: "End",
       },
-      editor: {
+      payload: {
         name: "Hello",
         value: "World",
       },
@@ -144,15 +126,12 @@ export const availableNodesData = [
     content: "Decision",
     coordinates: [50, 50],
     data: {
-      ui: {
-        icon: "FaBeer",
-        renderEditor: "Decision",
-      },
-      actions: {
+      helper: {
         canEdit: true,
         canDelete: true,
+        renderEditor: "Decision",
       },
-      editor: {
+      payload: {
         name: "Hello",
         value: "World",
       },
@@ -167,15 +146,12 @@ export const availableNodesData = [
     content: "Agent Handover",
     coordinates: [50, 50],
     data: {
-      ui: {
-        icon: "FaBeer",
-        renderEditor: "AgentHandover",
-      },
-      actions: {
+      helper: {
         canEdit: true,
         canDelete: true,
+        renderEditor: "AgentHandover",
       },
-      editor: {
+      payload: {
         nodeName: "Hello",
         responseValue: "World",
       },
@@ -190,15 +166,12 @@ export const availableNodesData = [
     content: "Response",
     coordinates: [50, 50],
     data: {
-      ui: {
-        icon: "FaBeer",
-        renderEditor: "Response",
-      },
-      actions: {
+      helper: {
         canEdit: true,
         canDelete: true,
+        renderEditor: "Response",
       },
-      editor: {
+      payload: {
         name: "Hello",
         value: "World",
       },
@@ -217,15 +190,12 @@ export const diagramData = {
       content: "Start",
       coordinates: [55, 95],
       data: {
-        ui: {
-          icon: "FaBeer",
-          renderEditor: "Start",
-        },
-        actions: {
+        helper: {
           canEdit: false,
           canDelete: false,
+          renderEditor: "Start",
         },
-        editor: {
+        payload: {
           name: "Hello",
           value: "World",
         },

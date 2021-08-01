@@ -5,7 +5,7 @@ import { NodeEditor } from "../../components";
 
 const NodeBlock = (props: any) => {
   const { id, data, inputs, outputs } = props;
-  const canDelete = data?.actions?.canDelete;
+  const canDelete = data?.helper?.canDelete;
 
   return (
     <div className="rz__node--block">

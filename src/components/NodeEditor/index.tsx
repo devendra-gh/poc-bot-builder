@@ -2,7 +2,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import { types } from "../../constants";
 
 const NodeEditor = ({ content, data }: any) => {
-  const canEdit = data?.actions?.canEdit;
+  const canEdit = data?.helper?.canEdit;
 
   const updateSidebarHandler = () => {
     data?.updateStateCreator(types.ON_CHANGE_SIDEBAR, {

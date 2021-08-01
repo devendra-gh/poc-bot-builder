@@ -151,7 +151,7 @@ const Creator = () => {
             ..._nodes[index],
             data: {
               ..._nodes[index].data,
-              editor: payload,
+              payload: payload,
             },
           };
 
@@ -252,7 +252,11 @@ const Creator = () => {
     setWorkFlowState(_workFlowState);
   };
 
-  const onChangeWorkFlowTabHandler = ({ type, workFlowIndex }: any) => {
+  const onChangeWorkFlowTabHandler = ({
+    type,
+    workFlowIndex,
+    importSchema,
+  }: any) => {
     switch (type) {
       case types.ON_CHANGE_WORKFLOW:
         const _workFlowState = _.cloneDeep(workFlowState);
@@ -291,11 +295,34 @@ const Creator = () => {
         setWorkFlowState(_updateWorkFlowState);
 
         return;
+
+      case types.ON_IMPORT_WORKFLOW:
+        debugger;
+
+        const _importSchema = _.cloneDeep(importSchema);
+        const _updateImportWorkFlowState = _.cloneDeep(workFlowState);
+
+        debugger;
+        _updateImportWorkFlowState.flows[workFlowIndex].schema = _importSchema;
+
+        debugger;
+
+        onChange({
+          nodes: [],
+          links: [],
+        });
+
+        const aa = createSchema(_importSchema);
+        onChange(aa);
+
+        setWorkFlowState(_updateImportWorkFlowState);
+
+        return;
     }
   };
 
-  console.log("availableNodes => ", availableNodes);
-  console.log("sidebarState => ", sidebarState);
+  // console.log("availableNodes => ", availableNodes);
+  // console.log("sidebarState => ", sidebarState);
   console.log("workFlowState => ", workFlowState);
   console.log("schema => ", schema);
 

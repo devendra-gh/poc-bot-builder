@@ -56,7 +56,10 @@ const DiagramPreview = ({
         onChangeWorkFlow={onChangeWorkFlow}
       />
 
-      <ActionBar />
+      <ActionBar
+        workFlowState={workFlowState}
+        onChangeWorkFlow={onChangeWorkFlow}
+      />
 
       <div
         ref={drop}

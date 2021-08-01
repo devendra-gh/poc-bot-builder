@@ -28,10 +28,10 @@ const components: any = {
 };
 
 const SidebarEditor = ({ sidebar, updateStateCreator }: any) => {
-  const renderEditor = sidebar?.data?.ui?.renderEditor || "NotFound";
+  const renderEditor = sidebar?.data?.helper?.renderEditor || "NotFound";
   const SpecificEditor = components[renderEditor];
   const formData = {
-    ...sidebar?.data?.editor,
+    ...sidebar?.data?.payload,
     id: sidebar?.data?.id,
   };
 

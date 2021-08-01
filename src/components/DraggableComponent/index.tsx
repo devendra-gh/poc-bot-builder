@@ -8,7 +8,6 @@ interface DropResult {
 
 const DraggableComponent = (props: any) => {
   const content = props?.menu?.content;
-  const icon = props?.menu?.data?.ui?.icon;
 
   const [{ opacity }, drag] = useDrag(() => ({
     type: DRAG_TYPES.NODE_COMPONENT,
