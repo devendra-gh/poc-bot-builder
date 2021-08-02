@@ -1,9 +1,9 @@
 import React from "react";
 
-const WorkflowSwitch = ({ updateSidebar }: any) => {
+const WebhookNode = ({ updateSidebar }: any) => {
   return (
     <div className="rz__editor--block">
-      <h1>Hello WorkflowSwitch</h1>
+      <h1>Hello Webhook</h1>
       <ul>
         <li>Item 1</li>
         <li>Item 2</li>
@@ -33,4 +33,4 @@ const WorkflowSwitch = ({ updateSidebar }: any) => {
   );
 };
 
-export default WorkflowSwitch;
+export default WebhookNode;

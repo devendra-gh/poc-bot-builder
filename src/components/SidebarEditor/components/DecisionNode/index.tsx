@@ -1,6 +1,6 @@
 import React from "react";
 
-const Decision = ({ updateSidebar }: any) => {
+const DecisionNode = ({ updateSidebar }: any) => {
   return (
     <div className="rz__editor--block">
       <h1>Hello Decision</h1>
@@ -33,4 +33,4 @@ const Decision = ({ updateSidebar }: any) => {
   );
 };
 
-export default Decision;
+export default DecisionNode;

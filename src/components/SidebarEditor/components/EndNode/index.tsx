@@ -1,9 +1,9 @@
 import React from "react";
 
-const Utterance = ({ updateSidebar }: any) => {
+const EndNode = ({ updateSidebar }: any) => {
   return (
     <div className="rz__editor--block">
-      <h1>Hello Utterance</h1>
+      <h1>Hello End</h1>
       <ul>
         <li>Item 1</li>
         <li>Item 2</li>
@@ -33,4 +33,4 @@ const Utterance = ({ updateSidebar }: any) => {
   );
 };
 
-export default Utterance;
+export default EndNode;

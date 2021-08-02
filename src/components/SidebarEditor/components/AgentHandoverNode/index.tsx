@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const AgentHandover = ({ data, onSuccess, onCancel }: any) => {
+const AgentHandoverNode = ({ data, onSuccess, onCancel }: any) => {
   const [state, setState] = useState<any>({
     ...data,
   });
@@ -50,4 +50,4 @@ const AgentHandover = ({ data, onSuccess, onCancel }: any) => {
   );
 };
 
-export default AgentHandover;
+export default AgentHandoverNode;

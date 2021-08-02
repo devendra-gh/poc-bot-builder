@@ -1,6 +1,6 @@
 import React from "react";
 
-const API = ({ updateSidebar }: any) => {
+const ApiNode = ({ updateSidebar }: any) => {
   return (
     <div className="rz__editor--block">
       <h1>Hello API</h1>
@@ -33,4 +33,4 @@ const API = ({ updateSidebar }: any) => {
   );
 };
 
-export default API;
+export default ApiNode;

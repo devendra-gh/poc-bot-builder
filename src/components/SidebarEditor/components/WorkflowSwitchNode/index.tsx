@@ -1,9 +1,9 @@
 import React from "react";
 
-const Reset = ({ updateSidebar }: any) => {
+const WorkflowSwitchNode = ({ updateSidebar }: any) => {
   return (
     <div className="rz__editor--block">
-      <h1>Hello Reset</h1>
+      <h1>Hello WorkflowSwitch</h1>
       <ul>
         <li>Item 1</li>
         <li>Item 2</li>
@@ -33,4 +33,4 @@ const Reset = ({ updateSidebar }: any) => {
   );
 };
 
-export default Reset;
+export default WorkflowSwitchNode;

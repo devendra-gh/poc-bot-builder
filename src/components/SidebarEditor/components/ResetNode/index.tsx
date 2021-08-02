@@ -1,9 +1,9 @@
 import React from "react";
 
-const End = ({ updateSidebar }: any) => {
+const ResetNode = ({ updateSidebar }: any) => {
   return (
     <div className="rz__editor--block">
-      <h1>Hello End</h1>
+      <h1>Hello Reset</h1>
       <ul>
         <li>Item 1</li>
         <li>Item 2</li>
@@ -33,4 +33,4 @@ const End = ({ updateSidebar }: any) => {
   );
 };
 
-export default End;
+export default ResetNode;

@@ -121,12 +121,12 @@ const Creator = () => {
     }
   }, [schema.links]);
 
-  updateStateCreator = (type: any, payload: any) => {
+  updateStateCreator = (type: any, editorData: any) => {
     switch (type) {
       case types.ON_CHANGE_NODE:
         const _nodes = _.cloneDeep(schema?.nodes);
         const index = _nodes.findIndex((node: any) => {
-          if (node.id === payload.id) {
+          if (node.id === editorData.id) {
             return true;
           }
 
@@ -134,13 +134,13 @@ const Creator = () => {
         });
 
         if (index >= 0) {
-          delete payload.id;
+          const _payload = _.cloneDeep(editorData?.payload);
 
           _nodes[index] = {
             ..._nodes[index],
             data: {
               ..._nodes[index].data,
-              payload: payload,
+              payload: _payload,
             },
           };
 
@@ -157,7 +157,7 @@ const Creator = () => {
         return;
 
       case types.ON_CHANGE_SIDEBAR:
-        return setSidebarState(payload);
+        return setSidebarState(editorData);
     }
   };
 

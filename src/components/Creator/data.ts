@@ -5,7 +5,10 @@ export const availableNodesData = [
   {
     id: uuidv4(),
     content: "Utterance",
+    disableDrag: false,
     coordinates: [50, 50],
+    inputs: 1,
+    outputs: 1,
     data: {
       helper: {
         canEdit: true,
@@ -16,18 +19,24 @@ export const availableNodesData = [
         renderNode: "NodeBlock",
       },
       payload: {
-        name: "Hello",
-        value: "World",
+        nodeName: "", // [Text]
+        inputType: "", // [Text | Date | Image | PDF ]
+        entityName: "", // [ID]
+        mandatory: false, // [Boolean]
+        failureMessage: "", // [Text]
+        validate: false, // [Boolean]
+        validateType: "", // [File Type | API Call]
+        validator: "", // [Text]
       },
     },
-    disableDrag: false,
-    inputs: 2,
-    outputs: 2,
   },
   {
     id: uuidv4(),
     content: "Workflow Switch",
+    disableDrag: false,
     coordinates: [50, 50],
+    inputs: 1,
+    outputs: 1,
     data: {
       helper: {
         canEdit: true,
@@ -38,18 +47,18 @@ export const availableNodesData = [
         renderNode: "NodeBlock",
       },
       payload: {
-        name: "Hello",
-        value: "World",
+        name: "", // [Text]
+        workflow: "", // [Workflow 1, Workflow 1, Workflow 3]
       },
     },
-    disableDrag: false,
-    inputs: 1,
-    outputs: 1,
   },
   {
     id: uuidv4(),
     content: "API",
+    disableDrag: false,
     coordinates: [50, 50],
+    inputs: 1,
+    outputs: 1,
     data: {
       helper: {
         canEdit: true,
@@ -60,18 +69,35 @@ export const availableNodesData = [
         renderNode: "NodeBlock",
       },
       payload: {
-        name: "Hello",
-        value: "World",
+        apiCall: "", // [Text]
+        apiEndPoint: "", // [Text]
+        requestType: "", // [Get, Post, Put, Delete]
+        requestBody: [
+          {
+            key: "",
+            value: "",
+            policyName: "",
+            botEntityName: "",
+          },
+        ],
+        authentication: [
+          {
+            key: "",
+            value: "",
+            policyName: "",
+            botEntityName: "",
+          },
+        ],
       },
     },
-    disableDrag: false,
-    inputs: 1,
-    outputs: 1,
   },
   {
     id: uuidv4(),
     content: "Reset",
+    disableDrag: false,
     coordinates: [50, 50],
+    inputs: 1,
+    outputs: 1,
     data: {
       helper: {
         canEdit: true,
@@ -82,18 +108,19 @@ export const availableNodesData = [
         renderNode: "NodeBlock",
       },
       payload: {
-        name: "Hello",
-        value: "World",
+        name: "", // [Text]
+        all: false, // [Boolean]
+        entities: "", // [A, B, C]
       },
     },
-    disableDrag: false,
-    inputs: 1,
-    outputs: 1,
   },
   {
     id: uuidv4(),
     content: "Webhook",
+    disableDrag: false,
     coordinates: [50, 50],
+    inputs: 1,
+    outputs: 1,
     data: {
       helper: {
         canEdit: true,
@@ -108,14 +135,14 @@ export const availableNodesData = [
         value: "World",
       },
     },
-    disableDrag: false,
-    inputs: 1,
-    outputs: 1,
   },
   {
     id: uuidv4(),
     content: "End",
+    disableDrag: false,
     coordinates: [50, 50],
+    inputs: 1,
+    outputs: 0,
     data: {
       helper: {
         canEdit: true,
@@ -126,18 +153,22 @@ export const availableNodesData = [
         renderNode: "NodeBlock",
       },
       payload: {
-        name: "Hello",
-        value: "World",
+        node: [
+          {
+            name: "", // [Text]
+            value: "", // [Text]
+          },
+        ],
       },
     },
-    disableDrag: false,
-    inputs: 1,
-    outputs: 1,
   },
   {
     id: uuidv4(),
     content: "Decision",
+    disableDrag: false,
     coordinates: [50, 50],
+    inputs: 1,
+    outputs: 1,
     data: {
       helper: {
         canEdit: true,
@@ -148,18 +179,25 @@ export const availableNodesData = [
         renderNode: "NodeBlock",
       },
       payload: {
-        name: "Hello",
-        value: "World",
+        decision: [
+          {
+            name: "",
+            successApi: "",
+            successApiRule: "", // [StartsWith, EndsWith, Equals, Contains, Regex]
+            rule: "", // [OR, AND]
+            status: false,
+          },
+        ],
       },
     },
-    disableDrag: false,
-    inputs: 1,
-    outputs: 1,
   },
   {
     id: uuidv4(),
     content: "Agent Handover",
+    disableDrag: false,
     coordinates: [50, 50],
+    inputs: 1,
+    outputs: 1,
     data: {
       helper: {
         canEdit: true,
@@ -174,14 +212,14 @@ export const availableNodesData = [
         responseValue: "World",
       },
     },
-    disableDrag: false,
-    inputs: 1,
-    outputs: 1,
   },
   {
     id: uuidv4(),
     content: "Response",
+    disableDrag: false,
     coordinates: [50, 50],
+    inputs: 1,
+    outputs: 1,
     data: {
       helper: {
         canEdit: true,
@@ -192,13 +230,24 @@ export const availableNodesData = [
         renderNode: "NodeBlock",
       },
       payload: {
-        name: "Hello",
-        value: "World",
+        nodes: [
+          {
+            name: "", // [Text]
+            value: "", // [Text]
+            skipFlow: false,
+            workFlowNode: "", // [A, B, C],
+            entityExists: "", // [Name, Email]
+          },
+          {
+            name: "", // [Text]
+            value: "", // [Text]
+            skipFlow: false,
+            workFlowNode: "", // [A, B, C],
+            entityExists: "", // [Name, Email]
+          },
+        ],
       },
     },
-    disableDrag: false,
-    inputs: 1,
-    outputs: 1,
   },
 ];
 
@@ -208,20 +257,6 @@ export const diagramData = {
       id: `node--${uuidv4()}`,
       content: "Start",
       coordinates: [55, 95],
-      data: {
-        helper: {
-          canEdit: false,
-          canDelete: false,
-          canLinkInput: false,
-          canLinkOutput: "canAllowToLink",
-          renderEditor: "Start",
-          renderNode: "NodeBlock",
-        },
-        payload: {
-          name: "Hello",
-          value: "World",
-        },
-      },
       disableDrag: true,
       inputs: [],
       outputs: [
@@ -231,6 +266,17 @@ export const diagramData = {
           canLink: "canAllowToLink",
         },
       ],
+      data: {
+        helper: {
+          canEdit: false,
+          canDelete: false,
+          canLinkInput: false,
+          canLinkOutput: "canAllowToLink",
+          renderEditor: "Start",
+          renderNode: "NodeBlock",
+        },
+        payload: {},
+      },
     },
   ],
   links: [
@@ -255,4 +301,12 @@ export const initialWorkflowState = (schema: any) => {
       },
     ],
   };
+};
+
+export const initialStateResponseNode = {
+  name: "",
+  value: "",
+  skipFlow: false,
+  workFlowNode: "",
+  entityExists: "",
 };

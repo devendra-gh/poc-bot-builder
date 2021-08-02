@@ -1,37 +1,37 @@
 import Drawer from "@material-ui/core/Drawer";
 import { types } from "../../constants";
 import {
-  AgentHandover,
-  API,
-  Decision,
-  End,
-  Reset,
-  Response,
-  Utterance,
-  Webhook,
-  WorkflowSwitch,
-  NotFound,
+  AgentHandoverNode,
+  ApiNode,
+  DecisionNode,
+  EndNode,
+  ResetNode,
+  ResponseNode,
+  UtteranceNode,
+  WebhookNode,
+  WorkflowSwitchNode,
+  NotFoundNode,
 } from "./components";
 
 const components: any = {
-  AgentHandover: AgentHandover,
-  API: API,
-  Decision: Decision,
-  End: End,
-  Reset: Reset,
-  Response: Response,
-  Utterance: Utterance,
-  Webhook: Webhook,
-  WorkflowSwitch: WorkflowSwitch,
-  NotFound: NotFound,
+  AgentHandover: AgentHandoverNode,
+  API: ApiNode,
+  Decision: DecisionNode,
+  End: EndNode,
+  Reset: ResetNode,
+  Response: ResponseNode,
+  Utterance: UtteranceNode,
+  Webhook: WebhookNode,
+  WorkflowSwitch: WorkflowSwitchNode,
+  NotFound: NotFoundNode,
 };
 
 const SidebarEditor = ({ sidebar, updateStateCreator }: any) => {
   const renderEditor = sidebar?.data?.helper?.renderEditor || "NotFound";
   const SpecificEditor = components[renderEditor];
   const formData = {
-    ...sidebar?.data?.payload,
     id: sidebar?.data?.id,
+    payload: sidebar?.data?.payload,
   };
 
   const onSuccessClick = (payload: any) => {
