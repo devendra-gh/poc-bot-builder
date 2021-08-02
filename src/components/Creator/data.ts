@@ -1,6 +1,91 @@
 import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
 
+export const initialStateResponseNode = {
+  nodes: [
+    {
+      name: "",
+      value: "",
+      skipFlow: false,
+      workFlowNode: "",
+      entityExists: "",
+    },
+  ],
+};
+
+export const initialStateAgentHandoverNode = {
+  name: "",
+};
+
+export const initialStateWorkflowSwitchNode = {
+  name: "",
+  workflow: "",
+};
+
+export const initialStateEndNode = {
+  nodes: [
+    {
+      name: "",
+      value: "",
+    },
+  ],
+};
+
+export const initialStateResetNode = {
+  name: "",
+  all: false,
+  entities: "",
+};
+
+export const initialStateDecisionNode = {
+  nodes: [
+    {
+      name: "",
+      successApi: "",
+      successApiRule: "",
+      status: "",
+    },
+  ],
+  rule: "",
+};
+
+export const initialStateWebhookNode = {
+  name: "",
+};
+
+export const initialStateUtteranceNode = {
+  name: "",
+  inputType: "",
+  entityName: "",
+  mandatory: false,
+  failureMessage: "",
+  validate: false,
+  validateType: "",
+  validator: "",
+};
+
+export const initialStateAPINode = {
+  apiCall: "",
+  apiEndPoint: "",
+  requestType: "",
+  requestBody: [
+    {
+      key: "",
+      value: "",
+      policyName: "",
+      botEntityName: "",
+    },
+  ],
+  authentication: [
+    {
+      key: "",
+      value: "",
+      policyName: "",
+      botEntityName: "",
+    },
+  ],
+};
+
 export const availableNodesData = [
   {
     id: uuidv4(),
@@ -18,16 +103,7 @@ export const availableNodesData = [
         renderEditor: "Utterance",
         renderNode: "NodeBlock",
       },
-      payload: {
-        nodeName: "", // [Text]
-        inputType: "", // [Text | Date | Image | PDF ]
-        entityName: "", // [ID]
-        mandatory: false, // [Boolean]
-        failureMessage: "", // [Text]
-        validate: false, // [Boolean]
-        validateType: "", // [File Type | API Call]
-        validator: "", // [Text]
-      },
+      payload: _.cloneDeep(initialStateUtteranceNode),
     },
   },
   {
@@ -46,10 +122,7 @@ export const availableNodesData = [
         renderEditor: "WorkflowSwitch",
         renderNode: "NodeBlock",
       },
-      payload: {
-        name: "", // [Text]
-        workflow: "", // [Workflow 1, Workflow 1, Workflow 3]
-      },
+      payload: _.cloneDeep(initialStateWorkflowSwitchNode),
     },
   },
   {
@@ -68,27 +141,7 @@ export const availableNodesData = [
         renderEditor: "API",
         renderNode: "NodeBlock",
       },
-      payload: {
-        apiCall: "", // [Text]
-        apiEndPoint: "", // [Text]
-        requestType: "", // [Get, Post, Put, Delete]
-        requestBody: [
-          {
-            key: "",
-            value: "",
-            policyName: "",
-            botEntityName: "",
-          },
-        ],
-        authentication: [
-          {
-            key: "",
-            value: "",
-            policyName: "",
-            botEntityName: "",
-          },
-        ],
-      },
+      payload: _.cloneDeep(initialStateAPINode),
     },
   },
   {
@@ -107,11 +160,7 @@ export const availableNodesData = [
         renderEditor: "Reset",
         renderNode: "NodeBlock",
       },
-      payload: {
-        name: "", // [Text]
-        all: false, // [Boolean]
-        entities: "", // [A, B, C]
-      },
+      payload: _.cloneDeep(initialStateResetNode),
     },
   },
   {
@@ -130,10 +179,7 @@ export const availableNodesData = [
         renderEditor: "Webhook",
         renderNode: "NodeBlock",
       },
-      payload: {
-        name: "Hello",
-        value: "World",
-      },
+      payload: _.cloneDeep(initialStateWebhookNode),
     },
   },
   {
@@ -152,14 +198,7 @@ export const availableNodesData = [
         renderEditor: "End",
         renderNode: "NodeBlock",
       },
-      payload: {
-        node: [
-          {
-            name: "", // [Text]
-            value: "", // [Text]
-          },
-        ],
-      },
+      payload: _.cloneDeep(initialStateEndNode),
     },
   },
   {
@@ -178,17 +217,7 @@ export const availableNodesData = [
         renderEditor: "Decision",
         renderNode: "NodeBlock",
       },
-      payload: {
-        decision: [
-          {
-            name: "",
-            successApi: "",
-            successApiRule: "", // [StartsWith, EndsWith, Equals, Contains, Regex]
-            rule: "", // [OR, AND]
-            status: false,
-          },
-        ],
-      },
+      payload: _.cloneDeep(initialStateDecisionNode),
     },
   },
   {
@@ -207,10 +236,7 @@ export const availableNodesData = [
         renderEditor: "AgentHandover",
         renderNode: "NodeBlock",
       },
-      payload: {
-        nodeName: "Hello",
-        responseValue: "World",
-      },
+      payload: _.cloneDeep(initialStateAgentHandoverNode),
     },
   },
   {
@@ -229,24 +255,7 @@ export const availableNodesData = [
         renderEditor: "Response",
         renderNode: "NodeBlock",
       },
-      payload: {
-        nodes: [
-          {
-            name: "", // [Text]
-            value: "", // [Text]
-            skipFlow: false,
-            workFlowNode: "", // [A, B, C],
-            entityExists: "", // [Name, Email]
-          },
-          {
-            name: "", // [Text]
-            value: "", // [Text]
-            skipFlow: false,
-            workFlowNode: "", // [A, B, C],
-            entityExists: "", // [Name, Email]
-          },
-        ],
-      },
+      payload: _.cloneDeep(initialStateResponseNode),
     },
   },
 ];
@@ -301,12 +310,4 @@ export const initialWorkflowState = (schema: any) => {
       },
     ],
   };
-};
-
-export const initialStateResponseNode = {
-  name: "",
-  value: "",
-  skipFlow: false,
-  workFlowNode: "",
-  entityExists: "",
 };

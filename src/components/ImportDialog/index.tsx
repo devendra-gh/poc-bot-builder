@@ -40,12 +40,12 @@ const ImportDialog = (props: any) => {
       style={{ width: "100%" }}
       fullWidth
     >
-      <DialogTitle id="simple-dialog-title">Import Flow</DialogTitle>
+      <DialogTitle id="simple-dialog-title">Import Workflow</DialogTitle>
 
       <DialogContent>
         <TextField
           id="filled-multiline-static"
-          label="JSON with the flow information"
+          label="JSON with the Workflow information"
           inputRef={(e) => (jsonFieldRef = e)}
           multiline
           rows="6"
