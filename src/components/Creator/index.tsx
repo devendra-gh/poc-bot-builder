@@ -20,6 +20,8 @@ import {
   DesignMenu,
   SidebarEditor,
 } from "../../components";
+// import DiagramPreview from "../DiagramPreview";
+
 import { availableNodesData, diagramData, initialWorkflowState } from "./data";
 
 const ConstantNodeBlock: any = {
@@ -104,6 +106,7 @@ const Creator = () => {
   useEffect(() => {
     setWorkFlowState(initialWorkflowState(schema));
   }, []);
+  // }, [schema]);
 
   useEffect(() => {
     if (schema.links) {
@@ -119,6 +122,7 @@ const Creator = () => {
         onChange(schema);
       }
     }
+    // }, [schema.links]);
   }, [schema.links]);
 
   updateStateCreator = (type: any, editorData: any) => {

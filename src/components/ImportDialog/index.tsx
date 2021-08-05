@@ -9,7 +9,7 @@ const renderActions = (handleClose: any, handleImport: any) => {
   return (
     <DialogActions>
       <Button onClick={handleClose} color="primary">
-        Cancle
+        Cancel
       </Button>
 
       <Button onClick={handleImport} color="primary">

@@ -2,12 +2,13 @@ import Drawer from "@material-ui/core/Drawer";
 import { types } from "../../constants";
 import {
   AgentHandoverNode,
+  CustomCodeNode,
+  QuestionNode,
   ApiNode,
   DecisionNode,
   EndNode,
-  ResetNode,
   ResponseNode,
-  UtteranceNode,
+  EntityNode,
   WebhookNode,
   WorkflowSwitchNode,
   NotFoundNode,
@@ -15,12 +16,13 @@ import {
 
 const components: any = {
   AgentHandover: AgentHandoverNode,
+  CustomCode: CustomCodeNode,
+  Question: QuestionNode,
   API: ApiNode,
   Decision: DecisionNode,
   End: EndNode,
-  Reset: ResetNode,
   Response: ResponseNode,
-  Utterance: UtteranceNode,
+  Entity: EntityNode,
   Webhook: WebhookNode,
   WorkflowSwitch: WorkflowSwitchNode,
   NotFound: NotFoundNode,

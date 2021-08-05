@@ -21,7 +21,7 @@ const WorkFlowTab = ({ workFlowState, onChangeWorkFlow }: any) => {
       name: flow.name,
     };
   });
-  tabs.push({ id: types.ON_ADD_WORKFLOW, name: "Add" });
+  tabs?.push({ id: types.ON_ADD_WORKFLOW, name: "Add" });
 
   const onTabChange = (index: any, id: any) => {
     // Call to update last workflow
@@ -46,7 +46,7 @@ const WorkFlowTab = ({ workFlowState, onChangeWorkFlow }: any) => {
 
   return (
     <div className="rz__workflow">
-      {tabs.map((tab: any, index: any) => (
+      {tabs?.map((tab: any, index: any) => (
         <Tab
           isActive={index === activeTab}
           key={`${tab.id}`}

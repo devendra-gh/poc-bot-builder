@@ -1,86 +1,144 @@
-import { useState } from "react";
-import _ from "lodash";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
-import { makeStyles } from "@material-ui/core/styles";
+import * as Yup from "yup";
+import { Box, Grid } from "@material-ui/core";
+import {
+  Form,
+  TextField,
+  ButtonGroup,
+  Button,
+  Title,
+  Select,
+  DividerText,
+  Paper,
+} from "../../../FormsUI";
 
-const useStyles = makeStyles((theme) => ({
-  title: {
-    paddingBottom: theme.spacing(3),
+const FORM_VALIDATION = Yup.object().shape(
+  {
+    name: Yup.string().required("Field is required"),
+    message: Yup.string().required("Field is required"),
+    phoneNumber: Yup.string().when("department", {
+      is: (val: any) => !!val,
+      then: Yup.string(),
+      otherwise: Yup.string().required("Field is required"),
+    }),
+    phoneExtention: Yup.string().when("phoneNumber", {
+      is: (val: any) => {
+        return !!val;
+      },
+      then: Yup.string().required("Field is required"),
+    }),
+    department: Yup.string().when("phoneNumber", {
+      is: (val: any) => !!val,
+      then: Yup.string(),
+      otherwise: Yup.string().required("Field is required"),
+    }),
   },
-  buttonContainer: {
-    padding: theme.spacing(3, 0),
-  },
-  button: {
-    marginLeft: theme.spacing(2),
-
-    "&:first-child": {
-      marginLeft: theme.spacing(0),
-    },
-  },
-}));
+  [["phoneNumber", "department"]]
+);
 
 const AgentHandoverNode = ({ data, onSuccess, onCancel }: any) => {
-  const classes = useStyles();
-  const [state, setState] = useState<any>(data?.payload);
-
-  const onChangeField: any = (event: any) => {
-    const { name, value } = event.target;
-    const _state = _.cloneDeep(state);
-
-    _state[name] = value;
-
-    setState(_state);
+  const INITIAL_FORM_STATE = {
+    name: data?.payload?.name,
+    message: data?.payload?.message,
+    phoneNumber: data?.payload?.phoneNumber,
+    phoneExtention: data?.payload?.phoneExtention,
+    department: data?.payload?.department,
   };
 
-  const onSuccessHandler = () => {
+  const onSubmitHandler = (values: any) => {
+    console.log(values);
+
     onSuccess({
       id: data?.id,
-      payload: state,
+      payload: values,
     });
   };
 
   return (
     <Box className="rz__editor--block">
-      <Typography className={classes.title} variant="h5" gutterBottom>
-        Agent Handover Node
-      </Typography>
+      <Title>Agent Handover Node</Title>
 
-      <form noValidate autoComplete="off">
-        <TextField
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          fullWidth
-          label="Node Name"
-          name="name"
-          value={state.name}
-          onChange={(e: any) => onChangeField(e)}
-        />
+      <Form
+        initialValues={{
+          ...INITIAL_FORM_STATE,
+        }}
+        validationSchema={FORM_VALIDATION}
+        onSubmit={onSubmitHandler}
+        render={({ errors, setFieldValue }: any) => {
+          console.log("errors", errors);
+          return (
+            <>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField name="name" label="Node Name" />
+                </Grid>
 
-        <Box className={classes.buttonContainer}>
-          <Button
-            className={classes.button}
-            size="large"
-            variant="contained"
-            onClick={onCancel}
-          >
-            Cancel
-          </Button>
-          <Button
-            className={classes.button}
-            size="large"
-            variant="contained"
-            color="primary"
-            onClick={onSuccessHandler}
-          >
-            Save
-          </Button>
-        </Box>
-      </form>
+                <Grid item xs={12}>
+                  <TextField name="message" label="Transfer Message" />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Paper>
+                    <Grid container spacing={2}>
+                      <Grid item xs={6}>
+                        <Select
+                          name="phoneNumber"
+                          label="Select the Number"
+                          options={{
+                            "111111": "111111",
+                            "222222": "222222",
+                            "333333": "333333",
+                            "444444": "444444",
+                          }}
+                          onChange={(event: any) => {
+                            const { name, value } = event.target;
+                            setFieldValue("department", "");
+                            setFieldValue(name, value);
+                          }}
+                        />
+                      </Grid>
+
+                      <Grid item xs={6}>
+                        <Select
+                          name="phoneExtention"
+                          label="Extension Number"
+                          options={{
+                            "91": "91",
+                            "92": "92",
+                            "93": "93",
+                            "94": "94",
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+
+                    <DividerText>OR</DividerText>
+
+                    <TextField
+                      name="department"
+                      label="Department"
+                      onChange={(event: any) => {
+                        const { name, value } = event.target;
+                        setFieldValue("phoneExtention", "");
+                        setFieldValue("phoneNumber", "");
+                        setFieldValue(name, value);
+                      }}
+                    />
+                  </Paper>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <ButtonGroup>
+                    <Button onClick={onCancel}>Cancel</Button>
+                    <Button type="submit" color="primary">
+                      Save
+                    </Button>
+                  </ButtonGroup>
+                </Grid>
+              </Grid>
+            </>
+          );
+        }}
+      />
     </Box>
   );
 };

@@ -1,27 +1,19 @@
 import * as Yup from "yup";
-import { Grid, Box } from "@material-ui/core";
-import {
-  Form,
-  TextField,
-  Select,
-  ButtonGroup,
-  Button,
-  Title,
-} from "../../../FormsUI";
+import { Box, Grid } from "@material-ui/core";
+import { Form, TextField, ButtonGroup, Button, Title } from "../../../FormsUI";
 
 const FORM_VALIDATION = Yup.object().shape({
   name: Yup.string().required("Field is required"),
-  workflow: Yup.string().required("Field is required"),
 });
 
-const WorkflowSwitchNode = ({ data, onSuccess, onCancel }: any) => {
+const CustomCodeNode = ({ data, onSuccess, onCancel }: any) => {
   const INITIAL_FORM_STATE = {
     name: data?.payload?.name,
-    workflow: data?.payload?.workflow,
-    message: data?.payload?.message,
   };
 
   const onSubmitHandler = (values: any) => {
+    console.log(values);
+
     onSuccess({
       id: data?.id,
       payload: values,
@@ -30,12 +22,11 @@ const WorkflowSwitchNode = ({ data, onSuccess, onCancel }: any) => {
 
   return (
     <Box className="rz__editor--block">
-      <Title>Workflow Switch Node</Title>
+      <Title>Custom Code Node</Title>
 
       <Form
         initialValues={{
           ...INITIAL_FORM_STATE,
-          country: "",
         }}
         validationSchema={FORM_VALIDATION}
         onSubmit={onSubmitHandler}
@@ -46,23 +37,6 @@ const WorkflowSwitchNode = ({ data, onSuccess, onCancel }: any) => {
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField name="name" label="Node Name" />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Select
-                    name="workflow"
-                    label="Select Workflow"
-                    options={{
-                      "workflow-1": "Workflow 1",
-                      "workflow-2": "Workflow 2",
-                      "workflow-3": "Workflow 3",
-                      "workflow-4": "Workflow 4",
-                    }}
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <TextField name="message" label="Transfer message" />
                 </Grid>
 
                 <Grid item xs={12}>
@@ -82,4 +56,4 @@ const WorkflowSwitchNode = ({ data, onSuccess, onCancel }: any) => {
   );
 };
 
-export default WorkflowSwitchNode;
+export default CustomCodeNode;

@@ -1,40 +1,47 @@
 import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
 
+/*
+ * Initial State
+ */
 export const initialStateResponseNode = {
-  nodes: [
+  name: "",
+  response: [
     {
-      name: "",
       value: "",
-      skipFlow: false,
-      workFlowNode: "",
-      entityExists: "",
     },
   ],
 };
 
 export const initialStateAgentHandoverNode = {
   name: "",
+  message: "",
+  phoneNumber: "",
+  phoneExtention: "",
+  department: "",
+};
+
+export const initialStateCustomCodeNode = {
+  name: "",
+};
+
+export const initialStateQuestionNode = {
+  name: "",
 };
 
 export const initialStateWorkflowSwitchNode = {
   name: "",
   workflow: "",
+  message: "",
 };
 
 export const initialStateEndNode = {
-  nodes: [
+  name: "",
+  response: [
     {
-      name: "",
       value: "",
     },
   ],
-};
-
-export const initialStateResetNode = {
-  name: "",
-  all: false,
-  entities: "",
 };
 
 export const initialStateDecisionNode = {
@@ -53,43 +60,43 @@ export const initialStateWebhookNode = {
   name: "",
 };
 
-export const initialStateUtteranceNode = {
+export const initialStateEntityNode = {
   name: "",
-  inputType: "",
+  message: "",
+  isAvailable: false,
   entityName: "",
-  mandatory: false,
+  isMandatory: false,
   failureMessage: "",
-  validate: false,
+  isValidate: false,
   validateType: "",
-  validator: "",
+  validatorRegex: "",
 };
 
 export const initialStateAPINode = {
   apiCall: "",
   apiEndPoint: "",
   requestType: "",
-  requestBody: [
+  body: [
     {
       key: "",
       value: "",
-      policyName: "",
-      botEntityName: "",
     },
   ],
-  authentication: [
+  headers: [
     {
       key: "",
       value: "",
-      policyName: "",
-      botEntityName: "",
     },
   ],
 };
 
+/*
+ * Available Nodes Data
+ */
 export const availableNodesData = [
   {
     id: uuidv4(),
-    content: "Utterance",
+    content: "Entity",
     disableDrag: false,
     coordinates: [50, 50],
     inputs: 1,
@@ -100,10 +107,10 @@ export const availableNodesData = [
         canDelete: true,
         canLinkInput: "canAllowToLink",
         canLinkOutput: "canAllowToLink",
-        renderEditor: "Utterance",
+        renderEditor: "Entity",
         renderNode: "NodeBlock",
       },
-      payload: _.cloneDeep(initialStateUtteranceNode),
+      payload: _.cloneDeep(initialStateEntityNode),
     },
   },
   {
@@ -146,21 +153,21 @@ export const availableNodesData = [
   },
   {
     id: uuidv4(),
-    content: "Reset",
+    content: "End",
     disableDrag: false,
     coordinates: [50, 50],
     inputs: 1,
-    outputs: 1,
+    outputs: 0,
     data: {
       helper: {
         canEdit: true,
         canDelete: true,
         canLinkInput: "canAllowToLink",
         canLinkOutput: "canAllowToLink",
-        renderEditor: "Reset",
+        renderEditor: "End",
         renderNode: "NodeBlock",
       },
-      payload: _.cloneDeep(initialStateResetNode),
+      payload: _.cloneDeep(initialStateEndNode),
     },
   },
   {
@@ -180,25 +187,6 @@ export const availableNodesData = [
         renderNode: "NodeBlock",
       },
       payload: _.cloneDeep(initialStateWebhookNode),
-    },
-  },
-  {
-    id: uuidv4(),
-    content: "End",
-    disableDrag: false,
-    coordinates: [50, 50],
-    inputs: 1,
-    outputs: 0,
-    data: {
-      helper: {
-        canEdit: true,
-        canDelete: true,
-        canLinkInput: "canAllowToLink",
-        canLinkOutput: "canAllowToLink",
-        renderEditor: "End",
-        renderNode: "NodeBlock",
-      },
-      payload: _.cloneDeep(initialStateEndNode),
     },
   },
   {
@@ -241,6 +229,44 @@ export const availableNodesData = [
   },
   {
     id: uuidv4(),
+    content: "Custom Code",
+    disableDrag: false,
+    coordinates: [50, 50],
+    inputs: 1,
+    outputs: 1,
+    data: {
+      helper: {
+        canEdit: true,
+        canDelete: true,
+        canLinkInput: "canAllowToLink",
+        canLinkOutput: "canAllowToLink",
+        renderEditor: "CustomCode",
+        renderNode: "NodeBlock",
+      },
+      payload: _.cloneDeep(initialStateCustomCodeNode),
+    },
+  },
+  {
+    id: uuidv4(),
+    content: "Question",
+    disableDrag: false,
+    coordinates: [50, 50],
+    inputs: 1,
+    outputs: 1,
+    data: {
+      helper: {
+        canEdit: true,
+        canDelete: true,
+        canLinkInput: "canAllowToLink",
+        canLinkOutput: "canAllowToLink",
+        renderEditor: "Question",
+        renderNode: "NodeBlock",
+      },
+      payload: _.cloneDeep(initialStateQuestionNode),
+    },
+  },
+  {
+    id: uuidv4(),
     content: "Response",
     disableDrag: false,
     coordinates: [50, 50],
@@ -260,6 +286,9 @@ export const availableNodesData = [
   },
 ];
 
+/*
+ * Diagram Data
+ */
 export const diagramData = {
   nodes: [
     {
@@ -299,6 +328,9 @@ export const diagramData = {
   ],
 };
 
+/*
+ * Initial Workflow State
+ */
 export const initialWorkflowState = (schema: any) => {
   return {
     currentWorkFlowIndex: 0,
