@@ -69,9 +69,7 @@ const QuestionNode = ({ data, onSuccess, onCancel }: any) => {
         }}
         validationSchema={FORM_VALIDATION}
         onSubmit={onSubmitHandler}
-        render={({ values, errors }: any) => {
-          console.log("errors", errors);
-
+        render={({ values }: any) => {
           return (
             <>
               <Grid container spacing={2}>

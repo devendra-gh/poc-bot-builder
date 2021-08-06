@@ -42,8 +42,7 @@ const WorkflowSwitchNode = ({ data, onSuccess, onCancel }: any) => {
         }}
         validationSchema={FORM_VALIDATION}
         onSubmit={onSubmitHandler}
-        render={({ errors }: any) => {
-          console.log("errors", errors);
+        render={() => {
           return (
             <>
               <Grid container spacing={2}>

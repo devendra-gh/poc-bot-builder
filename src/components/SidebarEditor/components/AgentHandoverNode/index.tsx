@@ -68,8 +68,7 @@ const AgentHandoverNode = ({ data, onSuccess, onCancel }: any) => {
         }}
         validationSchema={FORM_VALIDATION}
         onSubmit={onSubmitHandler}
-        render={({ errors, setFieldValue }: any) => {
-          console.log("errors", errors);
+        render={({ setFieldValue }: any) => {
           return (
             <>
               <Grid container spacing={2}>

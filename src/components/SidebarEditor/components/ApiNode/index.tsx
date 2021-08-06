@@ -78,8 +78,7 @@ const ApiNode = ({ data, onSuccess, onCancel }: any) => {
         }}
         validationSchema={FORM_VALIDATION}
         onSubmit={onSubmitHandler}
-        render={({ errors, values }: any) => {
-          console.log("errors", errors);
+        render={({ values }: any) => {
           return (
             <>
               <Grid container spacing={2}>
