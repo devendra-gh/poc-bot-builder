@@ -4,7 +4,7 @@ import { FieldArray } from "formik";
 import { Grid, Box, Tabs, Tab } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
-import { initialStateAPINode } from "../../../Creator/data";
+import { initialStateAPINode, requestTypeOptions } from "../../../Creator/data";
 import {
   Form,
   TextField,
@@ -95,10 +95,7 @@ const ApiNode = ({ data, onSuccess, onCancel }: any) => {
                     name="requestType"
                     label="Request Type"
                     options={{
-                      GET: "Get",
-                      POST: "Post",
-                      PUT: "PUT",
-                      DELETE: "Delete",
+                      ...requestTypeOptions,
                     }}
                   />
                 </Grid>

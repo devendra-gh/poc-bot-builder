@@ -37,7 +37,6 @@ const QuestionNode = ({ data, onSuccess, onCancel }: any) => {
   };
 
   const onSubmitHandler = (values: any) => {
-    debugger;
     let _allowOutputPort = 0;
 
     if (values.isBranching) {
@@ -51,7 +50,6 @@ const QuestionNode = ({ data, onSuccess, onCancel }: any) => {
       }
     }
 
-    debugger;
     onSuccess({
       payload: {
         id: data?.id,
@@ -116,7 +114,7 @@ const QuestionNode = ({ data, onSuccess, onCancel }: any) => {
                               </Fragment>
                             ))}
 
-                            {inputs.length <= 5 && (
+                            {inputs.length < 5 && (
                               <Grid item xs={12}>
                                 <ButtonGroup>
                                   <Button

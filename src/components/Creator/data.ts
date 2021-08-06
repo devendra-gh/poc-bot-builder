@@ -53,15 +53,14 @@ export const initialStateEndNode = {
 };
 
 export const initialStateDecisionNode = {
-  nodes: [
+  name: "",
+  successApi: "",
+  successApiRule: "",
+  inputs: [
     {
-      name: "",
-      successApi: "",
-      successApiRule: "",
-      status: "",
+      value: "",
     },
   ],
-  rule: "",
 };
 
 export const initialStateWebhookNode = {
@@ -350,4 +349,43 @@ export const initialWorkflowState = (schema: any) => {
       },
     ],
   };
+};
+
+export const phoneNumberOptions = {
+  "111111": "111111",
+  "222222": "222222",
+  "333333": "333333",
+  "444444": "444444",
+};
+
+export const phoneExtentionOptions = {
+  "91": "91",
+  "92": "92",
+  "93": "93",
+  "94": "94",
+};
+
+export const requestTypeOptions = {
+  GET: "Get",
+  POST: "Post",
+  PUT: "PUT",
+  DELETE: "Delete",
+};
+
+export const successApiRuleOptions = {
+  starts_with: "Starts with",
+  ends_with: "Ends with",
+  equals: "Equals",
+  contains: "Contains",
+  regex: "Regex",
+};
+
+export const validateTypeOptions = {
+  text: "Text field",
+  date: "Date field",
+  image: "Image",
+  address: "Address",
+  email: "Email",
+  alpha: "Alphanumeric",
+  regex: "Regex",
 };

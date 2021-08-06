@@ -1,5 +1,6 @@
 import * as Yup from "yup";
 import { Grid, Box } from "@material-ui/core";
+import { validateTypeOptions } from "../../../Creator/data";
 import {
   Form,
   TextField,
@@ -119,15 +120,7 @@ const EntityNode = ({ data, onSuccess, onCancel }: any) => {
                             <Select
                               name="validateType"
                               label="Validate Type"
-                              options={{
-                                text: "Text field",
-                                date: "Date field",
-                                image: "Image",
-                                address: "Address",
-                                email: "Email",
-                                alpha: "Alphanumeric",
-                                regex: "Regex",
-                              }}
+                              options={{ ...validateTypeOptions }}
                             />
                           </Grid>
                         </>

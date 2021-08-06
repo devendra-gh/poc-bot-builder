@@ -10,6 +10,10 @@ import {
   DividerText,
   Paper,
 } from "../../../FormsUI";
+import {
+  phoneNumberOptions,
+  phoneExtentionOptions,
+} from "../../../Creator/data";
 
 const FORM_VALIDATION = Yup.object().shape(
   {
@@ -84,10 +88,7 @@ const AgentHandoverNode = ({ data, onSuccess, onCancel }: any) => {
                           name="phoneNumber"
                           label="Select the Number"
                           options={{
-                            "111111": "111111",
-                            "222222": "222222",
-                            "333333": "333333",
-                            "444444": "444444",
+                            ...phoneNumberOptions,
                           }}
                           onChange={(event: any) => {
                             const { name, value } = event.target;
@@ -102,10 +103,7 @@ const AgentHandoverNode = ({ data, onSuccess, onCancel }: any) => {
                           name="phoneExtention"
                           label="Extension Number"
                           options={{
-                            "91": "91",
-                            "92": "92",
-                            "93": "93",
-                            "94": "94",
+                            ...phoneExtentionOptions,
                           }}
                         />
                       </Grid>
