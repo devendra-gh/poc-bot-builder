@@ -23,8 +23,10 @@ const WorkflowSwitchNode = ({ data, onSuccess, onCancel }: any) => {
 
   const onSubmitHandler = (values: any) => {
     onSuccess({
-      id: data?.id,
-      payload: values,
+      payload: {
+        id: data?.id,
+        payload: values,
+      },
     });
   };
 

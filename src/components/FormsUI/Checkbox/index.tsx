@@ -12,6 +12,7 @@ export interface ICheckboxProps {
   name: string;
   label: string;
   color?: any;
+  checked?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -45,6 +46,7 @@ const CheckboxWrapper = ({
   const configCheckbox = {
     ...field,
     ...otherProps,
+    checked: !!meta.value,
     onChange: handleChange,
   };
 

@@ -43,11 +43,11 @@ const EntityNode = ({ data, onSuccess, onCancel }: any) => {
   };
 
   const onSubmitHandler = (values: any) => {
-    console.log(values);
-
     onSuccess({
-      id: data?.id,
-      payload: values,
+      payload: {
+        id: data?.id,
+        payload: values,
+      },
     });
   };
 

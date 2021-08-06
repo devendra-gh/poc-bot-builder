@@ -1,86 +1,172 @@
-import { useState } from "react";
-import _ from "lodash";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
-import { makeStyles } from "@material-ui/core/styles";
+import * as Yup from "yup";
+import { Fragment } from "react";
+import { FieldArray } from "formik";
+import { Box, Grid } from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
+import AddIcon from "@material-ui/icons/Add";
+import { initialStateQuestionNode } from "../../../Creator/data";
+import {
+  Form,
+  TextField,
+  ButtonGroup,
+  Button,
+  IconButton,
+  Title,
+  Checkbox,
+  Paper,
+} from "../../../FormsUI";
 
-const useStyles = makeStyles((theme) => ({
-  title: {
-    paddingBottom: theme.spacing(3),
-  },
-  buttonContainer: {
-    padding: theme.spacing(3, 0),
-  },
-  button: {
-    marginLeft: theme.spacing(2),
-
-    "&:first-child": {
-      marginLeft: theme.spacing(0),
-    },
-  },
-}));
+const FORM_VALIDATION = Yup.object().shape({
+  name: Yup.string().required("Field is required"),
+  message: Yup.string().required("Field is required"),
+  inputs: Yup.array().of(
+    Yup.object().shape({
+      value: Yup.string().required("Field is required"),
+    })
+  ),
+  failureMessage: Yup.string().required("Field is required"),
+});
 
 const QuestionNode = ({ data, onSuccess, onCancel }: any) => {
-  const classes = useStyles();
-  const [state, setState] = useState<any>(data?.payload);
-
-  const onChangeField: any = (event: any) => {
-    const { name, value } = event.target;
-    const _state = _.cloneDeep(state);
-
-    _state[name] = value;
-
-    setState(_state);
+  const INITIAL_FORM_STATE = {
+    name: data?.payload?.name,
+    message: data?.payload?.message,
+    inputs: data?.payload?.inputs,
+    failureMessage: data?.payload?.failureMessage,
+    isBranching: data?.payload?.isBranching,
   };
 
-  const onSuccessHandler = () => {
+  const onSubmitHandler = (values: any) => {
+    debugger;
+    let _allowOutputPort = 0;
+
+    if (values.isBranching) {
+      if (data.payload.isBranching) {
+        _allowOutputPort =
+          data.payload.inputs.length === values.inputs.length
+            ? false
+            : values.inputs.length;
+      } else {
+        _allowOutputPort = values.inputs.length;
+      }
+    }
+
+    debugger;
     onSuccess({
-      id: data?.id,
-      payload: state,
+      payload: {
+        id: data?.id,
+        payload: values,
+      },
+      allowOutputPort: _allowOutputPort,
     });
   };
 
   return (
     <Box className="rz__editor--block">
-      <Typography className={classes.title} variant="h5" gutterBottom>
-        Question Node
-      </Typography>
+      <Title>Response Node</Title>
+      <Form
+        initialValues={{
+          ...INITIAL_FORM_STATE,
+        }}
+        validationSchema={FORM_VALIDATION}
+        onSubmit={onSubmitHandler}
+        render={({ values, errors }: any) => {
+          console.log("errors", errors);
 
-      <form noValidate autoComplete="off">
-        <TextField
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          fullWidth
-          label="Node Name"
-          name="name"
-          value={state.name}
-          onChange={(e: any) => onChangeField(e)}
-        />
+          return (
+            <>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField name="name" label="Node Name" />
+                </Grid>
 
-        <Box className={classes.buttonContainer}>
-          <Button
-            className={classes.button}
-            size="large"
-            variant="contained"
-            onClick={onCancel}
-          >
-            Cancel
-          </Button>
-          <Button
-            className={classes.button}
-            size="large"
-            variant="contained"
-            color="primary"
-            onClick={onSuccessHandler}
-          >
-            Save
-          </Button>
-        </Box>
-      </form>
+                <Grid item xs={12}>
+                  <TextField name="message" label="Bot Message" />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Paper>
+                    <FieldArray
+                      name="inputs"
+                      render={(arrayHelpers: any) => {
+                        const inputs = values.inputs;
+
+                        return (
+                          <Grid container spacing={2}>
+                            {inputs.map((_: any, index: any) => (
+                              <Fragment key={`${index}`}>
+                                <Grid item xs={inputs.length > 1 ? 10 : 12}>
+                                  <TextField
+                                    label={`Input ${index + 1}`}
+                                    name={`inputs.${index}.value`}
+                                  />
+                                </Grid>
+
+                                {inputs.length > 1 && (
+                                  <Grid item xs={2}>
+                                    <IconButton
+                                      onClick={() => {
+                                        arrayHelpers.remove(index);
+                                      }}
+                                    >
+                                      <DeleteIcon />
+                                    </IconButton>
+                                  </Grid>
+                                )}
+                              </Fragment>
+                            ))}
+
+                            {inputs.length <= 5 && (
+                              <Grid item xs={12}>
+                                <ButtonGroup>
+                                  <Button
+                                    onClick={() => {
+                                      arrayHelpers.push({
+                                        ...initialStateQuestionNode.inputs[0],
+                                      });
+                                    }}
+                                    variant="outlined"
+                                    color="primary"
+                                    size="medium"
+                                    startIcon={<AddIcon />}
+                                  >
+                                    Add
+                                  </Button>
+                                </ButtonGroup>
+                              </Grid>
+                            )}
+                          </Grid>
+                        );
+                      }}
+                    />
+                  </Paper>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <TextField name="failureMessage" label="Failure Message" />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Checkbox
+                    name="isBranching"
+                    label="Branching"
+                    color="primary"
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <ButtonGroup>
+                    <Button onClick={onCancel}>Cancel</Button>
+                    <Button type="submit" color="primary">
+                      Save
+                    </Button>
+                  </ButtonGroup>
+                </Grid>
+              </Grid>
+            </>
+          );
+        }}
+      />
     </Box>
   );
 };

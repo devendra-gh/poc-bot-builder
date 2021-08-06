@@ -89,11 +89,18 @@ const DecisionNode = ({ data, onSuccess, onCancel }: any) => {
     setState(_state);
   };
 
-  const onSuccessHandler = () => {
-    onSuccess({
-      id: data?.id,
-      payload: { nodes: state, rule: stateRule },
-    });
+  const onSuccessHandler = (values: any) => {
+    // onSuccess({
+    //   payload: {
+    //     id: data?.id,
+    //     payload: values,
+    //   },
+    // });
+
+    // onSuccess({
+    //   id: data?.id,
+    //   payload: { nodes: state, rule: stateRule },
+    // });
   };
 
   return (

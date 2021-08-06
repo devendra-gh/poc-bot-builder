@@ -12,6 +12,7 @@ import {
   Button,
   IconButton,
   Title,
+  Paper,
 } from "../../../FormsUI";
 
 const FORM_VALIDATION = Yup.object().shape({
@@ -30,11 +31,11 @@ const EndNode = ({ data, onSuccess, onCancel }: any) => {
   };
 
   const onSubmitHandler = (values: any) => {
-    console.log(values);
-    // debugger;
     onSuccess({
-      id: data?.id,
-      payload: values,
+      payload: {
+        id: data?.id,
+        payload: values,
+      },
     });
   };
 
@@ -57,57 +58,61 @@ const EndNode = ({ data, onSuccess, onCancel }: any) => {
                   <TextField name="name" label="Node Name" />
                 </Grid>
 
-                <FieldArray
-                  name="response"
-                  render={(arrayHelpers: any) => {
-                    const response = values.response;
+                <Grid item xs={12}>
+                  <Paper>
+                    <FieldArray
+                      name="response"
+                      render={(arrayHelpers: any) => {
+                        const response = values.response;
 
-                    return (
-                      <>
-                        {response.map((_: any, index: any) => (
-                          <Fragment key={`${index}`}>
-                            <Grid item xs={response.length > 1 ? 10 : 12}>
-                              <TextField
-                                label={`Response Value ${index + 1}`}
-                                name={`response.${index}.value`}
-                              />
-                            </Grid>
+                        return (
+                          <Grid container spacing={2}>
+                            {response.map((_: any, index: any) => (
+                              <Fragment key={`${index}`}>
+                                <Grid item xs={response.length > 1 ? 10 : 12}>
+                                  <TextField
+                                    label={`Response Value ${index + 1}`}
+                                    name={`response.${index}.value`}
+                                  />
+                                </Grid>
 
-                            {response.length > 1 && (
-                              <Grid item xs={2}>
-                                <IconButton
+                                {response.length > 1 && (
+                                  <Grid item xs={2}>
+                                    <IconButton
+                                      onClick={() => {
+                                        arrayHelpers.remove(index);
+                                      }}
+                                    >
+                                      <DeleteIcon />
+                                    </IconButton>
+                                  </Grid>
+                                )}
+                              </Fragment>
+                            ))}
+
+                            <Grid item xs={12}>
+                              <ButtonGroup>
+                                <Button
                                   onClick={() => {
-                                    arrayHelpers.remove(index);
+                                    arrayHelpers.push({
+                                      ...initialStateEndNode.response[0],
+                                    });
                                   }}
+                                  variant="outlined"
+                                  color="primary"
+                                  size="medium"
+                                  startIcon={<AddIcon />}
                                 >
-                                  <DeleteIcon />
-                                </IconButton>
-                              </Grid>
-                            )}
-                          </Fragment>
-                        ))}
-
-                        <Grid item xs={12}>
-                          <ButtonGroup>
-                            <Button
-                              onClick={() => {
-                                arrayHelpers.push({
-                                  ...initialStateEndNode.response[0],
-                                });
-                              }}
-                              variant="outlined"
-                              color="primary"
-                              size="medium"
-                              startIcon={<AddIcon />}
-                            >
-                              Add
-                            </Button>
-                          </ButtonGroup>
-                        </Grid>
-                      </>
-                    );
-                  }}
-                />
+                                  Add
+                                </Button>
+                              </ButtonGroup>
+                            </Grid>
+                          </Grid>
+                        );
+                      }}
+                    />
+                  </Paper>
+                </Grid>
 
                 <Grid item xs={12}>
                   <ButtonGroup>

@@ -36,13 +36,21 @@ const SidebarEditor = ({ sidebar, updateStateCreator }: any) => {
     payload: sidebar?.data?.payload,
   };
 
-  const onSuccessClick = (payload: any) => {
-    updateStateCreator(types.ON_CHANGE_NODE, payload);
+  const onSuccessClick = (data: any) => {
+    updateStateCreator({
+      type: types.ON_CHANGE_NODE,
+      formData: data?.payload,
+      allowOutputPort: data?.allowOutputPort,
+    });
     onCancelClick();
   };
 
   const onCancelClick = () => {
-    updateStateCreator(types.ON_CHANGE_SIDEBAR, { isOpen: false, data: {} });
+    updateStateCreator({
+      type: types.ON_CHANGE_SIDEBAR,
+      formData: { isOpen: false, data: {} },
+      allowOutputPort: false,
+    });
   };
 
   return (

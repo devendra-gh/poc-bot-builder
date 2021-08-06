@@ -12,7 +12,7 @@ const PaperWrapper = ({ children }: any) => {
   const classes = useStyles();
 
   return (
-    <Paper elevation={4} className={classes.paperContainer}>
+    <Paper elevation={3} className={classes.paperContainer}>
       {children}
     </Paper>
   );

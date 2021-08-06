@@ -8,7 +8,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 
 import { types } from "../../constants";
-import validateFlowJSON from "../../utils/validateFlowJSON";
+import { validateFlowJSON } from "../../utils/helpers";
 import ImportDialog from "../ImportDialog";
 
 const Alert = (props: any) => {
@@ -78,13 +78,7 @@ const ActionBar = ({ workFlowState, onChangeWorkFlow }: any) => {
   const importFlowData = (jsonFlowString: any) => {
     const jsonFlow = validateFlowJSON(jsonFlowString);
 
-    if (!jsonFlow) {
-      setOpen({
-        isOpen: true,
-        message: `Not a valid Flow`,
-        severity: "error",
-      });
-    } else {
+    if (jsonFlow) {
       const { currentWorkFlowIndex } = workFlowState;
 
       onChangeWorkFlow({
@@ -96,6 +90,12 @@ const ActionBar = ({ workFlowState, onChangeWorkFlow }: any) => {
         isOpen: true,
         message: `Successfully Workflow imported`,
         severity: "success",
+      });
+    } else {
+      setOpen({
+        isOpen: true,
+        message: `Not a valid Flow`,
+        severity: "error",
       });
     }
   };

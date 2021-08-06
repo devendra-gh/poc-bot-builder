@@ -1,4 +1,3 @@
-import React from "react";
 import { TextField } from "@material-ui/core";
 import { useField } from "formik";
 
@@ -20,6 +19,8 @@ const DateTimePicker = ({ name, ...otherProps }: any) => {
     configDateTimePicker.error = true;
     configDateTimePicker.helperText = meta.error;
   }
+
+  /* <DateTimePicker name="departureDate" label="Departure Date" />; */
 
   return <TextField {...configDateTimePicker} />;
 };

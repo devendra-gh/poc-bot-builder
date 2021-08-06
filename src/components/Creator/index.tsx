@@ -4,25 +4,22 @@ import _ from "lodash";
 import {
   createSchema,
   useSchema,
-  //   validateNode,
-  //   validateNodes,
-  //   validateSchema,
-  //   validateLink,
-  //   validateLinks,
-  //   validatePort,
+  validateNode,
+  // validateNodes,
+  // validateSchema,
+  // validateLink,
+  // validateLinks,
+  // validatePort,
 } from "beautiful-react-diagrams";
-
-import { canAllowToLink } from "../../utils/helpers";
+import { canAllowToLink, getPort } from "../../utils/helpers";
 import { types } from "../../constants";
+import { availableNodesData, diagramData, initialWorkflowState } from "./data";
 import {
   NodeBlock,
   DiagramPreview,
   DesignMenu,
   SidebarEditor,
 } from "../../components";
-// import DiagramPreview from "../DiagramPreview";
-
-import { availableNodesData, diagramData, initialWorkflowState } from "./data";
 
 const ConstantNodeBlock: any = {
   NodeBlock: NodeBlock,
@@ -105,8 +102,8 @@ const Creator = () => {
 
   useEffect(() => {
     setWorkFlowState(initialWorkflowState(schema));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // }, [schema]);
 
   useEffect(() => {
     if (schema.links) {
@@ -122,15 +119,15 @@ const Creator = () => {
         onChange(schema);
       }
     }
-    // }, [schema.links]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [schema.links]);
 
-  updateStateCreator = (type: any, editorData: any) => {
+  updateStateCreator = ({ type, formData, allowOutputPort = false }: any) => {
     switch (type) {
       case types.ON_CHANGE_NODE:
         const _nodes = _.cloneDeep(schema?.nodes);
         const index = _nodes.findIndex((node: any) => {
-          if (node.id === editorData.id) {
+          if (node.id === formData.id) {
             return true;
           }
 
@@ -138,7 +135,7 @@ const Creator = () => {
         });
 
         if (index >= 0) {
-          const _payload = _.cloneDeep(editorData?.payload);
+          const _payload = _.cloneDeep(formData?.payload);
 
           _nodes[index] = {
             ..._nodes[index],
@@ -148,20 +145,48 @@ const Creator = () => {
             },
           };
 
+          if (allowOutputPort !== false) {
+            const _outputs = [];
+
+            if (allowOutputPort > 0) {
+              for (let i = 0; i < allowOutputPort; i++) {
+                _outputs.push(
+                  getPort(
+                    ConstantCanLink[_nodes[index]?.data?.helper?.canLinkOutput],
+                    false
+                  )
+                );
+              }
+            }
+
+            _nodes[index] = {
+              ..._nodes[index],
+              outputs: _outputs,
+            };
+          }
+
           const _workFlowState = _.cloneDeep(workFlowState);
           const { currentWorkFlowIndex } = _workFlowState;
           _workFlowState.flows[currentWorkFlowIndex].schema.nodes = _nodes;
 
           setWorkFlowState(_workFlowState);
-          onChange({
-            nodes: _nodes,
-          });
+
+          if (allowOutputPort !== false) {
+            if (validateNode(_nodes[index])) {
+              removeNode(_nodes[index]);
+              addNode(_nodes[index]);
+            }
+          } else {
+            onChange({
+              nodes: _nodes,
+            });
+          }
         }
 
         return;
 
       case types.ON_CHANGE_SIDEBAR:
-        return setSidebarState(editorData);
+        return setSidebarState(formData);
     }
   };
 
@@ -180,25 +205,21 @@ const Creator = () => {
 
     if (_input) {
       for (let i = 0; i < _input; i++) {
-        inputs.push({
-          id: `input-port--${uuidv4()}`,
-          alignment: "left",
-          canLink: ConstantCanLink[node?.data?.helper?.canLinkInput],
-        });
+        inputs.push(
+          getPort(ConstantCanLink[node?.data?.helper?.canLinkInput], true)
+        );
       }
     }
 
     if (_output) {
       for (let j = 0; j < _output; j++) {
-        outputs.push({
-          id: `output-port--${uuidv4()}`,
-          alignment: "right",
-          canLink: ConstantCanLink[node?.data?.helper?.canLinkOutput],
-        });
+        outputs.push(
+          getPort(ConstantCanLink[node?.data?.helper?.canLinkOutput], false)
+        );
       }
     }
 
-    const nextNode = {
+    const nextNode: any = {
       id: _id,
       content: node.content,
       disableDrag: node.disableDrag,
@@ -215,10 +236,12 @@ const Creator = () => {
       },
     };
 
-    addNode(nextNode);
-    setTimeout(() => {
-      updateWorkFlowState();
-    });
+    if (validateNode(nextNode)) {
+      addNode(nextNode);
+      setTimeout(() => {
+        updateWorkFlowState();
+      });
+    }
   };
 
   deleteNodeFromSchema = (id: any) => {
@@ -319,8 +342,6 @@ const Creator = () => {
     }
   };
 
-  // console.log("availableNodes => ", availableNodes);
-  // console.log("sidebarState => ", sidebarState);
   console.log("workFlowState => ", workFlowState);
   console.log("schema => ", schema);
 

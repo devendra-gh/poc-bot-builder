@@ -1,7 +1,6 @@
 import { Fragment, useState } from "react";
 import * as Yup from "yup";
 import { FieldArray } from "formik";
-import _ from "lodash";
 import { Grid, Box, Tabs, Tab } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
@@ -60,11 +59,11 @@ const ApiNode = ({ data, onSuccess, onCancel }: any) => {
   };
 
   const onSubmitHandler = (values: any) => {
-    console.log(values);
-
     onSuccess({
-      id: data?.id,
-      payload: values,
+      payload: {
+        id: data?.id,
+        payload: values,
+      },
     });
   };
 

@@ -27,6 +27,14 @@ export const initialStateCustomCodeNode = {
 
 export const initialStateQuestionNode = {
   name: "",
+  message: "",
+  inputs: [
+    {
+      value: "",
+    },
+  ],
+  failureMessage: "",
+  isBranching: false,
 };
 
 export const initialStateWorkflowSwitchNode = {
@@ -252,7 +260,7 @@ export const availableNodesData = [
     disableDrag: false,
     coordinates: [50, 50],
     inputs: 1,
-    outputs: 1,
+    outputs: 0,
     data: {
       helper: {
         canEdit: true,

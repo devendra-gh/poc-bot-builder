@@ -1,5 +1,4 @@
 import React from "react";
-// import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
 import { types } from "../../constants";
 import { NodeEditor } from "../../components";
 
@@ -7,9 +6,13 @@ const NodeBlock = (props: any) => {
   const { id, data, inputs, outputs } = props;
 
   const updateSidebarHandler = () => {
-    data?.updateStateCreator(types.ON_CHANGE_SIDEBAR, {
-      isOpen: true,
-      data: data,
+    data?.updateStateCreator({
+      type: types.ON_CHANGE_SIDEBAR,
+      formData: {
+        isOpen: true,
+        data: data,
+      },
+      allowOutputPort: false,
     });
   };
 
