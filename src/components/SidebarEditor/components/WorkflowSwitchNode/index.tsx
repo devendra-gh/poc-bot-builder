@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { Grid, Box } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import {
   Form,
   TextField,
@@ -7,6 +7,7 @@ import {
   ButtonGroup,
   Button,
   Title,
+  EditorBlock,
 } from "../../../FormsUI";
 
 const FORM_VALIDATION = Yup.object().shape({
@@ -31,7 +32,7 @@ const WorkflowSwitchNode = ({ data, onSuccess, onCancel }: any) => {
   };
 
   return (
-    <Box className="rz__editor--block">
+    <EditorBlock>
       <Title>Workflow Switch Node</Title>
 
       <Form
@@ -80,7 +81,7 @@ const WorkflowSwitchNode = ({ data, onSuccess, onCancel }: any) => {
           );
         }}
       />
-    </Box>
+    </EditorBlock>
   );
 };
 

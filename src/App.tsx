@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import { Loader, Layout } from "./components";

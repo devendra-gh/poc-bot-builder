@@ -54,15 +54,13 @@ const SidebarEditor = ({ sidebar, updateStateCreator }: any) => {
   };
 
   return (
-    <>
-      <Drawer anchor="right" open={sidebar?.isOpen} onClose={() => {}}>
-        <SpecificEditor
-          data={formData}
-          onSuccess={onSuccessClick}
-          onCancel={onCancelClick}
-        />
-      </Drawer>
-    </>
+    <Drawer anchor="right" open={sidebar?.isOpen} onClose={() => {}}>
+      <SpecificEditor
+        data={formData}
+        onSuccess={onSuccessClick}
+        onCancel={onCancelClick}
+      />
+    </Drawer>
   );
 };
 

@@ -2,9 +2,16 @@ import ReactDOM from "react-dom";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import WebFont from "webfontloader";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
 import "./styles.scss";
+
+WebFont.load({
+  google: {
+    families: ["Titillium Web:300,400,700", "sans-serif"],
+  },
+});
 
 const theme: any = createTheme({
   palette: {

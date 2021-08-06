@@ -1,12 +1,43 @@
 import { useDrag } from "react-dnd";
+import { Box } from "@material-ui/core";
 import DragIndicatorIcon from "@material-ui/icons/DragIndicator";
+import { makeStyles } from "@material-ui/core/styles";
 import { DRAG_TYPES } from "../../constants";
 
 interface DropResult {
   name: string;
 }
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginBottom: "10px",
+    padding: "10px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#455aa2",
+    color: "white",
+    cursor: "move",
+
+    "&:last-child": {
+      marginBottom: 0,
+    },
+  },
+
+  content: {
+    display: "flex",
+    alignItems: "center",
+  },
+
+  icon: {
+    display: "flex",
+    alignItems: "center",
+    color: "#ccc",
+  },
+}));
+
 const DraggableComponent = (props: any) => {
+  const classes = useStyles();
   const content = props?.menu?.content;
 
   const [{ opacity }, drag] = useDrag(() => ({
@@ -24,18 +55,16 @@ const DraggableComponent = (props: any) => {
   }));
 
   return (
-    <div
-      ref={drag}
-      // role="menu-item"
+    <Box
+      {...({ ref: drag } as any)}
       style={{ opacity }}
-      className="rz__design-menu--item"
+      className={classes.root}
     >
-      <span className="rz__design-menu--content">{content}</span>
-
-      <span className="rz__design-menu--icon">
+      <Box className={classes.content}>{content}</Box>
+      <Box className={classes.icon}>
         <DragIndicatorIcon />
-      </span>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

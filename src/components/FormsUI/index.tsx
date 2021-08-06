@@ -10,6 +10,7 @@ import Title from "../FormsUI/Title";
 import DividerText from "../FormsUI/DividerText";
 import ConditionalField from "../FormsUI/ConditionalField";
 import Paper from "../FormsUI/Paper";
+import EditorBlock from "../FormsUI/EditorBlock";
 
 export {
   Form,
@@ -20,8 +21,9 @@ export {
   ButtonGroup,
   Button,
   IconButton,
+  ConditionalField,
   Title,
   DividerText,
-  ConditionalField,
   Paper,
+  EditorBlock,
 };

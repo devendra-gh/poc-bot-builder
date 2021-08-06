@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import { Fragment } from "react";
 import { FieldArray } from "formik";
-import { Box, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
 import {
@@ -17,6 +17,7 @@ import {
   Title,
   Select,
   Paper,
+  EditorBlock,
 } from "../../../FormsUI";
 
 const FORM_VALIDATION = Yup.object().shape({
@@ -56,7 +57,7 @@ const DecisionNode = ({ data, onSuccess, onCancel }: any) => {
   };
 
   return (
-    <Box className="rz__editor--block">
+    <EditorBlock>
       <Title>Decision Node</Title>
       <Form
         initialValues={{
@@ -155,7 +156,7 @@ const DecisionNode = ({ data, onSuccess, onCancel }: any) => {
           );
         }}
       />
-    </Box>
+    </EditorBlock>
   );
 };
 

@@ -1,9 +1,18 @@
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import TextField from "@material-ui/core/TextField";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+  },
+}));
 
 const renderActions = (handleClose: any, handleImport: any) => {
   return (
@@ -20,6 +29,7 @@ const renderActions = (handleClose: any, handleImport: any) => {
 };
 
 const ImportDialog = (props: any) => {
+  const classes = useStyles();
   const { open, onClose, onImport } = props;
   let jsonFieldRef: any;
 
@@ -37,8 +47,8 @@ const ImportDialog = (props: any) => {
       onClose={handleClose}
       aria-labelledby="simple-dialog-title"
       open={open}
-      style={{ width: "100%" }}
       fullWidth
+      className={classes.root}
     >
       <DialogTitle id="simple-dialog-title">Import Workflow</DialogTitle>
 
@@ -50,10 +60,8 @@ const ImportDialog = (props: any) => {
           multiline
           rows="6"
           defaultValue=""
-          className=""
-          margin="normal"
           variant="filled"
-          style={{ width: "100%" }}
+          className={classes.root}
         />
       </DialogContent>
 

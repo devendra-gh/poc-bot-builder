@@ -1,10 +1,24 @@
+import { Box } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: "5px",
+    background: "#2d4571aa",
+  },
+
+  content: {
+    textAlign: "center",
+  },
+}));
+
 const NodeEditor = ({ content }: any) => {
+  const classes = useStyles();
+
   return (
-    <>
-      <div className="rz__node--header">
-        <div className="rz__node--content">{content}</div>
-      </div>
-    </>
+    <Box className={classes.root}>
+      <Box className={classes.content}>{content}</Box>
+    </Box>
   );
 };
 

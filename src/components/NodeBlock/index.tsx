@@ -1,8 +1,67 @@
 import React from "react";
+import { Box } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import { types } from "../../constants";
 import { NodeEditor } from "../../components";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: 0,
+    margin: 0,
+    width: "200px",
+    position: "relative",
+    display: "inline-block",
+    color: "#fff",
+    cursor: "move",
+    borderRadius: "3px",
+    border: "solid 3px #283c69",
+    backgroundColor: "rgba(9, 19, 54, 0.666667)",
+
+    "&:focus": {
+      boxShadow: "0 0 3pt 2pt cornflowerblue",
+    },
+  },
+
+  portsInput: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+
+    "& .bi-diagram-port": {
+      marginTop: "5px",
+      width: "15px",
+      height: "15px",
+      cursor: "pointer",
+      borderBottomRightRadius: "8px",
+      borderTopRightRadius: "8px",
+      backgroundColor: "rgb(100, 214, 193)",
+
+      "&:first-child": {
+        marginRop: "15px",
+      },
+    },
+  },
+
+  portsOutput: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-end",
+
+    "& .bi-diagram-port": {
+      marginTop: "5px",
+      width: "15px",
+      height: "15px",
+      cursor: "pointer",
+      borderBottomLeftRadius: "8px",
+      borderTopLeftRadius: "8px",
+      backgroundColor: "rgb(100, 214, 193)",
+    },
+  },
+}));
+
 const NodeBlock = (props: any) => {
+  const classes = useStyles();
   const { id, data, inputs, outputs } = props;
 
   const updateSidebarHandler = () => {
@@ -42,25 +101,19 @@ const NodeBlock = (props: any) => {
       onKeyDown={onKeyDown}
       onDoubleClick={onDoubleClickHandler}
       type="button"
-      className="rz__node--block"
+      className={classes.root}
     >
-      {/* {canDelete ? (
-        <button className="rz__node--close" onClick={() => data.onClick(id)}>
-          <RemoveCircleOutlineIcon style={{ color: "#fff" }} fontSize="small" />
-        </button>
-      ) : null} */}
-
       <NodeEditor {...props} />
 
-      <div className="rz__node--ports">
-        <div className="rz__node--ports-input">
+      <Box>
+        <Box className={classes.portsInput}>
           {inputs.map((port: any) => React.cloneElement(port, {}))}
-        </div>
+        </Box>
 
-        <div className="rz__node--ports-output">
+        <Box className={classes.portsOutput}>
           {outputs.map((port: any) => React.cloneElement(port, {}))}
-        </div>
-      </div>
+        </Box>
+      </Box>
     </button>
   );
 };

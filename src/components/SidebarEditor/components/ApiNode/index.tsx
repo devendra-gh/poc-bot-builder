@@ -14,6 +14,7 @@ import {
   Select,
   IconButton,
   Paper,
+  EditorBlock,
 } from "../../../FormsUI";
 
 const FORM_VALIDATION = Yup.object().shape({
@@ -68,7 +69,7 @@ const ApiNode = ({ data, onSuccess, onCancel }: any) => {
   };
 
   return (
-    <Box className="rz__editor--block">
+    <EditorBlock>
       <Title>API Node</Title>
 
       <Form
@@ -241,7 +242,7 @@ const ApiNode = ({ data, onSuccess, onCancel }: any) => {
           );
         }}
       />
-    </Box>
+    </EditorBlock>
   );
 };
 

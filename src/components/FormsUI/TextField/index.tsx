@@ -1,7 +1,6 @@
 import React from "react";
 import { useField, useFormikContext } from "formik";
-import { TextField, Box } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { TextField } from "@material-ui/core";
 
 export interface InputProps {
   name: string;
@@ -9,14 +8,7 @@ export interface InputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    // padding: theme.spacing(1),
-  },
-}));
-
 const TextFieldWrapper = ({ name, onChange, ...otherProps }: InputProps) => {
-  const classes = useStyles();
   const { setFieldValue } = useFormikContext();
   const [field, mata] = useField(name);
 
@@ -43,11 +35,7 @@ const TextFieldWrapper = ({ name, onChange, ...otherProps }: InputProps) => {
     configTextfield.helperText = mata.error;
   }
 
-  return (
-    <Box className={classes.formControl}>
-      <TextField {...configTextfield} />
-    </Box>
-  );
+  return <TextField {...configTextfield} />;
 };
 
 export default TextFieldWrapper;

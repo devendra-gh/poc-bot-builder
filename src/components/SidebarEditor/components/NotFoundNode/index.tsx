@@ -1,15 +1,14 @@
-import Box from "@material-ui/core/Box";
-import { Title, ButtonGroup, Button } from "../../../FormsUI";
+import { Title, ButtonGroup, Button, EditorBlock } from "../../../FormsUI";
 
 const NotFoundNode = ({ onCancel }: any) => {
   return (
-    <Box className="rz__editor--block">
+    <EditorBlock>
       <Title>Node not available</Title>
 
       <ButtonGroup>
         <Button onClick={onCancel}>Cancel</Button>
       </ButtonGroup>
-    </Box>
+    </EditorBlock>
   );
 };
 

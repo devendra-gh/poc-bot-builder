@@ -1,6 +1,13 @@
 import * as Yup from "yup";
-import { Box, Grid } from "@material-ui/core";
-import { Form, TextField, ButtonGroup, Button, Title } from "../../../FormsUI";
+import { Grid } from "@material-ui/core";
+import {
+  Form,
+  TextField,
+  ButtonGroup,
+  Button,
+  Title,
+  EditorBlock,
+} from "../../../FormsUI";
 
 const FORM_VALIDATION = Yup.object().shape({
   name: Yup.string().required("Field is required"),
@@ -21,7 +28,7 @@ const CustomCodeNode = ({ data, onSuccess, onCancel }: any) => {
   };
 
   return (
-    <Box className="rz__editor--block">
+    <EditorBlock>
       <Title>Custom Code Node</Title>
 
       <Form
@@ -52,7 +59,7 @@ const CustomCodeNode = ({ data, onSuccess, onCancel }: any) => {
           );
         }}
       />
-    </Box>
+    </EditorBlock>
   );
 };
 

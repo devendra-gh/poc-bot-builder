@@ -1,5 +1,5 @@
-import { useField } from "formik";
 import React, { ReactElement } from "react";
+import { useField } from "formik";
 
 export interface IConditionalFieldProps {
   name: string;

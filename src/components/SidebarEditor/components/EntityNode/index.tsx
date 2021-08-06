@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { Grid, Box } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { validateTypeOptions } from "../../../Creator/data";
 import {
   Form,
@@ -11,6 +11,7 @@ import {
   Checkbox,
   ConditionalField,
   Paper,
+  EditorBlock,
 } from "../../../FormsUI";
 
 const FORM_VALIDATION = Yup.object().shape({
@@ -53,7 +54,7 @@ const EntityNode = ({ data, onSuccess, onCancel }: any) => {
   };
 
   return (
-    <Box className="rz__editor--block">
+    <EditorBlock>
       <Title>Entity Node</Title>
 
       <Form
@@ -158,7 +159,7 @@ const EntityNode = ({ data, onSuccess, onCancel }: any) => {
           );
         }}
       />
-    </Box>
+    </EditorBlock>
   );
 };
 

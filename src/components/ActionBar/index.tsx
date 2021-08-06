@@ -1,21 +1,36 @@
 import { useState } from "react";
 import exportFromJSON from "export-from-json";
-import Button from "@material-ui/core/Button";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Menu,
+  MenuItem,
+  Snackbar,
+} from "@material-ui/core";
 import { types } from "../../constants";
 import { validateFlowJSON } from "../../utils/helpers";
 import ImportDialog from "../ImportDialog";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    position: "absolute",
+    padding: theme.spacing(2),
+    zIndex: 9,
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-between",
+  },
+}));
 
 const Alert = (props: any) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 };
 
 const ActionBar = ({ workFlowState, onChangeWorkFlow }: any) => {
+  const classes = useStyles();
   const [open, setOpen] = useState({
     isOpen: false,
     message: "",
@@ -101,7 +116,7 @@ const ActionBar = ({ workFlowState, onChangeWorkFlow }: any) => {
   };
 
   return (
-    <div className="rz__action-bar">
+    <Box className={classes.root}>
       <Button variant="contained" color="secondary">
         Delete
       </Button>
@@ -111,7 +126,7 @@ const ActionBar = ({ workFlowState, onChangeWorkFlow }: any) => {
         <Button>Save</Button>
       </ButtonGroup>
 
-      <div>
+      <Box>
         <Button
           aria-controls="simple-menu"
           aria-haspopup="true"
@@ -151,8 +166,8 @@ const ActionBar = ({ workFlowState, onChangeWorkFlow }: any) => {
           onClose={() => setImportDialogActive(false)}
           onImport={(jsonData: any) => importFlowData(jsonData)}
         />
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

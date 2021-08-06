@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { Box, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import {
   Form,
   TextField,
@@ -9,6 +9,7 @@ import {
   Select,
   DividerText,
   Paper,
+  EditorBlock,
 } from "../../../FormsUI";
 import {
   phoneNumberOptions,
@@ -58,7 +59,7 @@ const AgentHandoverNode = ({ data, onSuccess, onCancel }: any) => {
   };
 
   return (
-    <Box className="rz__editor--block">
+    <EditorBlock>
       <Title>Agent Handover Node</Title>
 
       <Form
@@ -137,7 +138,7 @@ const AgentHandoverNode = ({ data, onSuccess, onCancel }: any) => {
           );
         }}
       />
-    </Box>
+    </EditorBlock>
   );
 };
 

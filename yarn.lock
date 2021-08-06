@@ -2012,6 +2012,11 @@
   resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-8.3.1.tgz#1a32969cf8f0364b3d8c8af9cc3555b7805df14f"
   integrity sha512-Y2mHTRAbqfFkpjldbkHGY8JIzRN6XqYRliG8/24FcHm2D2PwW24fl5xMRTVGdrb7iMrwCaIEbLWerGIkXuFWVg==
 
+"@types/webfontloader@^1.6.33":
+  version "1.6.33"
+  resolved "https://registry.yarnpkg.com/@types/webfontloader/-/webfontloader-1.6.33.tgz#cdef66b53341193ce1b4d4ad771703689db77708"
+  integrity sha512-2oOYQp0UBo/+NFsxdlF9ZwS1rq1q/wGnLsZMN7X+/xArRZoLPQhOGecesaRYJ2uhHyJ53TgitDORu2IV47FhHw==
+
 "@types/webpack-sources@*":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@types/webpack-sources/-/webpack-sources-2.1.1.tgz#6af17e3a3ded71eec2b98008d7c12f498a0a4506"
@@ -12021,6 +12026,11 @@ web-vitals@^0.2.4:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-0.2.4.tgz#ec3df43c834a207fd7cdefd732b2987896e08511"
   integrity sha512-6BjspCO9VriYy12z356nL6JBS0GYeEcA457YyRzD+dD6XYCQ75NKhcOHUMHentOE7OcVCIXXDvOm0jKFfQG2Gg==
+
+webfontloader@^1.6.28:
+  version "1.6.28"
+  resolved "https://registry.yarnpkg.com/webfontloader/-/webfontloader-1.6.28.tgz#db786129253cb6e8eae54c2fb05f870af6675bae"
+  integrity sha1-23hhKSU8tujq5UwvsF+HCvZnW64=
 
 webidl-conversions@^5.0.0:
   version "5.0.0"

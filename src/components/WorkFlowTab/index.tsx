@@ -1,18 +1,52 @@
 import { useState } from "react";
+import { Box } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import { types } from "../../constants";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    marginTop: "5px",
+    marginLeft: "-1px",
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: "auto",
+  },
+
+  tab: {
+    padding: "5px",
+    borderTop: "solid 1px #a2a7b2",
+    borderRight: "solid 1px #a2a7b2",
+    borderLeft: "solid 1px #a2a7b2",
+    backgroundColor: "#455aa2b3",
+    color: "white",
+    marginRight: "1px",
+    minWidth: "80px",
+    textAlign: "center",
+    cursor: "pointer",
+
+    "&.active": {
+      backgroundColor: "#455aa2",
+      zIndex: 1,
+    },
+  },
+}));
+
 const Tab = (props: any) => {
+  const classes = useStyles();
+
   return (
-    <div
-      className={`rz__workflow--tab ${props.isActive ? "active" : ""}`}
+    <Box
+      className={`${classes.tab} ${props.isActive ? "active" : ""}`}
       onClick={props.onClick}
     >
       {props.children}
-    </div>
+    </Box>
   );
 };
 
 const WorkFlowTab = ({ workFlowState, onChangeWorkFlow }: any) => {
+  const classes = useStyles();
   const [activeTab, setActiveTab] = useState(0);
 
   const tabs = workFlowState?.flows?.map((flow: any) => {
@@ -45,7 +79,7 @@ const WorkFlowTab = ({ workFlowState, onChangeWorkFlow }: any) => {
   };
 
   return (
-    <div className="rz__workflow">
+    <Box className={classes.root}>
       {tabs?.map((tab: any, index: any) => (
         <Tab
           isActive={index === activeTab}
@@ -57,7 +91,7 @@ const WorkFlowTab = ({ workFlowState, onChangeWorkFlow }: any) => {
           {tab.name}
         </Tab>
       ))}
-    </div>
+    </Box>
   );
 };
 

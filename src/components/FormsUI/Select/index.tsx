@@ -1,7 +1,6 @@
 import React from "react";
 import { useField, useFormikContext } from "formik";
-import { TextField, MenuItem, Box } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { TextField, MenuItem } from "@material-ui/core";
 
 export interface ISelectProps {
   name: string;
@@ -10,19 +9,12 @@ export interface ISelectProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    // padding: theme.spacing(1),
-  },
-}));
-
 const SelectWrapper = ({
   name,
   options,
   onChange,
   ...otherProps
 }: ISelectProps) => {
-  const classes = useStyles();
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
 
@@ -51,20 +43,18 @@ const SelectWrapper = ({
   }
 
   return (
-    <Box className={classes.formControl}>
-      <TextField {...configSelect}>
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
-        {Object.keys(options).map((item, pos) => {
-          return (
-            <MenuItem key={pos} value={item}>
-              {options[item]}
-            </MenuItem>
-          );
-        })}
-      </TextField>
-    </Box>
+    <TextField {...configSelect}>
+      <MenuItem value="">
+        <em>None</em>
+      </MenuItem>
+      {Object.keys(options).map((item, pos) => {
+        return (
+          <MenuItem key={pos} value={item}>
+            {options[item]}
+          </MenuItem>
+        );
+      })}
+    </TextField>
   );
 };
 
