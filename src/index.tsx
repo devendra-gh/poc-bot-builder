@@ -5,7 +5,7 @@ import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import WebFont from "webfontloader";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
-import "./styles.scss";
+import "./styles.css";
 
 WebFont.load({
   google: {
