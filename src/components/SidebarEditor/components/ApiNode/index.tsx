@@ -18,7 +18,7 @@ import {
 } from "../../../FormsUI";
 
 const FORM_VALIDATION = Yup.object().shape({
-  apiCall: Yup.string().required("Field is required"),
+  name: Yup.string().required("Field is required"),
   apiEndPoint: Yup.string().required("Field is required"),
   requestType: Yup.string().required("Field is required"),
   body: Yup.array().of(
@@ -47,7 +47,7 @@ const TabPanel = (props: any) => {
 
 const ApiNode = ({ data, onSuccess, onCancel }: any) => {
   const INITIAL_FORM_STATE = {
-    apiCall: data?.payload?.apiCall,
+    name: data?.payload?.name,
     apiEndPoint: data?.payload?.apiEndPoint,
     requestType: data?.payload?.requestType,
     body: data?.payload?.body,
@@ -83,7 +83,7 @@ const ApiNode = ({ data, onSuccess, onCancel }: any) => {
             <>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <TextField name="apiCall" label="API Call" />
+                  <TextField name="name" label="API Name" />
                 </Grid>
 
                 <Grid item xs={12}>

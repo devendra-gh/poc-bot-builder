@@ -65,6 +65,20 @@ export const initialStateDecisionNode = {
 
 export const initialStateWebhookNode = {
   name: "",
+  apiEndPoint: "",
+  requestType: "",
+  body: [
+    {
+      key: "",
+      value: "",
+    },
+  ],
+  headers: [
+    {
+      key: "",
+      value: "",
+    },
+  ],
 };
 
 export const initialStateEntityNode = {
@@ -80,7 +94,7 @@ export const initialStateEntityNode = {
 };
 
 export const initialStateAPINode = {
-  apiCall: "",
+  name: "",
   apiEndPoint: "",
   requestType: "",
   body: [
