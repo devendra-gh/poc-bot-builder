@@ -38,7 +38,6 @@ const WorkflowSwitchNode = ({ data, onSuccess, onCancel }: any) => {
       <Form
         initialValues={{
           ...INITIAL_FORM_STATE,
-          country: "",
         }}
         validationSchema={FORM_VALIDATION}
         onSubmit={onSubmitHandler}

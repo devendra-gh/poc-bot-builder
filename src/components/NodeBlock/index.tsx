@@ -65,7 +65,7 @@ const NodeBlock = (props: any) => {
   const { id, data, inputs, outputs } = props;
 
   const updateSidebarHandler = () => {
-    data?.updateStateCreator({
+    data?.updateStateSidebarEditor({
       type: types.ON_CHANGE_SIDEBAR,
       formData: {
         isOpen: true,

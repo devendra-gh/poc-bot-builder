@@ -28,7 +28,7 @@ const components: any = {
   NotFound: NotFoundNode,
 };
 
-const SidebarEditor = ({ sidebar, updateStateCreator }: any) => {
+const SidebarEditor = ({ sidebar, updateStateSidebarEditor }: any) => {
   const renderEditor = sidebar?.data?.helper?.renderEditor || "NotFound";
   const SpecificEditor = components[renderEditor];
   const formData = {
@@ -37,7 +37,7 @@ const SidebarEditor = ({ sidebar, updateStateCreator }: any) => {
   };
 
   const onSuccessClick = (data: any) => {
-    updateStateCreator({
+    updateStateSidebarEditor({
       type: types.ON_CHANGE_NODE,
       formData: data?.payload,
       allowOutputPort: data?.allowOutputPort,
@@ -46,7 +46,7 @@ const SidebarEditor = ({ sidebar, updateStateCreator }: any) => {
   };
 
   const onCancelClick = () => {
-    updateStateCreator({
+    updateStateSidebarEditor({
       type: types.ON_CHANGE_SIDEBAR,
       formData: { isOpen: false, data: {} },
       allowOutputPort: false,

@@ -34,8 +34,8 @@ const FORM_VALIDATION = Yup.object().shape({
 const DecisionNode = ({ data, onSuccess, onCancel }: any) => {
   const INITIAL_FORM_STATE = {
     name: data?.payload?.name,
-    successApi: data?.payload?.message,
-    successApiRule: data?.payload?.failureMessage,
+    successApi: data?.payload?.successApi,
+    successApiRule: data?.payload?.successApiRule,
     inputs: data?.payload?.inputs,
   };
 

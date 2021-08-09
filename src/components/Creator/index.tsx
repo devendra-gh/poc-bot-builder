@@ -29,9 +29,14 @@ const ConstantCanLink: any = {
   canAllowToLink: canAllowToLink,
 };
 
+const initialStateSchema = createSchema({
+  nodes: [],
+  links: [],
+});
+
 const Creator = () => {
-  let updateStateCreator: any;
-  let deleteNodeFromSchema: any;
+  const [schema, { onChange, addNode, removeNode, connect }]: any =
+    useSchema(initialStateSchema);
 
   const [availableNodes] = useState<any>(availableNodesData);
   const [workFlowState, setWorkFlowState] = useState<any>({});
@@ -40,7 +45,114 @@ const Creator = () => {
     data: {},
   });
 
-  const getInitialNode: any = (payload: any) => {
+  useEffect(() => {
+    const schemaData = loadInitialSchema(diagramData);
+    const initialSchema = createSchema(schemaData);
+
+    onChange(initialSchema);
+    setWorkFlowState(initialWorkflowState(initialSchema));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (schema.links) {
+      const { currentWorkFlowIndex } = workFlowState;
+
+      if (typeof currentWorkFlowIndex !== "undefined") {
+        const _workFlowState = _.cloneDeep(workFlowState);
+        const _schema = _.cloneDeep(schema);
+
+        _workFlowState.flows[currentWorkFlowIndex].schema.links = _schema.links;
+
+        setWorkFlowState(_workFlowState);
+        onChange(schema);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [schema.links]);
+
+  const addNewNode = (node: any) => {
+    const _id = `node--${uuidv4()}`;
+    const nodeId = schema.nodes.length + 1;
+    const coordinates = [
+      schema.nodes[nodeId - 2].coordinates[0] + 100,
+      schema.nodes[nodeId - 2].coordinates[1] + 100,
+    ];
+
+    const _input = node?.inputs || 0;
+    const _output = node?.outputs || 0;
+    const inputs = [];
+    const outputs = [];
+
+    if (_input) {
+      for (let i = 0; i < _input; i++) {
+        inputs.push(
+          getPort(ConstantCanLink[node?.data?.helper?.canLinkInput], true)
+        );
+      }
+    }
+
+    if (_output) {
+      for (let j = 0; j < _output; j++) {
+        outputs.push(
+          getPort(ConstantCanLink[node?.data?.helper?.canLinkOutput], false)
+        );
+      }
+    }
+
+    const nextNode: any = {
+      id: _id,
+      content: node.content,
+      disableDrag: node.disableDrag,
+      render: ConstantNodeBlock[node?.data?.helper?.renderNode] || null,
+      coordinates: coordinates,
+      inputs: inputs,
+      outputs: outputs,
+      data: {
+        ...node.data,
+        id: _id,
+        content: node.content,
+        onClick: deleteNodeFromSchema,
+        updateStateSidebarEditor: updateStateSidebarEditor,
+      },
+    };
+
+    if (validateNode(nextNode)) {
+      addNode(nextNode);
+      updateWorkFlowState();
+    }
+  };
+
+  const deleteNodeFromSchema = (id: any) => {
+    const _schema = _.cloneDeep(schema);
+
+    const nodeToRemove = _schema?.nodes?.find((node: any) => {
+      if (node.id === id) {
+        return true;
+      }
+      return false;
+    });
+
+    if (nodeToRemove) {
+      removeNode(nodeToRemove);
+      setTimeout(() => {
+        updateWorkFlowState();
+      });
+    }
+  };
+
+  const updateWorkFlowState = () => {
+    const _schema = _.cloneDeep(schema);
+    const _workFlowState = _.cloneDeep(workFlowState);
+    const { currentWorkFlowIndex } = _workFlowState;
+
+    _workFlowState.flows[currentWorkFlowIndex].schema = _schema;
+
+    setWorkFlowState(_workFlowState);
+  };
+
+  const loadInitialSchema = (payload: any) => {
     let nodes: any = [];
     let links: any = [];
 
@@ -81,7 +193,7 @@ const Creator = () => {
           id: node.id,
           content: node.content,
           onClick: deleteNodeFromSchema,
-          updateStateCreator: updateStateCreator,
+          updateStateSidebarEditor: updateStateSidebarEditor,
         },
       };
     });
@@ -94,35 +206,11 @@ const Creator = () => {
     };
   };
 
-  const initialData = getInitialNode(diagramData);
-  const initialSchema = createSchema(initialData);
-
-  const [schema, { onChange, addNode, removeNode, connect }]: any =
-    useSchema(initialSchema);
-
-  useEffect(() => {
-    setWorkFlowState(initialWorkflowState(schema));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (schema.links) {
-      const { currentWorkFlowIndex } = workFlowState;
-
-      if (typeof currentWorkFlowIndex !== "undefined") {
-        const _workFlowState = _.cloneDeep(workFlowState);
-        const _schema = _.cloneDeep(schema);
-
-        _workFlowState.flows[currentWorkFlowIndex].schema.links = _schema.links;
-
-        setWorkFlowState(_workFlowState);
-        onChange(schema);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [schema.links]);
-
-  updateStateCreator = ({ type, formData, allowOutputPort = false }: any) => {
+  const updateStateSidebarEditor = ({
+    type,
+    formData,
+    allowOutputPort = false,
+  }: any) => {
     switch (type) {
       case types.ON_CHANGE_NODE:
         const _nodes = _.cloneDeep(schema?.nodes);
@@ -171,6 +259,7 @@ const Creator = () => {
 
           setWorkFlowState(_workFlowState);
 
+          // onChange is not working properly for disconnected link and render UI
           if (allowOutputPort !== false) {
             if (validateNode(_nodes[index])) {
               removeNode(_nodes[index]);
@@ -190,95 +279,13 @@ const Creator = () => {
     }
   };
 
-  const addNewNode = (node: any) => {
-    const _id = `node--${uuidv4()}`;
-    const nodeId = schema.nodes.length + 1;
-    const coordinates = [
-      schema.nodes[nodeId - 2].coordinates[0] + 100,
-      schema.nodes[nodeId - 2].coordinates[1] + 100,
-    ];
-
-    const _input = node?.inputs || 0;
-    const _output = node?.outputs || 0;
-    const inputs = [];
-    const outputs = [];
-
-    if (_input) {
-      for (let i = 0; i < _input; i++) {
-        inputs.push(
-          getPort(ConstantCanLink[node?.data?.helper?.canLinkInput], true)
-        );
-      }
-    }
-
-    if (_output) {
-      for (let j = 0; j < _output; j++) {
-        outputs.push(
-          getPort(ConstantCanLink[node?.data?.helper?.canLinkOutput], false)
-        );
-      }
-    }
-
-    const nextNode: any = {
-      id: _id,
-      content: node.content,
-      disableDrag: node.disableDrag,
-      render: ConstantNodeBlock[node?.data?.helper?.renderNode] || null,
-      coordinates: coordinates,
-      inputs: inputs,
-      outputs: outputs,
-      data: {
-        ...node.data,
-        id: _id,
-        content: node.content,
-        onClick: deleteNodeFromSchema,
-        updateStateCreator: updateStateCreator,
-      },
-    };
-
-    if (validateNode(nextNode)) {
-      addNode(nextNode);
-      setTimeout(() => {
-        updateWorkFlowState();
-      });
-    }
-  };
-
-  deleteNodeFromSchema = (id: any) => {
-    const _schema = _.cloneDeep(schema);
-
-    const nodeToRemove = _schema?.nodes?.find((node: any) => {
-      if (node.id === id) {
-        return true;
-      }
-      return false;
-    });
-
-    if (nodeToRemove) {
-      removeNode(nodeToRemove);
-      setTimeout(() => {
-        updateWorkFlowState();
-      });
-    }
-  };
-
-  const updateWorkFlowState = () => {
-    const _schema = _.cloneDeep(schema);
-    const _workFlowState = _.cloneDeep(workFlowState);
-    const { currentWorkFlowIndex } = _workFlowState;
-
-    _workFlowState.flows[currentWorkFlowIndex].schema = _schema;
-
-    setWorkFlowState(_workFlowState);
-  };
-
   const onChangeWorkFlowTabHandler = ({
     type,
     workFlowIndex,
     importSchema,
   }: any) => {
     switch (type) {
-      case types.ON_CHANGE_WORKFLOW:
+      case types.ON_CHANGE_WORKFLOW_TAB:
         const _workFlowState = _.cloneDeep(workFlowState);
         const selectSchema = _workFlowState.flows[workFlowIndex].schema;
 
@@ -291,7 +298,10 @@ const Creator = () => {
         return;
 
       case types.ON_ADD_WORKFLOW:
-        onChange(initialSchema);
+        const _schemaData = loadInitialSchema(diagramData);
+        const _initialSchema = createSchema(_schemaData);
+
+        onChange(_initialSchema);
         setWorkFlowState((prev: any) => ({
           currentWorkFlowIndex: workFlowIndex,
           flows: [
@@ -299,7 +309,7 @@ const Creator = () => {
             {
               id: `workflow--${uuidv4()}`,
               name: `Workflow ${workFlowIndex + 1}`,
-              schema: _.cloneDeep(initialSchema),
+              schema: _.cloneDeep(_initialSchema),
             },
           ],
         }));
@@ -318,20 +328,23 @@ const Creator = () => {
 
       case types.ON_IMPORT_WORKFLOW:
         const payload = _.cloneDeep(importSchema);
-        const _importSchema = getInitialNode(payload);
 
-        const _updateImportWorkFlowState = _.cloneDeep(workFlowState);
+        const _importSchema = loadInitialSchema(payload);
         const _updatedSchema: any = createSchema(_importSchema);
-        _updateImportWorkFlowState.flows[workFlowIndex].schema = _updatedSchema;
+        const _updateImportWorkFlowState = _.cloneDeep(workFlowState);
 
+        _updateImportWorkFlowState.flows[workFlowIndex].schema = _updatedSchema;
         setWorkFlowState(_updateImportWorkFlowState);
 
+        // Notes: onChange Event is not working properly when delete node
         schema.nodes.forEach((node: any) => {
           removeNode(node);
         });
+
         _updatedSchema?.nodes.forEach((node: any) => {
           addNode(node);
         });
+
         _updatedSchema?.links.forEach((link: any) => {
           const inputId = link.input || "";
           const outputId = link.output || "";
@@ -351,7 +364,7 @@ const Creator = () => {
 
       <SidebarEditor
         sidebar={sidebarState}
-        updateStateCreator={updateStateCreator}
+        updateStateSidebarEditor={updateStateSidebarEditor}
       />
 
       <DiagramPreview

@@ -38,16 +38,20 @@ const QuestionNode = ({ data, onSuccess, onCancel }: any) => {
   };
 
   const onSubmitHandler = (values: any) => {
-    let _allowOutputPort = 0;
+    let _allowOutputPort: any = 0;
 
     if (values.isBranching) {
-      if (data.payload.isBranching) {
-        _allowOutputPort =
-          data.payload.inputs.length === values.inputs.length
-            ? false
-            : values.inputs.length;
+      if (
+        data.payload.isBranching &&
+        data.payload.inputs.length === values.inputs.length
+      ) {
+        _allowOutputPort = false;
       } else {
         _allowOutputPort = values.inputs.length;
+      }
+    } else {
+      if (!data.payload.isBranching) {
+        _allowOutputPort = false;
       }
     }
 

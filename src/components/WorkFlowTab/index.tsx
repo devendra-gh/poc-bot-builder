@@ -70,7 +70,7 @@ const WorkFlowTab = ({ workFlowState, onChangeWorkFlow }: any) => {
     } else {
       // Call to change new workflow
       onChangeWorkFlow({
-        type: types.ON_CHANGE_WORKFLOW,
+        type: types.ON_CHANGE_WORKFLOW_TAB,
         workFlowIndex: index,
       });
     }
