@@ -60,17 +60,38 @@ const Creator = () => {
       const { currentWorkFlowIndex } = workFlowState;
 
       if (typeof currentWorkFlowIndex !== "undefined") {
-        const _workFlowState = _.cloneDeep(workFlowState);
-        const _schema = _.cloneDeep(schema);
+        const _schema: any = _.cloneDeep(schema);
+        const newLinks = getUniqueLinks(_schema.links);
 
-        _workFlowState.flows[currentWorkFlowIndex].schema.links = _schema.links;
+        const _workFlowState = _.cloneDeep(workFlowState);
+        _workFlowState.flows[currentWorkFlowIndex].schema.links = newLinks;
 
         setWorkFlowState(_workFlowState);
-        onChange(schema);
+        onChange({ ...schema, links: newLinks });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [schema.links]);
+  }, [schema.links.length]);
+
+  const getUniqueLinks = (links: any) => {
+    const linksIn: any = {};
+    const linksOut: any = {};
+
+    links.forEach((link: any) => {
+      linksIn[link.input] = link.output;
+    });
+
+    Object.keys(linksIn).forEach((link: any) => {
+      linksOut[linksIn[link]] = link;
+    });
+
+    return Object.keys(linksOut).map((key: any) => {
+      return {
+        output: key,
+        input: linksOut[key],
+      };
+    });
+  };
 
   const addNewNode = (node: any) => {
     const _id = `node--${uuidv4()}`;
