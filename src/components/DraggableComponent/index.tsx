@@ -1,3 +1,4 @@
+import React from 'react';
 import { useDrag } from "react-dnd";
 import { Box } from "@material-ui/core";
 import DragIndicatorIcon from "@material-ui/icons/DragIndicator";

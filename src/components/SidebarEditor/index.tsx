@@ -1,3 +1,4 @@
+import React from 'react';
 import Drawer from "@material-ui/core/Drawer";
 import { types } from "../../constants";
 import {

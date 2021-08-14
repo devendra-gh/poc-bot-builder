@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
 import {
@@ -20,6 +20,7 @@ import {
   DesignMenu,
   SidebarEditor,
 } from "../../components";
+import 'beautiful-react-diagrams/styles.css';
 
 const ConstantNodeBlock: any = {
   NodeBlock: NodeBlock,

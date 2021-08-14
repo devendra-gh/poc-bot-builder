@@ -1,3 +1,4 @@
+import React from 'react';
 import { Title, ButtonGroup, Button, EditorBlock } from "../../../FormsUI";
 
 const NotFoundNode = ({ onCancel }: any) => {

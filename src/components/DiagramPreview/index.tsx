@@ -1,3 +1,4 @@
+import React from 'react';
 import Diagram from "beautiful-react-diagrams";
 import { useDrop } from "react-dnd";
 import { Box } from "@material-ui/core";
